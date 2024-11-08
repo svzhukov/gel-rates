@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Currency: Identifiable {
+struct BestRatesDisplayItem: Identifiable {
     let id = UUID()
     let name: String
     let buy: Double

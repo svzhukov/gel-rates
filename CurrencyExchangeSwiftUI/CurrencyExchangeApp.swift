@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct CurrencyExchangeMain: App {
+struct CurrencyExchangeApp: App {
     var body: some Scene {
         WindowGroup {
-            DashboardView()
+            AppAssembly.createDashboardView()
         }
     }
 }

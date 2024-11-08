@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct DashboardView: View {
+    var vm: DashboardViewModel
+    
+    init(vm: DashboardViewModel) {
+        self.vm = vm
+    }
+    
     var body: some View {
         ZStack() {
             Color(hex: "#F1F2EB").ignoresSafeArea()
@@ -24,18 +30,15 @@ struct DashboardView: View {
                     }
                     .padding(.bottom, 15)
                     
-                    ExchangeRatesView()
-                        .frame(width: 350)
+                    ExchangeRateView()
                         .padding(.bottom, 15)
-                    ExchangeGraphView()
-                        .frame(width: 350)
+                    ExchangeGraphView(vm: self.vm)
                 }
-                .frame(minHeight: 1000, alignment: .topLeading)
             }
         }
     }
 }
 
 #Preview {
-    DashboardView()
+    AppAssembly.createDashboardView()
 }

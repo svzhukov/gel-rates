@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ExchangeRatesView: View {
+struct ExchangeRateView: View {
     let title = "BEST OFFERS"
     let mockHeaders = ["Currency", "Buy", "Sell"]
     let mockData = [
@@ -51,7 +51,7 @@ struct ExchangeRatesView: View {
                         }
                     }
                 )
-//                .padding()
         }
+        .frame(width: 350)
     }
 }
