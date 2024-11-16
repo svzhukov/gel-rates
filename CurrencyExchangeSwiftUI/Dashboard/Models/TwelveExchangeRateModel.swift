@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct APITwelveExchangeRate: Codable {
+struct TwelveExchangeRateModel: Codable {
     let meta: Meta
     let values: [CurrencyValue]
     let status: String
@@ -26,20 +26,6 @@ struct APITwelveExchangeRate: Codable {
         let high: String
         let low: String
         let close: String
-    }
-    
-    func mapToDisplayItems() -> [RatesGraphDisplayItem] {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        return values.compactMap { value in
-            guard let price = Double(value.close) else { return nil }
-            guard let date = dateFormatter.date(from: value.datetime) else { return nil }
-            return RatesGraphDisplayItem(
-                date: date,
-                price: 1 / price
-            )
-        }
     }
 }
 

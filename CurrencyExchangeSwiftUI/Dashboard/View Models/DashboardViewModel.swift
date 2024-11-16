@@ -9,7 +9,7 @@ import Foundation
 
 class DashboardViewModel: ObservableObject {
     var bestRates: [BestRatesDisplayItem]?
-    @Published var graphRates: [RatesGraphDisplayItem]?
+    @Published var graphItems: [RatesGraphDisplayItem]?
     
     var service: ExchangeRateServiceProtocol
     
@@ -18,9 +18,12 @@ class DashboardViewModel: ObservableObject {
     }
     
     func fetchData() {
-        self.service.fetchAnnualRates { [weak self] response in
-            DispatchQueue.main.async {
-                self?.graphRates = response.mapToDisplayItems()
+        self.service.fetchAnnualRates { [weak self] result in
+            switch result {
+            case .success(let model):
+                self?.graphItems = RatesGraphDisplayItem.mapFrom(model: model)
+            case .failure(let error):
+                fatalError(error.localizedDescription)
             }
         }
     }

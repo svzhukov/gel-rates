@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct APIMyfinExchangeRate: Codable {
+struct MyfinExchangeRateModel: Codable {
     let best: [String: CurrencyRate]
     let organizations: [Organization]
     

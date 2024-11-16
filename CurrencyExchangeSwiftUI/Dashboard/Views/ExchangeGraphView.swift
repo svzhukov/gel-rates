@@ -45,7 +45,7 @@ struct ChartView: View {
     }
     
     var body: some View {
-        if let items = self.vm.graphRates {
+        if let items = self.vm.graphItems {
             Chart {
                 AreaPlot(
                     items,

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 71;
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
@@ -37,11 +37,19 @@
 			);
 			target = D9D8271D2C949DB2006DF004 /* CurrencyExchangeSwiftUITests */;
 		};
+		D9A8010C2CE8EBBE0034AC8C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Config.xcconfig,
+				Info.plist,
+			);
+			target = D9D8270D2C949DAF006DF004 /* CurrencyExchangeSwiftUI */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D95ADA042CCAA2FF00AACCA6 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
-		D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D95ADA202CCAA30A00AACCA6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CurrencyExchangeSwiftUI; sourceTree = "<group>"; };
+		D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D9A8010C2CE8EBBE0034AC8C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, D95ADA202CCAA30A00AACCA6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CurrencyExchangeSwiftUI; sourceTree = "<group>"; };
 		D95ADA1A2CCAA30900AACCA6 /* CurrencyExchangeUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CurrencyExchangeUITests; sourceTree = "<group>"; };
 		D95ADA1E2CCAA30A00AACCA6 /* CurrencyExchangeTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CurrencyExchangeTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -166,7 +174,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					D9D8270D2C949DAF006DF004 = {
 						CreatedOnToolsVersion = 15.3;
@@ -265,8 +273,11 @@
 /* Begin XCBuildConfiguration section */
 		D9D827302C949DB2006DF004 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				API_KEY = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -323,13 +334,17 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TWELVE_API_KEY = "$(TWELVE_API_KEY)";
 			};
 			name = Debug;
 		};
 		D9D827312C949DB2006DF004 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				API_KEY = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -378,12 +393,15 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				TWELVE_API_KEY = "$(TWELVE_API_KEY)";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		D9D827332C949DB2006DF004 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -393,6 +411,7 @@
 				DEVELOPMENT_TEAM = 597DF497MN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CurrencyExchangeSwiftUI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -408,11 +427,14 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TWELVE_API_KEY = "$(TWELVE_API_KEY)";
 			};
 			name = Debug;
 		};
 		D9D827342C949DB2006DF004 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -422,6 +444,7 @@
 				DEVELOPMENT_TEAM = 597DF497MN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CurrencyExchangeSwiftUI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -437,6 +460,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TWELVE_API_KEY = "$(TWELVE_API_KEY)";
 			};
 			name = Release;
 		};
