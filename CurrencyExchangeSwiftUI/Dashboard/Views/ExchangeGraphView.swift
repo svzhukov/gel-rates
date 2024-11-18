@@ -26,7 +26,7 @@ struct ExchangeGraphView: View {
             
             RoundedRectangle(cornerRadius: 15)
                 .fill(Color(hex: "d8dad3"))
-                .frame(height: 150)
+                .frame(height: 300)
                 .overlay(ChartView(vm: self.vm))
                 .frame(width: 350)
         }
@@ -54,11 +54,32 @@ struct ChartView: View {
                 )
                 .opacity(0.2)
             }
-            .padding(.leading, 12)
-            .chartYScale(domain: (0.34 - 0.01)...(0.38 + 0.01))
-            .clipped()
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .month, count: 1)) {
+                    AxisGridLine()
+
+                }
+                AxisMarks(values: .stride(by: .month, count: 2)) {
+//                    AxisTick()
+                    AxisValueLabel(format: .dateTime.month())
+                }
+            }
+            .chartYScale(domain: DynamicYScaleChart())
+            .clipShape(RoundedRectangle(cornerRadius: 15))
         } else {
             ProgressView("Loading...")
         }
     }
+    
+    func DynamicYScaleChart() -> ClosedRange<Double> {
+        let min = self.vm.graphItems!.compactMap { $0.price }.min()!
+        var max = self.vm.graphItems!.compactMap { $0.price }.max()!
+        max = round(max * 100) / 100 + 0.001
+        
+        return min...max
+    }
+}
+
+#Preview {
+    AppAssembly.createDashboardView()
 }

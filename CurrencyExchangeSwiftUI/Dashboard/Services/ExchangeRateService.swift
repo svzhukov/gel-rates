@@ -36,9 +36,6 @@ class ExchangeRateService: ExchangeRateServiceProtocol {
         let endString = dateFormatter.string(from: end)
         let startString = dateFormatter.string(from: start)
         
-        print(Bundle.main.infoDictionary ?? "No Info.plist found")
-
-        
         let url =         "\(APIType.twelve.endpoint)?symbol=\(from)/\(to)&interval=\(interval)day&start_date=\(startString)&end_date=\(endString)&apikey=\(APIType.twelve.apikey)"
         print(url)
         

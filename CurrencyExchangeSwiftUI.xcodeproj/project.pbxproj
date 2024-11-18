@@ -40,7 +40,6 @@
 		D9A8010C2CE8EBBE0034AC8C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Config.xcconfig,
 				Info.plist,
 			);
 			target = D9D8270D2C949DAF006DF004 /* CurrencyExchangeSwiftUI */;
