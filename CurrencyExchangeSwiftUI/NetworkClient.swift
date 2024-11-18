@@ -11,7 +11,8 @@ class NetworkClient {
     static let shared = NetworkClient()
     private init() {}
     
-    func request<T: Decodable>(_ url: URL,
+    func request<T: Decodable>(_ type: T.Type,
+                               url: URL,
                                method: String = "GET",
                                headers: [String: String]? = nil,
                                body: Data? = nil,

@@ -12,12 +12,31 @@ protocol ExchangeRateServiceProtocol {
 }
 
 class ExchangeRateService: ExchangeRateServiceProtocol {
+    private let userDefaults = UserDefaults.standard
+    private let cacheKey = UserDefaultsKeys.twelveExchangeRateModelCache.rawValue
+    private let lastRequested = UserDefaultsKeys.twelveExchangeRateModelTimestamp.rawValue
+
     func fetchAnnualRates(completion: @escaping (Result<TwelveExchangeRateModel, Error>)  -> Void) {
+        if let cachedData = loadCachedData(),
+           let lastFetch = loadLastFetchTimestamp(),
+           Date().timeIntervalSince(lastFetch) < 600 {
+            print("Reusing cached data...")
+            completion(.success(cachedData))
+            return
+        }
+        
         DispatchQueue.global().async {
             guard let url = self.urlTwelveAPI()
             else { return }
             
-            NetworkClient.shared.request(url) { result in
+            NetworkClient.shared.request(TwelveExchangeRateModel.self, url: url) { result in
+                switch result {
+                case .success(let model):
+                    self.saveDataToCache(model)
+                case .failure(_):
+                    break
+                }
+                
                 DispatchQueue.main.async {
                     completion(result)
                 }
@@ -41,7 +60,25 @@ class ExchangeRateService: ExchangeRateServiceProtocol {
         
         return URL(string: url)
     }
+    
+    private func loadCachedData() -> TwelveExchangeRateModel? {
+        guard let data = userDefaults.data(forKey: cacheKey) else { return nil }
+        return try? JSONDecoder().decode(TwelveExchangeRateModel.self, from: data)
+    }
+    
+    private func loadLastFetchTimestamp() -> Date? {
+        return userDefaults.object(forKey: lastRequested) as? Date
+    }
+    
+    private func saveDataToCache(_ data: TwelveExchangeRateModel) {
+        if let encodedData = try? JSONEncoder().encode(data) {
+            userDefaults.set(encodedData, forKey: cacheKey)
+            userDefaults.set(Date(), forKey: lastRequested)
+            print("Cached data saved.")
+        }
+    }
 }
+
 
 // Constants
 extension ExchangeRateService {
@@ -72,6 +109,11 @@ extension ExchangeRateService {
     enum Currency: String {
         case usd = "USD"
         case gel = "GEL"
+    }
+    
+    enum UserDefaultsKeys: String {
+        case twelveExchangeRateModelCache = "TwelveExchangeRateModelCache"
+        case twelveExchangeRateModelTimestamp = "TwelveExchangeRateModelTimestamp"
     }
 }
 
