@@ -32,9 +32,11 @@ struct DashboardView: View {
                     
                     ExchangeRateView()
                         .padding(.bottom, 15)
-                    ExchangeGraphView(vm: self.vm)
+                    ExchangeChartView(vm: self.vm)
                 }
             }
+            .frame(maxWidth: .infinity)
+            .background(Color.red)
         }
     }
 }

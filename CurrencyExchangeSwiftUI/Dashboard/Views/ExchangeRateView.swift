@@ -52,6 +52,7 @@ struct ExchangeRateView: View {
                     }
                 )
         }
-        .frame(width: 350)
+        .padding(.leading)
+        .padding(.trailing)
     }
 }
