@@ -15,29 +15,67 @@ struct DashboardView: View {
     }
     
     var body: some View {
-        ZStack() {
-            Color(hex: "#F1F2EB").ignoresSafeArea()
-            ScrollView(.vertical) {
-                VStack {
-                    HStack(alignment: .bottom) {
-                        Image("GEL")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .padding(.bottom, 3)
-                        Text("Exchange Rates")
-                            .font(.title)
-                            .padding(.bottom, 0)
+        NavigationSplitView {
+            
+            ZStack() {
+                Color(hex: "#F1F2EB").ignoresSafeArea()
+                ScrollView(.vertical) {
+                    VStack {
+                        TitleView()
+                            .padding(.bottom, 15)
+                        ExchangeRateView()
+                            .padding(.bottom, 15)
+                        NavigationLink {
+                            ExchangeChartView(vm: self.vm)
+                        } label: {
+                            Text("Go to chart")
+                        }
                     }
-                    .padding(.bottom, 15)
-                    
-                    ExchangeRateView()
-                        .padding(.bottom, 15)
-                    ExchangeChartView(vm: self.vm)
                 }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
-            .background(Color.red)
+        } detail: {
+            
         }
+    }
+}
+
+struct TitleView: View {
+    var body: some View {
+        HStack(alignment: .bottom) {
+            Image("GEL")
+                .resizable()
+                .frame(width: 50, height: 50)
+                .padding(.bottom, 3)
+            Text("Exchange Rates")
+                .font(.title)
+                .padding(.bottom, 0)
+        }
+    }
+}
+
+struct NavigationView: View {
+    var body: some View {
+        NavigationStack { // Use NavigationView for iOS 15 or earlier
+            VStack {
+                Text("Home Screen")
+                    .font(.largeTitle)
+                    .padding()
+                
+                NavigationLink("Go to Details", destination: DetailView())
+                    .padding()
+                    .font(.headline)
+            }
+            .navigationTitle("Home")
+        }
+    }
+}
+
+struct DetailView: View {
+    var body: some View {
+        Text("Details Screen")
+            .font(.largeTitle)
+            .navigationTitle("Details")
     }
 }
 

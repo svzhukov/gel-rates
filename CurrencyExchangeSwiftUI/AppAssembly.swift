@@ -16,4 +16,12 @@ struct AppAssembly {
         
         return view
     }
+    
+    static func createChartView() -> some View {
+        let service = ExchangeRateService()
+        let vm = DashboardViewModel(service: service)
+        let view = ExchangeChartView(vm: vm)
+        
+        return view
+    }
 }

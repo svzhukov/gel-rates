@@ -24,7 +24,7 @@ struct ExchangeChartView: View {
             ChartButtonsView(vm: self.vm)
         }
         .padding(.horizontal)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
             self.vm.fetchData()
         }
@@ -44,16 +44,13 @@ struct ChartTitleView: View {
 
 // MARK: - Chart Content
 struct ChartContentView: View {
-    @StateObject var vm: DashboardViewModel
+    @ObservedObject var vm: DashboardViewModel
     @State private var pointAnimation: PointMarkAnimation = PointMarkAnimation()
-
+    
     init(vm: DashboardViewModel) {
-        _vm = StateObject(wrappedValue: vm)
+        self.vm = vm
     }
     
-//    init(vm: DashboardViewModel) {
-//        self.vm = vm
-//    }
     var body: some View {
         let _ = print("ChartContentView")
         RoundedRectangle(cornerRadius: 15)
@@ -83,7 +80,6 @@ struct ChartContentView: View {
         .chartYScale(domain: items.minPrice!.price - 0.008...items.maxPrice!.price + 0.008)
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .padding(.trailing, 10)
-        .animation(pointAnimation.isVisible ? .smooth(duration: 0.5) : nil, value: pointAnimation.isVisible)
         .onChange(of: vm.selectedTimeRange, initial: true) {
             addDelayedPointMarks(items, delay: 0.3)
         }
@@ -106,9 +102,11 @@ struct ChartContentView: View {
         let animationId = pointAnimation.id
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            if animationId == pointAnimation.id {
-                pointAnimation.points.append(contentsOf: [ExtremePoint(item: max, color: .green), ExtremePoint(item: min, color: .red)])
-                pointAnimation.isVisible = true
+            withAnimation(.easeInOut(duration: 0.5)) {  // Explicit animation only for points
+                if animationId == pointAnimation.id {
+                    pointAnimation.points.append(contentsOf: [ExtremePoint(item: max, color: .green), ExtremePoint(item: min, color: .red)])
+                    pointAnimation.isVisible = true
+                }
             }
         }
     }
@@ -234,10 +232,10 @@ struct ChartAxisModifier: ViewModifier {
 
 // MARK: - Chart Buttons
 struct ChartButtonsView: View {
-    @StateObject var vm: DashboardViewModel
+    @ObservedObject var vm: DashboardViewModel
     
     init(vm: DashboardViewModel) {
-        _vm = StateObject(wrappedValue: vm) // ??
+        self.vm = vm
     }
     
     var body: some View {
@@ -262,4 +260,8 @@ struct ChartButtonsView: View {
         .cornerRadius(12)
         .frame(maxWidth: .infinity)
     }
+}
+
+#Preview {
+    AppAssembly.createChartView()
 }
