@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct TwelveExchangeRateModel: Codable {
+struct TwelvedataAPIModel: APIModelProtocol {
+    
+    static let apiType: Constants.APIType = Constants.APIType.myfin
+
     let meta: Meta
     let values: [CurrencyValue]
     let status: String

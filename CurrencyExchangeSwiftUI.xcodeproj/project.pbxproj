@@ -47,7 +47,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D95ADA042CCAA2FF00AACCA6 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
 		D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (D9A8010C2CE8EBBE0034AC8C /* PBXFileSystemSynchronizedBuildFileExceptionSet */, D95ADA202CCAA30A00AACCA6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CurrencyExchangeSwiftUI; sourceTree = "<group>"; };
 		D95ADA1A2CCAA30900AACCA6 /* CurrencyExchangeUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CurrencyExchangeUITests; sourceTree = "<group>"; };
 		D95ADA1E2CCAA30A00AACCA6 /* CurrencyExchangeTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CurrencyExchangeTests; sourceTree = "<group>"; };
@@ -81,11 +80,10 @@
 		D9D827052C949DAF006DF004 = {
 			isa = PBXGroup;
 			children = (
-				D95ADA042CCAA2FF00AACCA6 /* Extensions */,
-				D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */,
 				D95ADA1E2CCAA30A00AACCA6 /* CurrencyExchangeTests */,
 				D95ADA1A2CCAA30900AACCA6 /* CurrencyExchangeUITests */,
 				D9D8270F2C949DAF006DF004 /* Products */,
+				D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,7 +113,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D95ADA042CCAA2FF00AACCA6 /* Extensions */,
 				D95ADA0F2CCAA30900AACCA6 /* CurrencyExchangeSwiftUI */,
 			);
 			name = CurrencyExchangeSwiftUI;

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct DashboardView: View {
-    var vm: DashboardViewModel
+    var vm: ChartVM
     
-    init(vm: DashboardViewModel) {
+    init(vm: ChartVM) {
         self.vm = vm
     }
     
@@ -23,12 +23,18 @@ struct DashboardView: View {
                     VStack {
                         TitleView()
                             .padding(.bottom, 15)
-                        ExchangeRateView()
+                        BestRatesView()
                             .padding(.bottom, 15)
                         NavigationLink {
-                            ExchangeChartView(vm: self.vm)
+                            ChartView(vm: self.vm)
                         } label: {
-                            Text("Go to chart")
+                            Text("USD/GEL chart")
+                        }
+                        .padding(.bottom, 15)
+                        NavigationLink {
+                            AppAssembly.createListView()
+                        } label: {
+                            Text("Exchange list")
                         }
                     }
                 }

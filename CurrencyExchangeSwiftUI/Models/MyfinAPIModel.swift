@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct MyfinExchangeRateModel: Codable {
+struct MyfinAPIModel: APIModelProtocol {
+    
+    static let apiType: Constants.APIType = Constants.APIType.myfin
+
     let best: [String: CurrencyRate]
     let organizations: [Organization]
     
@@ -24,7 +27,7 @@ struct MyfinExchangeRateModel: Codable {
         let link: String
         let icon: String
         let name: TranslatedName
-        let bestRates: [String: CurrencyRate]
+        let best: [String: CurrencyRate]
         let offices: [Office]
         
         struct Office: Codable {
@@ -32,7 +35,7 @@ struct MyfinExchangeRateModel: Codable {
             let name: TranslatedName
             let address: TranslatedAddress
             let icon: String?
-            let workingNow: Bool
+            let working_now: Bool?
             let rates: [String: CurrencyRateWithTime]
         }
         
