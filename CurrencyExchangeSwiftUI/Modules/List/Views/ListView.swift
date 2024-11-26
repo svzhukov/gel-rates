@@ -18,64 +18,91 @@ struct ListView: View {
     var body: some View {
         ScrollView {
             if let items = self.vm.listItems {
-                ForEach(items) { (item: ListDisplayItem) in
-                    VStack {
-                        // Header
-                        HStack {
-                            Image(systemName: "dollarsign.circle.fill")
-                                .font(.title2)
-                                .foregroundColor(.black)
-                                .background(
-                                    Circle()
-                                        .fill(Color.yellow)
-                                        .frame(width: 32, height: 32)
-                                )
-                            
-                            Text(item.bank.name.en ?? "No name")
-                                .font(.headline)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        // Rates Header
-                        HStack {
-                            Text("Покупка")
-                                .foregroundColor(.gray)
-                            Spacer()
-                            Text("Продажа")
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.bottom, -5)
-                        
-                        // Rates
-                        ForEach(item.currencies) { (currency: Currency) in
-                            HStack {
-                                Text("\(currency.buy, specifier: "%.3f") ₾")
-                                    .font(.title3)
-                                Spacer()
-                                Text(currency.type.flag)
-                                    .font(.title3)
-                                Spacer()
-                                Text("\(currency.sell, specifier: "%.3f") ₾")
-                                    .font(.title3)
+                    ForEach(items) { (item: ListDisplayItem) in
+                        Group {
+                            VStack {
+                                listHeaderView(item: item)
+                                listContentView(item: item)
                             }
-                            .padding(.vertical, -5)
+                            .padding()
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .cornerRadius(16)
                         }
+                        .padding(.horizontal)
+                        .padding(.bottom, 5)
                     }
-                    .padding()
-                    .background(Color.black)
-                    .foregroundColor(.white)
-                    .cornerRadius(16)
-                }
-                
             } else {
                 ProgressView("Loading...")
             }
         }
+
         .onAppear {
             vm.fetchData()
         }
     }
 }
+
+struct listHeaderView: View {
+    let item: ListDisplayItem
+    
+    var body: some View {
+        HStack {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: 38, height: 38)
+                .foregroundStyle(Color(.white))
+                .shadow(color: .white, radius: 2)
+                .overlay(
+                    Image(item.bank.icon.name)
+                    .if(item.bank.icon.fileExtension == "png") { view in
+                        view
+                            .resizable()
+                            .frame(maxWidth: 32, maxHeight: 32)
+                    }
+                        .frame(maxWidth: 32, maxHeight: 32)
+                        .scaledToFit()
+                )
+
+
+            Text(item.bank.name)
+                .font(.headline)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.bottom, 10)
+    }
+}
+
+struct listContentView: View {
+    let item: ListDisplayItem
+    
+    var body: some View {
+        HStack {
+            Text("Покупка")
+                .foregroundColor(.gray)
+            Spacer()
+            Text("Продажа")
+                .foregroundColor(.gray)
+        }
+        
+        ForEach(item.bank.currencies) { (currency: Currency) in
+            HStack {
+                Text("\(currency.buy, specifier: "%.3f") ₾")
+                    .font(.title3)
+                    .frame(maxWidth: 100, alignment: .leading)
+                Spacer()
+                Text("\(currency.type.flag)  1 \(currency.type.symbol)")
+                    .font(.title3).bold()
+                    .frame(alignment: .leading)
+                Spacer()
+                Text("\(currency.sell, specifier: "%.3f") ₾")
+                    .font(.title3)
+                    .frame(maxWidth: 100, alignment: .trailing)
+            }
+            .padding(.vertical, -4)
+        }
+    }
+}
+
 
 #Preview {
     AppAssembly.createListView()

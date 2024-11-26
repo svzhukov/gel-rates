@@ -9,20 +9,26 @@ import Foundation
 
 struct ListDisplayItem: Identifiable {
     let id = UUID()
-    let bank: MyfinAPIModel.Organization
-    let currencies: [Currency]
+    let bank: Bank
     
     static func mapModel(_ model: MyfinAPIModel) -> [ListDisplayItem] {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
         let items: [ListDisplayItem] = model.organizations.compactMap { (org: MyfinAPIModel.Organization) in
-            let currencies: [String : Currency] = org.best.mapValues { (value: MyfinAPIModel.CurrencyRate) in
+            let currenciesDict: [String : Currency] = org.best.mapValues { (value: MyfinAPIModel.CurrencyRate) in
                 Currency(buy: value.buy, sell: value.sell, type: Currency.CurrencyType(rawValue: value.ccy)!)
             }
-            return ListDisplayItem (bank: org, currencies: Array(currencies.values))
+            let currencies = Array(currenciesDict.values).sorted { c1, c2 in
+                c1.type.sortOrder < c2.type.sortOrder
+            }
+            let bank = Bank(id: org.id,
+                            name: org.name.en!,
+                            type: Bank.OrgType(rawValue: org.type)!,
+                            icon: Icon(name: URL(fileURLWithPath: org.icon).deletingPathExtension().lastPathComponent, fileExtension: URL(fileURLWithPath: org.icon).pathExtension),
+                            currencies: currencies)
+            
+                return ListDisplayItem (bank: bank)
         }
-        
         return items
     }
 }
+
+

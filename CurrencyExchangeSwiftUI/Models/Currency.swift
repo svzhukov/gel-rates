@@ -75,6 +75,31 @@ struct Currency: Identifiable {
             }
         }
         
+        var sortOrder: Int {
+            switch self {
+            case .usd:
+                return 0
+            case .eur:
+                return 1
+            case .gel:
+                return 2
+            case .rub:
+                return 3
+            case .try:
+                return 4
+            case .amd:
+                return 5
+            case .gbp:
+                return 6
+            case .azn:
+                return 7
+            case .uah:
+                return 8
+            case .kzt:
+                return 9
+            }
+        }
+        
         init?(rawValue: String) {
             switch rawValue.uppercased() {
             case "USD":
