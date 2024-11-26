@@ -64,7 +64,7 @@ struct listHeaderView: View {
                 )
 
 
-            Text(item.bank.name)
+            Text(item.bank.name.en!)
                 .font(.headline)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -77,10 +77,10 @@ struct listContentView: View {
     
     var body: some View {
         HStack {
-            Text("Покупка")
+            Text(NSLocalizedString("list_header_buy", comment: "buy"))
                 .foregroundColor(.gray)
             Spacer()
-            Text("Продажа")
+            Text(NSLocalizedString("list_header_sell", comment: "sell"))
                 .foregroundColor(.gray)
         }
         

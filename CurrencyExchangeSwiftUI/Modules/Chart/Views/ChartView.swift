@@ -164,7 +164,7 @@ struct ChartPointContent: ChartContent {
             .opacity(pointAnimation.isVisible ? 1 : 0)
             .annotation(position: .automatic) {
                 Text("\(point.item.price, specifier: "%.3f")")
-                    .font(.system(size: 10, weight: .light))
+                    .font(.system(size: 10))
                     .foregroundColor(.secondary)
             }
         }
@@ -248,8 +248,7 @@ struct ChartButtonsView: View {
                     Text(range.localizedName)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(range == self.vm.selectedTimeRange ? .white : .secondary)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 10)
+                        .padding(10)
                         .frame(maxWidth: .infinity)
                         .background(range == self.vm.selectedTimeRange ? Color.gray.opacity(0.2) : Color.clear)
                         .cornerRadius(10)

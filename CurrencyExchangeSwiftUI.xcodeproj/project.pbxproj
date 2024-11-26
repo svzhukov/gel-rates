@@ -192,6 +192,9 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
+				ka,
+				ca,
 			);
 			mainGroup = D9D827052C949DAF006DF004;
 			productRefGroup = D9D8270F2C949DAF006DF004 /* Products */;
@@ -329,6 +332,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TWELVE_API_KEY = "$(TWELVE_API_KEY)";
 			};
@@ -389,6 +393,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				TWELVE_API_KEY = "$(TWELVE_API_KEY)";
 				VALIDATE_PRODUCT = YES;
 			};

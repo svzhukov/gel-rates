@@ -23,6 +23,9 @@ struct DashboardView: View {
                     VStack {
                         TitleView()
                             .padding(.bottom, 15)
+                        LanguageSwitchView()
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing)
                         BestRatesView()
                             .padding(.bottom, 15)
                         NavigationLink {

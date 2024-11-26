@@ -28,13 +28,19 @@ class NetworkClient {
                 return
             }
             
-            guard let data = data else {
+            guard let dataReceived = data else {
                 completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
                 return
             }
+        
             
             do {
-                let decodedObject = try JSONDecoder().decode(T.self, from: data)
+                let jsonObject = try JSONSerialization.jsonObject(with: dataReceived, options: [])
+                if let dictionary = jsonObject as? [String: Any] {
+                    print(dictionary)
+                }
+                
+                let decodedObject = try JSONDecoder().decode(T.self, from: dataReceived)
                 completion(.success(decodedObject))
             } catch {
                 completion(.failure(error))

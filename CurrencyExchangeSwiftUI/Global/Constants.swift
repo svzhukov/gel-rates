@@ -24,10 +24,9 @@ enum Constants {
         var apikey: String {
             switch self {
             case.twelvedata:
-                return Bundle.main.infoDictionary?["TWELVE_API_KEY"] as? String ?? "noapikeyfound"
-
+                return Bundle.main.infoDictionary?["TWELVE_API_KEY"] as? String ?? "no twelvedata apikey found"
             case.myfin:
-                return ""
+                return "muffin"
             }
         }
         

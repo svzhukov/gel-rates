@@ -51,10 +51,10 @@ enum TimeRange: String, Equatable {
 extension TimeRange: CaseIterable, Identifiable {
     var localizedName: String {
         switch self {
-        case .week: return "Неделя"
-        case .month: return "Месяц"
-        case .halfYear: return "Полгода"
-        case .year: return "Год"
+        case .week: return NSLocalizedString("chart_button_week", comment: "")
+        case .month: return NSLocalizedString("chart_button_month", comment: "месяц")
+        case .halfYear: return NSLocalizedString("chart_button_six_months", comment: "")
+        case .year: return NSLocalizedString("chart_button_year", comment: "")
         }
     }
     

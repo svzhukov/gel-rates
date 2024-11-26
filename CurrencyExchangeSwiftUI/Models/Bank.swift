@@ -9,7 +9,7 @@ import Foundation
 
 struct Bank {
     let id: String
-    let name: String
+    let name: Organization.TranslatedName
     let type: OrgType
     let icon: Icon
     let currencies: [Currency]

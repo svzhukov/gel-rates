@@ -15,8 +15,8 @@ protocol StorageManagerProtocol {
 
 struct StorageManager: StorageManagerProtocol {
     static let shared = StorageManager()
-    private init() {}
     private let userDefaults = UserDefaults.standard
+    private init() { setAppLanguage(to: "ru") }
 
     func loadCachedData<T: APIModelProtocol>(type: T.Type) -> T? {
         guard let data = userDefaults.data(forKey: type.apiType.cacheKey) else { return nil }
@@ -33,6 +33,17 @@ struct StorageManager: StorageManagerProtocol {
             userDefaults.set(Date(), forKey: T.apiType.timestampKey)
             print("Cached data saved.")
         }
+    }
+    
+    func setAppLanguage(to language: String) {
+        var languageArray = userDefaults.array(forKey: "AppleLanguages") as? [String] ?? []
+        
+        languageArray[0] = language
+        
+        userDefaults.set(languageArray, forKey: "AppleLanguages")
+        userDefaults.synchronize()
+        
+        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
     }
     
     

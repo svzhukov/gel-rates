@@ -12,15 +12,15 @@ struct ListDisplayItem: Identifiable {
     let bank: Bank
     
     static func mapModel(_ model: MyfinAPIModel) -> [ListDisplayItem] {
-        let items: [ListDisplayItem] = model.organizations.compactMap { (org: MyfinAPIModel.Organization) in
-            let currenciesDict: [String : Currency] = org.best.mapValues { (value: MyfinAPIModel.CurrencyRate) in
+        let items: [ListDisplayItem] = model.organizations.compactMap { (org: Organization) in
+            let currenciesDict: [String : Currency] = org.best.mapValues { (value: CurrencyRate) in
                 Currency(buy: value.buy, sell: value.sell, type: Currency.CurrencyType(rawValue: value.ccy)!)
             }
             let currencies = Array(currenciesDict.values).sorted { c1, c2 in
                 c1.type.sortOrder < c2.type.sortOrder
             }
             let bank = Bank(id: org.id,
-                            name: org.name.en!,
+                            name: org.name,
                             type: Bank.OrgType(rawValue: org.type)!,
                             icon: Icon(name: URL(fileURLWithPath: org.icon).deletingPathExtension().lastPathComponent, fileExtension: URL(fileURLWithPath: org.icon).pathExtension),
                             currencies: currencies)
