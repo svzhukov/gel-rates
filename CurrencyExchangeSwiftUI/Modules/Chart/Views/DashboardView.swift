@@ -21,11 +21,9 @@ struct DashboardView: View {
                 Color(hex: "#F1F2EB").ignoresSafeArea()
                 ScrollView(.vertical) {
                     VStack {
-                        TitleView()
-                            .padding(.bottom, 15)
                         LanguageSwitchView()
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.trailing)
+                            .padding()
                         BestRatesView()
                             .padding(.bottom, 15)
                         NavigationLink {
