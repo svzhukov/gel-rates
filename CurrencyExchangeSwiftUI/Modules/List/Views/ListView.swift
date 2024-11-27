@@ -77,10 +77,10 @@ struct listContentView: View {
     
     var body: some View {
         HStack {
-            Text(NSLocalizedString("list_header_buy", comment: "buy"))
+            Text(translated("list_header_buy", comment: "buy"))
                 .foregroundColor(.gray)
             Spacer()
-            Text(NSLocalizedString("list_header_sell", comment: "sell"))
+            Text(translated("list_header_sell", comment: "sell"))
                 .foregroundColor(.gray)
         }
         

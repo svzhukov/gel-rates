@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct BestRatesView: View {
-    let title = "BEST OFFERS"
-    let mockHeaders = ["Currency", "Buy", "Sell"]
+    let title = translated("Best offers")
+    let mockHeaders = [translated("Currency"), translated("Buy"), translated("Sell")]
     let mockData = [
         ["USD", "2.73", "2.736"],
         ["EUR", "2.735", "2.735"],

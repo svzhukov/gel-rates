@@ -4,6 +4,9 @@
     "%.3f" : {
       "shouldTranslate" : false
     },
+    "%.3f ₾" : {
+
+    },
     "%@  1 %@" : {
       "localizations" : {
         "en" : {
@@ -14,6 +17,45 @@
         }
       },
       "shouldTranslate" : false
+    },
+    "All banks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все банки"
+          }
+        }
+      }
+    },
+    "Best offers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best offers"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Лучший курс"
+          }
+        }
+      }
+    },
+    "Buy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупка"
+          }
+        }
+      }
     },
     "chart_button_month" : {
       "comment" : "месяц",
@@ -84,6 +126,17 @@
         }
       }
     },
+    "Currency" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Валюта"
+          }
+        }
+      }
+    },
     "Date" : {
       "localizations" : {
         "ru" : {
@@ -107,9 +160,6 @@
     "Details Screen" : {
 
     },
-    "Exchange list" : {
-
-    },
     "Exchange Rates" : {
       "localizations" : {
         "ru" : {
@@ -119,9 +169,6 @@
           }
         }
       }
-    },
-    "GEL / USD" : {
-
     },
     "Go to Details" : {
 
@@ -186,8 +233,27 @@
         }
       }
     },
-    "USD/GEL chart" : {
-
+    "Sell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продажа"
+          }
+        }
+      }
+    },
+    "USD to GEL currency chart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USD к GEL график"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

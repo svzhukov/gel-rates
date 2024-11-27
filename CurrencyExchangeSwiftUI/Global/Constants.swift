@@ -66,4 +66,17 @@ enum Constants {
             }
         }
     }
+    
+    enum Language: String, CaseIterable, Codable {
+        case ru = "ru"
+        case en = "en"
+        
+        static var cacheKey: String {
+            return "CurrentAppLanguageCacheKey"
+        }
+        
+        static var defaultLanguage: Language {
+            return self.en
+        }
+    }
 }

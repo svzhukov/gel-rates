@@ -29,13 +29,13 @@ struct DashboardView: View {
                         NavigationLink {
                             ChartView(vm: self.vm)
                         } label: {
-                            Text("USD/GEL chart")
+                            Text(translated("USD to GEL currency chart"))
                         }
                         .padding(.bottom, 15)
                         NavigationLink {
                             AppAssembly.createListView()
                         } label: {
-                            Text("Exchange list")
+                            Text(translated("All banks"))
                         }
                     }
                 }

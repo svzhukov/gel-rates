@@ -33,13 +33,7 @@ class NetworkClient {
                 return
             }
         
-            
             do {
-                let jsonObject = try JSONSerialization.jsonObject(with: dataReceived, options: [])
-                if let dictionary = jsonObject as? [String: Any] {
-                    print(dictionary)
-                }
-                
                 let decodedObject = try JSONDecoder().decode(T.self, from: dataReceived)
                 completion(.success(decodedObject))
             } catch {
@@ -48,5 +42,12 @@ class NetworkClient {
         }
         
         task.resume()
+    }
+    
+    private func debugPrintDict(data: Data) {
+        let jsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
+        if let dictionary = jsonObject as? [String: Any] {
+            print(dictionary)
+        }
     }
 }

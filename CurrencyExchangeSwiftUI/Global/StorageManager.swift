@@ -16,7 +16,7 @@ protocol StorageManagerProtocol {
 struct StorageManager: StorageManagerProtocol {
     static let shared = StorageManager()
     private let userDefaults = UserDefaults.standard
-    private init() { setAppLanguage(to: "ru") }
+    private init() { }
 
     func loadCachedData<T: APIModelProtocol>(type: T.Type) -> T? {
         guard let data = userDefaults.data(forKey: type.apiType.cacheKey) else { return nil }
@@ -31,19 +31,24 @@ struct StorageManager: StorageManagerProtocol {
         if let encodedData = encodeJSON(data: data) {
             userDefaults.set(encodedData, forKey: T.apiType.cacheKey)
             userDefaults.set(Date(), forKey: T.apiType.timestampKey)
-            print("Cached data saved.")
+            print("Saved in UserDefauts: \(data)")
         }
     }
     
-    func setAppLanguage(to language: String) {
-        var languageArray = userDefaults.array(forKey: "AppleLanguages") as? [String] ?? []
+    func saveAppLanguage(to language: Constants.Language) {
+        if let encoded = try? JSONEncoder().encode(language) {
+            userDefaults.set(encoded, forKey: Constants.Language.cacheKey)
+            print("Saved in UserDefauts: \(language)")
+        }
+    }
+    
+    func loadAppLanguage() -> Constants.Language? {
+        guard let data = userDefaults.data(forKey: Constants.Language.cacheKey) else { return nil}
+        if let decoded = try? JSONDecoder().decode(Constants.Language.self, from: data) {
+            return decoded
+        }
         
-        languageArray[0] = language
-        
-        userDefaults.set(languageArray, forKey: "AppleLanguages")
-        userDefaults.synchronize()
-        
-        NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
+        return nil
     }
     
     

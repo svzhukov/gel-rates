@@ -34,7 +34,7 @@ struct ChartView: View {
 // MARK: - Chart Title
 struct ChartTitleView: View {
     var body: some View {
-        Text("GEL / USD")
+        Text(translated("GEL / USD"))
             .frame(maxWidth: .infinity, alignment: .leading)
             .foregroundStyle(.secondary)
             .padding(.leading, 30)
