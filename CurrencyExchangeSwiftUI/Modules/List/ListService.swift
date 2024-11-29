@@ -8,14 +8,14 @@
 import Foundation
 
 protocol ListServiceProtocol {
-    func fetchBanksExchangeRates(completion: @escaping (Result<MyfinAPIModel, Error>) -> Void)
+    func fetchListRates(completion: @escaping (Result<MyfinAPIModel, Error>) -> Void)
 }
 
 class ListService: ListServiceProtocol {
-    func fetchBanksExchangeRates(completion: @escaping (Result<MyfinAPIModel, Error>) -> Void) {
+    func fetchListRates(completion: @escaping (Result<MyfinAPIModel, Error>) -> Void) {
         
         if shouldReuseCachedData(MyfinAPIModel.self), let cachedData = StorageManager.shared.loadCachedData(type: MyfinAPIModel.self) {
-            print("Reusing cached data...")
+            print("Reusing fetchListRates cached data...")
             completion(.success(cachedData))
             return
         }
@@ -49,6 +49,8 @@ class ListService: ListServiceProtocol {
     private func shouldReuseCachedData<T: APIModelProtocol>(_ type: T.Type) -> Bool {
         let timeout: Double = 600
         guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
-        return Date().timeIntervalSince(lastFetch) < timeout
+        let should = Date().timeIntervalSince(lastFetch) < timeout
+        print("shouldReuseCachedData for \(type): \(should)")
+        return should
     }
 }

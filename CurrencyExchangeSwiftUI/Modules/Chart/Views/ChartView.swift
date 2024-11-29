@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 
 struct ChartView: View {
+    @ObservedObject var appearance = Appearance.shared
+
     var vm: ChartVM
 
     init(vm: ChartVM) {
@@ -17,7 +19,6 @@ struct ChartView: View {
     }
 
     var body: some View {
-        let _ = print("ChartContentView")
         VStack {
             ChartTitleView()
             ChartContentView(vm: self.vm)
@@ -33,10 +34,12 @@ struct ChartView: View {
 
 // MARK: - Chart Title
 struct ChartTitleView: View {
+    @ObservedObject var appearance = Appearance.shared
+
     var body: some View {
         Text(translated("GEL / USD"))
             .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(appearance.theme.secondaryTextColor)
             .padding(.leading, 30)
             .padding(.bottom, -5)
     }
@@ -44,6 +47,7 @@ struct ChartTitleView: View {
 
 // MARK: - Chart Content
 struct ChartContentView: View {
+    @ObservedObject var appearance = Appearance.shared
     @ObservedObject var vm: ChartVM
     @State private var pointAnimation: PointMarkAnimation = PointMarkAnimation()
     
@@ -52,16 +56,15 @@ struct ChartContentView: View {
     }
     
     var body: some View {
-        let _ = print("ChartContentView")
         RoundedRectangle(cornerRadius: 15)
-            .fill(Color(hex: "d8dad3"))
+            .fill(appearance.theme.secondaryBackgroundColor)
             .frame(height: 300)
             .overlay(
                 Group {
                     if let items = vm.periodicChartItems {
                         chartContent(items: items)
                     } else {
-                        ProgressView("Loading...")
+                        ProgressView(translated("Loading..."))
                     }
                 }
             )
@@ -77,19 +80,21 @@ struct ChartContentView: View {
         }
         .foregroundStyle(linearGradient(items))
         .chartXAxisConfiguration(for: vm.selectedTimeRange)
+        .customAxisStyle(textColor: appearance.theme.secondaryTextColor)
+
         .chartYScale(domain: items.minPrice!.price - 0.008...items.maxPrice!.price + 0.008)
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .padding(.trailing, 10)
-        .onChange(of: vm.selectedTimeRange, initial: true) {
-            addDelayedPointMarks(items, delay: 0.3)
-        }
+//        .onChange(of: vm.selectedTimeRange, initial: true) {
+//            addDelayedPointMarks(items, delay: 0.3)
+//        }
     }
     
     private func linearGradient(_ items: [ChartDisplayItem]) -> LinearGradient {
         LinearGradient(
             gradient: Gradient(colors: [
-                Color.blue.opacity(0.9),
-                Color.blue.opacity(0.1),
+                appearance.theme.chartColor.opacity(0.9),
+                appearance.theme.chartColor.opacity(0.1),
             ]),
             startPoint: UnitPoint(x: 0.5, y: 0),
             endPoint: UnitPoint(x: 0.5, y: gradientEndYPoint(items))
@@ -134,6 +139,8 @@ struct ChartAreaContent: ChartContent {
 }
 
 struct ChartLineContent: ChartContent {
+    @ObservedObject var appearance = Appearance.shared
+
     let item: ChartDisplayItem
     init(_ item: ChartDisplayItem) {
         self.item = item
@@ -145,27 +152,27 @@ struct ChartLineContent: ChartContent {
             y: .value("Price", item.price)
         )
         .lineStyle(StrokeStyle(lineWidth: 1.5))
-        .foregroundStyle(.blue)
-        .opacity(0.65)
+        .foregroundStyle(appearance.theme.chartColor).opacity(0.65)
     }
 }
 
 struct ChartPointContent: ChartContent {
+    @ObservedObject var appearance = Appearance.shared
+
     let pointAnimation: PointMarkAnimation
     
     var body: some ChartContent {
         ForEach(pointAnimation.points) { point in
-            let _ = print("\(point.item.price) drawn")
             PointMark(
                 x: .value("Date", point.item.date),
                 y: .value("Price", point.item.price)
             )
-            .foregroundStyle(point.color)
+            .foregroundStyle(appearance.theme.accentColor)
             .opacity(pointAnimation.isVisible ? 1 : 0)
             .annotation(position: .automatic) {
                 Text("\(point.item.price, specifier: "%.3f")")
                     .font(.system(size: 10))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(appearance.theme.secondaryTextColor)
             }
         }
     }
@@ -185,6 +192,7 @@ struct PointMarkAnimation: Identifiable {
 
 // MARK: - Chart Axis
 struct ChartAxisModifier: ViewModifier {
+    @ObservedObject var appearance = Appearance.shared
     let timeRange: TimeRange?
     
     func body(content: Content) -> some View {
@@ -204,6 +212,7 @@ struct ChartAxisModifier: ViewModifier {
         AxisMarks(values: .stride(by: .day, count: 7)) {
             AxisValueLabel(format: .dateTime.day(.twoDigits).month(.twoDigits))
                 .offset(y: -15)
+                .foregroundStyle(appearance.theme.secondaryTextColor)
             AxisGridLine()
         }
     }
@@ -212,6 +221,7 @@ struct ChartAxisModifier: ViewModifier {
         AxisMarks(values: .stride(by: .day, count: 1)) {
             AxisValueLabel(format: .dateTime.day(.twoDigits).month(.twoDigits))
                 .offset(y: -15)
+                .foregroundStyle(appearance.theme.secondaryTextColor)
             AxisGridLine()
         }
     }
@@ -221,46 +231,37 @@ struct ChartAxisModifier: ViewModifier {
             if let date = value.as(Date.self),
                Calendar.current.component(.month, from: date) == 1 {
                 AxisValueLabel(format: .dateTime.year())
+                    .foregroundStyle(appearance.theme.secondaryTextColor)
             } else if value.index % 2 == 0 {
                 AxisValueLabel(format: .dateTime.month())
                     .offset(y: -15)
+                    .foregroundStyle(appearance.theme.secondaryTextColor)
             }
             AxisGridLine()
         }
     }
 }
 
-// MARK: - Chart Buttons
-struct ChartButtonsView: View {
-    @ObservedObject var vm: ChartVM
-    
-    init(vm: ChartVM) {
-        self.vm = vm
-    }
-    
-    var body: some View {
-        let _ = print("ChartButtonsView")
-        HStack(spacing: 5) {
-            ForEach(TimeRange.allCases) { range in
-                Button(action: {
-                    self.vm.selectedTimeRange = range
-                }) {
-                    Text(range.localizedName)
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(range == self.vm.selectedTimeRange ? .white : .secondary)
-                        .padding(10)
-                        .frame(maxWidth: .infinity)
-                        .background(range == self.vm.selectedTimeRange ? Color.gray.opacity(0.2) : Color.clear)
-                        .cornerRadius(10)
+struct CustomAxisStyle: ViewModifier {
+    var textColor: Color
+
+    func body(content: Content) -> some View {
+        content
+            .chartXAxis {
+                AxisMarks {
+                    AxisValueLabel()
+                        .foregroundStyle(textColor)
                 }
             }
-        }
-        .background(Color(hex: "d8dad3"))
-        .cornerRadius(12)
-        .frame(maxWidth: .infinity)
+            .chartYAxis {
+                AxisMarks {
+                    AxisValueLabel()
+                        .foregroundStyle(textColor)
+                }
+            }
     }
 }
 
 #Preview {
-    AppAssembly.createChartView()
+    Assembly.createDashboardView()
 }

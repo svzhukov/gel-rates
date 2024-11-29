@@ -20,7 +20,8 @@ struct StorageManager: StorageManagerProtocol {
 
     func loadCachedData<T: APIModelProtocol>(type: T.Type) -> T? {
         guard let data = userDefaults.data(forKey: type.apiType.cacheKey) else { return nil }
-        return decodeJSON(type: type, data: data)
+        let decoded = decodeJSON(type: type, data: data)
+        return decoded
     }
 
     func loadLastFetchTimestamp<T: APIModelProtocol>(type: T.Type) -> Date? {
@@ -31,19 +32,32 @@ struct StorageManager: StorageManagerProtocol {
         if let encodedData = encodeJSON(data: data) {
             userDefaults.set(encodedData, forKey: T.apiType.cacheKey)
             userDefaults.set(Date(), forKey: T.apiType.timestampKey)
-            print("Saved in UserDefauts: \(data)")
         }
+    }
+    
+    func saveAppTheme(to theme: Constants.Theme) {
+        if let encoded = try? JSONEncoder().encode(theme) {
+            userDefaults.set(encoded, forKey: Constants.Theme.cacheKey)
+        }
+    }
+    
+    func loadAppTheme() -> Constants.Theme? {
+        guard let data = userDefaults.data(forKey: Constants.Theme.cacheKey) else { return nil }
+        if let decoded = try? JSONDecoder().decode(Constants.Theme.self, from: data) {
+            return decoded
+        }
+        
+        return nil
     }
     
     func saveAppLanguage(to language: Constants.Language) {
         if let encoded = try? JSONEncoder().encode(language) {
             userDefaults.set(encoded, forKey: Constants.Language.cacheKey)
-            print("Saved in UserDefauts: \(language)")
         }
     }
     
     func loadAppLanguage() -> Constants.Language? {
-        guard let data = userDefaults.data(forKey: Constants.Language.cacheKey) else { return nil}
+        guard let data = userDefaults.data(forKey: Constants.Language.cacheKey) else { return nil }
         if let decoded = try? JSONDecoder().decode(Constants.Language.self, from: data) {
             return decoded
         }

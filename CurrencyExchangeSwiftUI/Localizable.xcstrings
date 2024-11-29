@@ -214,10 +214,17 @@
       }
     },
     "Loading..." : {
+      "extractionState" : "stale",
       "localizations" : {
-        "ru" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Loading…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Загрузка…"
           }
         }

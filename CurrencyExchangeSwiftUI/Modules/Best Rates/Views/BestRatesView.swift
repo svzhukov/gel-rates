@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct BestRatesView: View {
+    @ObservedObject var appearance = Appearance.shared
+    
     let title = translated("Best offers")
     let mockHeaders = [translated("Currency"), translated("Buy"), translated("Sell")]
     let mockData = [
@@ -21,12 +23,12 @@ struct BestRatesView: View {
         VStack {
             Text(title)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(appearance.theme.secondaryTextColor)
                 .padding(.leading, 30)
                 .padding(.bottom, -5)
             
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color(hex: "d8dad3"))
+                .fill(appearance.theme.secondaryBackgroundColor)
                 .frame(height: CGFloat(40 * (mockData.count + 1)))
                 .overlay(
                     VStack {
@@ -35,6 +37,7 @@ struct BestRatesView: View {
                                 ForEach(mockHeaders, id: \.self) { header in
                                     Text(header)
                                         .font(.headline)
+                                        .foregroundStyle(appearance.theme.textColor)
                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                                 }
                             }
@@ -45,6 +48,7 @@ struct BestRatesView: View {
                                         Text(item)
                                             .font(.body)
                                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                                            .foregroundStyle(appearance.theme.textColor)
                                     }
                                 }
                             }
@@ -55,4 +59,8 @@ struct BestRatesView: View {
         .padding(.leading)
         .padding(.trailing)
     }
+}
+
+#Preview {
+    Assembly.createDashboardView()
 }

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ListView: View {
+    @ObservedObject var appearance = Appearance.shared
     @ObservedObject var vm: ListVM
     
     init(vm: ListVM) {
@@ -25,15 +26,15 @@ struct ListView: View {
                                 listContentView(item: item)
                             }
                             .padding()
-                            .background(Color.black)
-                            .foregroundColor(.white)
+                            .background(appearance.theme.secondaryBackgroundColor)
+                            .foregroundColor(appearance.theme.textColor)
                             .cornerRadius(16)
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 5)
                     }
             } else {
-                ProgressView("Loading...")
+                ProgressView(translated("Loading..."))
             }
         }
 
@@ -50,7 +51,7 @@ struct listHeaderView: View {
         HStack {
             RoundedRectangle(cornerRadius: 10)
                 .frame(width: 38, height: 38)
-                .foregroundStyle(Color(.white))
+                .foregroundStyle(.white)
                 .shadow(color: .white, radius: 2)
                 .overlay(
                     Image(item.bank.icon.name)
@@ -105,5 +106,5 @@ struct listContentView: View {
 
 
 #Preview {
-    AppAssembly.createListView()
+    Assembly.createListView()
 }

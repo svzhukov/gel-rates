@@ -17,10 +17,14 @@ class NetworkClient {
                                headers: [String: String]? = nil,
                                body: Data? = nil,
                                completion: @escaping (Result<T, Error>) -> Void) {
+
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = headers
         request.httpBody = body
+                                   
+                                   print("Sending URL request: \(url)")
+                                   
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {

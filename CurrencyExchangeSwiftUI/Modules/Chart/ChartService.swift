@@ -15,7 +15,7 @@ class ChartService: ChartServiceProtocol {
     
     func fetchAnnualRates(completion: @escaping (Result<TwelvedataAPIModel, Error>)  -> Void) {        
         if shouldReuseCachedData(TwelvedataAPIModel.self), let cachedData = StorageManager.shared.loadCachedData(type: TwelvedataAPIModel.self) {
-            print("Reusing cached data...")
+            print("Reusing fetchAnnualRates cached data...")
             completion(.success(cachedData))
             return
         }
@@ -51,7 +51,6 @@ class ChartService: ChartServiceProtocol {
         let startString = dateFormatter.string(from: start)
         
         let url =         "\(Constants.APIType.twelvedata.endpoint)?symbol=\(from)/\(to)&interval=\(interval)day&start_date=\(startString)&end_date=\(endString)&apikey=\(Constants.APIType.twelvedata.apikey)"
-        print(url)
         
         return URL(string: url)
     }
@@ -59,7 +58,9 @@ class ChartService: ChartServiceProtocol {
     private func shouldReuseCachedData<T: APIModelProtocol>(_ type: T.Type) -> Bool {
         let timeout: Double = 600
         guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
-        return Date().timeIntervalSince(lastFetch) < timeout
+        let should = Date().timeIntervalSince(lastFetch) < timeout
+        print("shouldReuseCachedData for \(type): \(should)")
+        return should
     }
 }
 

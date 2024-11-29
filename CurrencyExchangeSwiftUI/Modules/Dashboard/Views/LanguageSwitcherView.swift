@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-struct LanguageSwitchView: View {
+struct LanguageSwitcherView: View {
     @State var activeLang: Constants.Language = Localization.shared.language
     @State var isHidden: Bool = true
         
@@ -48,6 +48,7 @@ struct LanguagesButtonView: View {
 }
 
 struct LanguagesPanelView: View {
+    @ObservedObject var appearance = Appearance.shared
     @Binding var activeLang: Constants.Language
     @Binding var isHidden: Bool
 
@@ -61,9 +62,9 @@ struct LanguagesPanelView: View {
                 }) {
                     Text(lang.rawValue)
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(lang == activeLang ? .white : .secondary)
+                        .foregroundColor(lang == activeLang ? appearance.theme.textColor : appearance.theme.secondaryTextColor)
                         .frame(width: 48, height: 30, alignment: .center)
-                        .background(lang == activeLang ? Color.gray.opacity(0.2) : Color.clear)
+                        .background(lang == activeLang ? appearance.theme.secondaryBackgroundColor : Color.clear)
                         .cornerRadius(10)
                 }
                 
@@ -75,7 +76,7 @@ struct LanguagesPanelView: View {
                 }
             }
         }
-        .background(Color(hex: "d8dad3"))
+        .background(appearance.theme.secondaryBackgroundColor)
         .cornerRadius(12)
         .opacity(isHidden ? 0 : 1)
         .animation(isHidden ? .easeOut(duration: 0.2) : .easeIn(duration: 0.2), value: isHidden)
@@ -83,5 +84,5 @@ struct LanguagesPanelView: View {
 }
 
 #Preview {
-    LanguageSwitchView()
+    LanguageSwitcherView()
 }

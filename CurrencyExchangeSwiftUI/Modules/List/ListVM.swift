@@ -16,7 +16,7 @@ class ListVM: ObservableObject {
     }
     
     func fetchData() {
-        self.service.fetchBanksExchangeRates{ [weak self] (result: Result<MyfinAPIModel, any Error>) in
+        self.service.fetchListRates{ [weak self] (result: Result<MyfinAPIModel, any Error>) in
             switch result {
             case .success(let model):
                 self?.listItems = ListDisplayItem.mapModel(model)

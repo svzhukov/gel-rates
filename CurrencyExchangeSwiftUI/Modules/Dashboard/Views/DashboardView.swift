@@ -8,42 +8,48 @@
 import SwiftUI
 
 struct DashboardView: View {
-    var vm: ChartVM
+    @ObservedObject var appearance = Appearance.shared
+    @StateObject private var vm: DashboardVM
     
-    init(vm: ChartVM) {
-        self.vm = vm
+    init(dashboardVM: DashboardVM) {
+        _vm = StateObject(wrappedValue: dashboardVM)
     }
     
-    var body: some View {
-        NavigationSplitView {
-            
+    var body: some View {            
             ZStack() {
-                Color(hex: "#F1F2EB").ignoresSafeArea()
+                Color(appearance.theme.backgroundColor).ignoresSafeArea()
                 ScrollView(.vertical) {
                     VStack {
-                        LanguageSwitchView()
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding()
+                        HStack {
+                            ThemeSwitcherView()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            LanguageSwitcherView()
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
+                        .padding()
+                        
                         BestRatesView()
                             .padding(.bottom, 15)
-                        NavigationLink {
-                            ChartView(vm: self.vm)
-                        } label: {
-                            Text(translated("USD to GEL currency chart"))
-                        }
-                        .padding(.bottom, 15)
-                        NavigationLink {
-                            AppAssembly.createListView()
-                        } label: {
-                            Text(translated("All banks"))
-                        }
+                        
+                        ChartView(vm: vm.chartVM)
+                        ListView(vm: vm.listVM)
+                           
+
+//                        NavigationLink {
+//                            Assembly.createChartView()
+//                        } label: {
+//                            Text(translated("USD to GEL currency chart"))
+//                        }
+//                        .padding(.bottom, 15)
+//                        NavigationLink {
+//                            Assembly.createListView()
+//                        } label: {
+//                            Text(translated("All banks"))
+//                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
             }
-        } detail: {
-            
-        }
     }
 }
 
@@ -87,5 +93,5 @@ struct DetailView: View {
 }
 
 #Preview {
-    AppAssembly.createDashboardView()
+    Assembly.createDashboardView()
 }
