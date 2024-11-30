@@ -67,6 +67,10 @@ struct listHeaderView: View {
 
             Text(item.bank.name.en!)
                 .font(.headline)
+            
+            if item.bank.type == Bank.OrgType.online {
+                Image(systemName: "iphone.gen1")
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.bottom, 10)
@@ -105,6 +109,10 @@ struct listContentView: View {
 }
 
 
-#Preview {
+#Preview("List") {
     Assembly.createListView()
+}
+
+#Preview("Dashboard") {
+    Assembly.createDashboardView()
 }
