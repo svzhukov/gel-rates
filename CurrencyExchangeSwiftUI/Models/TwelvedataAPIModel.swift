@@ -9,7 +9,7 @@ import Foundation
 
 struct TwelvedataAPIModel: APIModelProtocol {
     
-    static let apiType: Constants.APIType = Constants.APIType.myfin
+    static let apiType: Constants.APIType = Constants.APIType.twelvedata
 
     let meta: Meta
     let values: [CurrencyValue]

@@ -36,3 +36,7 @@ struct ChartButtonsView: View {
         .frame(maxWidth: .infinity)
     }
 }
+
+#Preview {
+    Assembly.createDashboardView()
+}
