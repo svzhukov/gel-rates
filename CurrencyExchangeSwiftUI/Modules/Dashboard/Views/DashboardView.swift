@@ -28,9 +28,7 @@ struct DashboardView: View {
                         }
                         .padding()
                         
-                        BestRatesView()
-                            .padding(.bottom, 15)
-                        
+                        BestRatesView(vm: vm.bestRatesVM)                        
                         ChartView(vm: vm.chartVM)
                         ListView(vm: vm.listVM)
                            

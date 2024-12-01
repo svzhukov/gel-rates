@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-enum Constants {
+struct Constants {
+    static let cornerRadius: CGFloat = 12
+    
     enum APIType: Codable {
         case twelvedata
         case myfin

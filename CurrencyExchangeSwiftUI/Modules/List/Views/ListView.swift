@@ -17,7 +17,7 @@ struct ListView: View {
     }
     
     var body: some View {
-        ScrollView {
+        Group {
             if let items = self.vm.listItems {
                     ForEach(items) { (item: ListDisplayItem) in
                         Group {
@@ -28,7 +28,7 @@ struct ListView: View {
                             .padding()
                             .background(appearance.theme.secondaryBackgroundColor)
                             .foregroundColor(appearance.theme.textColor)
-                            .cornerRadius(16)
+                            .cornerRadius(Constants.cornerRadius)
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 5)
@@ -49,7 +49,7 @@ struct listHeaderView: View {
     
     var body: some View {
         HStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: Constants.cornerRadius)
                 .frame(width: 38, height: 38)
                 .foregroundStyle(.white)
                 .shadow(color: .white, radius: 2)
@@ -88,22 +88,22 @@ struct listContentView: View {
             Text(translated("list_header_sell", comment: "sell"))
                 .foregroundColor(.gray)
         }
+        .padding(.bottom, 3)
         
         ForEach(item.bank.currencies) { (currency: Currency) in
             HStack {
                 Text("\(currency.buy, specifier: "%.3f") ₾")
-                    .font(.title3)
+                    .font(.body)
                     .frame(maxWidth: 100, alignment: .leading)
                 Spacer()
                 Text("\(currency.type.flag)  1 \(currency.type.symbol)")
-                    .font(.title3).bold()
+                    .font(.body).bold()
                     .frame(alignment: .leading)
                 Spacer()
                 Text("\(currency.sell, specifier: "%.3f") ₾")
-                    .font(.title3)
+                    .font(.body)
                     .frame(maxWidth: 100, alignment: .trailing)
             }
-            .padding(.vertical, -4)
         }
     }
 }

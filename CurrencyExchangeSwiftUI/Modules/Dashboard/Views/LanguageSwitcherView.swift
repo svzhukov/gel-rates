@@ -65,7 +65,6 @@ struct LanguagesPanelView: View {
                         .foregroundColor(lang == activeLang ? appearance.theme.textColor : appearance.theme.secondaryTextColor)
                         .frame(width: 48, height: 30, alignment: .center)
                         .background(lang == activeLang ? appearance.theme.secondaryBackgroundColor : Color.clear)
-                        .cornerRadius(10)
                 }
                 
                 if Constants.Language.allCases.firstIndex(of: lang) != Constants.Language.allCases.count - 1 {
@@ -77,7 +76,7 @@ struct LanguagesPanelView: View {
             }
         }
         .background(appearance.theme.secondaryBackgroundColor)
-        .cornerRadius(12)
+        .cornerRadius(Constants.cornerRadius)
         .opacity(isHidden ? 0 : 1)
         .animation(isHidden ? .easeOut(duration: 0.2) : .easeIn(duration: 0.2), value: isHidden)
     }

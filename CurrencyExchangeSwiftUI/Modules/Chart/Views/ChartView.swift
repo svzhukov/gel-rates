@@ -55,7 +55,7 @@ struct ChartContentView: View {
     }
     
     var body: some View {
-        RoundedRectangle(cornerRadius: 15)
+        RoundedRectangle(cornerRadius: Constants.cornerRadius)
             .fill(Appearance.shared.theme.secondaryBackgroundColor)
             .frame(height: 300)
             .overlay(
@@ -86,7 +86,7 @@ struct ChartContentView: View {
         }
 
         .chartYScale(domain: items.minPrice!.price - 0.008...items.maxPrice!.price + 0.008)
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
         .padding(.trailing, 10)
         .onChange(of: vm.selectedTimeRange, initial: true) {
             addDelayedPointMarks(items, delay: 0.3)

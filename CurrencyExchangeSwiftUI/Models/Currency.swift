@@ -12,6 +12,9 @@ struct Currency: Identifiable {
     let buy: Double
     let sell: Double
     let type: CurrencyType
+    var name: String {
+        return type.rawValue
+    }
     
     enum CurrencyType: String {
         case usd = "USD"
