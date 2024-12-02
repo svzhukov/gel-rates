@@ -8,9 +8,9 @@
 import Foundation
 
 protocol StorageManagerProtocol {
-    func loadCachedData<T: APIModelProtocol>(type: T.Type) -> T?
-    func loadLastFetchTimestamp<T: APIModelProtocol>(type: T.Type) -> Date?
-    func saveDataToCache<T: APIModelProtocol>(data: T)
+    func loadCachedData<T: JSONModelProtocol>(type: T.Type) -> T?
+    func loadLastFetchTimestamp<T: JSONModelProtocol>(type: T.Type) -> Date?
+    func saveDataToCache<T: JSONModelProtocol>(data: T)
 }
 
 class StorageManager: StorageManagerProtocol {
@@ -20,7 +20,7 @@ class StorageManager: StorageManagerProtocol {
 
     private init() { }
 
-    func loadCachedData<T: APIModelProtocol>(type: T.Type) -> T? {
+    func loadCachedData<T: JSONModelProtocol>(type: T.Type) -> T? {
         if let inMemory = inMemoryData[type.apiType.cacheKey] as? T { return inMemory }
         guard let data = userDefaults.data(forKey: type.apiType.cacheKey) else { return nil }
         let decoded = decodeJSON(type: type, data: data)
@@ -29,7 +29,7 @@ class StorageManager: StorageManagerProtocol {
         return decoded
     }
 
-    func loadLastFetchTimestamp<T: APIModelProtocol>(type: T.Type) -> Date? {
+    func loadLastFetchTimestamp<T: JSONModelProtocol>(type: T.Type) -> Date? {
         if let inMemory = inMemoryData[type.apiType.timestampKey] as? Date { return inMemory }
         let timestamp = userDefaults.object(forKey: type.apiType.timestampKey) as? Date
         inMemoryData[type.apiType.timestampKey] = timestamp
@@ -37,7 +37,7 @@ class StorageManager: StorageManagerProtocol {
         return timestamp
     }
 
-    func saveDataToCache<T: APIModelProtocol>(data: T) {
+    func saveDataToCache<T: JSONModelProtocol>(data: T) {
         if let encodedData = encodeJSON(data: data) {
             userDefaults.set(encodedData, forKey: T.apiType.cacheKey)
             inMemoryData[T.apiType.cacheKey] = data
@@ -84,11 +84,11 @@ class StorageManager: StorageManagerProtocol {
     }
     
     
-    private func decodeJSON<T: APIModelProtocol>(type: T.Type, data: Data) -> T? {
+    private func decodeJSON<T: JSONModelProtocol>(type: T.Type, data: Data) -> T? {
         return try? JSONDecoder().decode(type, from: data)
     }
 
-    private func encodeJSON<T: APIModelProtocol>(data: T) -> Data? {
+    private func encodeJSON<T: JSONModelProtocol>(data: T) -> Data? {
         return try? JSONEncoder().encode(data)
     }
 }

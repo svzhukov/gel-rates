@@ -8,13 +8,13 @@
 import Foundation
 
 protocol ListServiceProtocol {
-    func fetchListRates(completion: @escaping (Result<MyfinAPIModel, Error>) -> Void)
+    func fetchListRates(completion: @escaping (Result<MyfinJSONModel, Error>) -> Void)
 }
 
 class ListService: ListServiceProtocol {
-    func fetchListRates(completion: @escaping (Result<MyfinAPIModel, Error>) -> Void) {
+    func fetchListRates(completion: @escaping (Result<MyfinJSONModel, Error>) -> Void) {
         
-        if shouldReuseCachedData(MyfinAPIModel.self), let cachedData = StorageManager.shared.loadCachedData(type: MyfinAPIModel.self) {
+        if shouldReuseCachedData(MyfinJSONModel.self), let cachedData = StorageManager.shared.loadCachedData(type: MyfinJSONModel.self) {
             print("Reusing fetchListRates cached data...")
             completion(.success(cachedData))
             return
@@ -24,7 +24,7 @@ class ListService: ListServiceProtocol {
             NetworkClient.shared.request(url: URL(string: Constants.APIType.myfin.endpoint)!,
                                          method: Constants.Network.Method.post,
                                          headers: Constants.Network.Headers.json.dictionary,
-                                         body: self.requestBody()) { (result: Result<MyfinAPIModel, Error>) in
+                                         body: self.requestBody()) { (result: Result<MyfinJSONModel, Error>) in
                 switch result {
                 case .success(let model):
                     StorageManager.shared.saveDataToCache(data: model)
@@ -46,7 +46,7 @@ class ListService: ListServiceProtocol {
         return try? JSONSerialization.data(withJSONObject: body)
     }
     
-    private func shouldReuseCachedData<T: APIModelProtocol>(_ type: T.Type) -> Bool {
+    private func shouldReuseCachedData<T: JSONModelProtocol>(_ type: T.Type) -> Bool {
         let timeout: Double = 600
         guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
         let should = Date().timeIntervalSince(lastFetch) < timeout

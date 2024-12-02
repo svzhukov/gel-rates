@@ -12,7 +12,7 @@ struct ChartDisplayItem: Identifiable, Equatable {
     let price: Double
     let id = UUID()
     
-    static func mapModel(_ model: TwelvedataAPIModel) -> [ChartDisplayItem] {
+    static func mapModel(_ model: TwelvedataJSONModel) -> [ChartDisplayItem] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         

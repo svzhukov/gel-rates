@@ -7,10 +7,12 @@
 
 import Foundation
 
-struct Currency: Identifiable {
+struct Currency: Identifiable, Hashable {
     let id = UUID()
     let buy: Double
+    let buyBest: Double
     let sell: Double
+    let sellBest: Double
     let type: CurrencyType
     var name: String {
         return type.rawValue

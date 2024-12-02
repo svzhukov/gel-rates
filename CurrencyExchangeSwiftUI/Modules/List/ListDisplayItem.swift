@@ -11,10 +11,11 @@ struct ListDisplayItem: Identifiable {
     let id = UUID()
     let bank: Bank
     
-    static func mapModel(_ model: MyfinAPIModel) -> [ListDisplayItem] {
+    static func mapModel(_ model: MyfinJSONModel) -> [ListDisplayItem] {
+        
         let items: [ListDisplayItem] = model.organizations.compactMap { (org: Organization) in
-            let currenciesDict: [String : Currency] = org.best.mapValues { (value: CurrencyRate) in
-                Currency(buy: value.buy, sell: value.sell, type: Currency.CurrencyType(rawValue: value.ccy)!)
+            let currenciesDict: [String: Currency] = org.best.mapValues { (value: CurrencyRate) in
+                Currency(buy: value.buy, buyBest: model.best[value.ccy]!.buy, sell: value.sell, sellBest: model.best[value.ccy]!.sell, type: Currency.CurrencyType(rawValue: value.ccy)!)
             }
             let currencies = Array(currenciesDict.values).sorted { c1, c2 in
                 c1.type.sortOrder < c2.type.sortOrder

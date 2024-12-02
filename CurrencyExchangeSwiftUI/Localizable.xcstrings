@@ -18,6 +18,36 @@
       },
       "shouldTranslate" : false
     },
+    "%@ **%@** %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ **%2$@** %3$@"
+          }
+        }
+      }
+    },
+    "%@ **%@** %@ %@ **%@** %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ **%2$@** %3$@ %4$@ **%5$@** %6$@"
+          }
+        }
+      }
+    },
+    "%@ **1** %@ = **%@** %@ (or **1** %@ = **%@** %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ **1** %2$@ = **%3$@** %4$@ (or **1** %5$@ = **%6$@** %7$@"
+          }
+        }
+      }
+    },
     "All banks" : {
       "extractionState" : "manual",
       "localizations" : {

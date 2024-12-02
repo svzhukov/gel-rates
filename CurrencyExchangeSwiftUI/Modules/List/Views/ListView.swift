@@ -78,16 +78,17 @@ struct listHeaderView: View {
 }
 
 struct listContentView: View {
+    @ObservedObject var appearance = Appearance.shared
+
     let item: ListDisplayItem
     
     var body: some View {
         HStack {
-            Text(translated("list_header_buy", comment: "buy"))
-                .foregroundColor(.gray)
+            Text(translated("list_header_buy"))
             Spacer()
-            Text(translated("list_header_sell", comment: "sell"))
-                .foregroundColor(.gray)
+            Text(translated("list_header_sell"))
         }
+        .foregroundColor(appearance.theme.secondaryTextColor)
         .padding(.bottom, 3)
         
         ForEach(item.bank.currencies) { (currency: Currency) in
@@ -95,6 +96,7 @@ struct listContentView: View {
                 Text("\(currency.buy, specifier: "%.3f") ₾")
                     .font(.body)
                     .frame(maxWidth: 100, alignment: .leading)
+                    .foregroundStyle(currency.buy == currency.buyBest ? appearance.theme.accentColor : appearance.theme.textColor)
                 Spacer()
                 Text("\(currency.type.flag)  1 \(currency.type.symbol)")
                     .font(.body).bold()
@@ -103,6 +105,7 @@ struct listContentView: View {
                 Text("\(currency.sell, specifier: "%.3f") ₾")
                     .font(.body)
                     .frame(maxWidth: 100, alignment: .trailing)
+                    .foregroundStyle(currency.sell == currency.sellBest ? appearance.theme.accentColor : appearance.theme.textColor)
             }
         }
     }
@@ -110,7 +113,9 @@ struct listContentView: View {
 
 
 #Preview("List") {
-    Assembly.createListView()
+    ScrollView {
+        Assembly.createListView()
+    }
 }
 
 #Preview("Dashboard") {

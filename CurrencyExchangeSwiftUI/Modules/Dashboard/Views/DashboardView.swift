@@ -28,10 +28,13 @@ struct DashboardView: View {
                         }
                         .padding()
                         
-                        BestRatesView(vm: vm.bestRatesVM)                        
-                        ChartView(vm: vm.chartVM)
-                        ListView(vm: vm.listVM)
+                        ConversionView(vm: vm.conversionVM)
+//                        BestRatesView(vm: vm.bestRatesVM)
+//                        ChartView(vm: vm.chartVM)
+//                        ListView(vm: vm.listVM)
                            
+                        
+                        
 
 //                        NavigationLink {
 //                            Assembly.createChartView()
