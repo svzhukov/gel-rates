@@ -38,12 +38,12 @@
         }
       }
     },
-    "%@ **1** %@ = **%@** %@ (or **1** %@ = **%@** %@" : {
+    "%@: **1** %@ = **%@** %@ (or **1** %@ = **%@** %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ **1** %2$@ = **%3$@** %4$@ (or **1** %5$@ = **%6$@** %7$@"
+            "value" : "%1$@: **1** %2$@ = **%3$@** %4$@ (or **1** %5$@ = **%6$@** %7$@"
           }
         }
       }
@@ -55,6 +55,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Все банки"
+          }
+        }
+      }
+    },
+    "Amount to buy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сумма покупки"
+          }
+        }
+      }
+    },
+    "Amount to sell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сумма продажи"
+          }
+        }
+      }
+    },
+    "and get" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "и получить"
           }
         }
       }
@@ -156,6 +189,23 @@
         }
       }
     },
+    "Conversion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currency converter"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Конвертер валют"
+          }
+        }
+      }
+    },
     "Currency" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -189,6 +239,17 @@
     },
     "Details Screen" : {
 
+    },
+    "Exchange rate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Курс обмена"
+          }
+        }
+      }
     },
     "Exchange Rates" : {
       "localizations" : {
@@ -244,7 +305,7 @@
       }
     },
     "Loading..." : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -256,6 +317,17 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Загрузка…"
+          }
+        }
+      }
+    },
+    "or" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "или"
           }
         }
       }
@@ -281,6 +353,17 @@
         }
       }
     },
+    "Then you can buy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Затем, вы можете купить"
+          }
+        }
+      }
+    },
     "USD to GEL currency chart" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -288,6 +371,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "USD к GEL график"
+          }
+        }
+      }
+    },
+    "You can sell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете продать"
+          }
+        }
+      }
+    },
+    "You get" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы получите"
+          }
+        }
+      }
+    },
+    "You have" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У Вас есть"
           }
         }
       }

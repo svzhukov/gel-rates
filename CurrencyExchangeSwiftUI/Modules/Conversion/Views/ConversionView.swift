@@ -26,15 +26,18 @@ struct ConversionView: View {
     var body: some View {
         Group {
             if let item = vm.item {
-                VStack(alignment: .leading, spacing: 10) {
-                    sellSegment(item: item)
-                    switchCurrenciesButton()
-                    buySegment(item: item)
-                    conversionFooter()
+                VStack {
+                    title()
+                    VStack(alignment: .leading, spacing: 10) {
+                        sellSegment(item: item)
+                        switchCurrenciesButton()
+                        buySegment(item: item)
+                        conversionFooter()
+                    }
+                    .padding()
+                    .background(appearance.theme.secondaryBackgroundColor)
+                    .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                 }
-                .padding()
-                .background(appearance.theme.secondaryBackgroundColor)
-                .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                 .padding()
                 .onAppear {
                     setInitialCurrencies(item: item)
@@ -50,6 +53,14 @@ struct ConversionView: View {
         }
     }
     
+    private func title() -> some View {
+        Text(translated("Conversion"))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .foregroundStyle(appearance.theme.secondaryTextColor)
+            .padding(.leading, 30)
+            .padding(.bottom, -5)
+    }
+ 
     private func sellSegment(item: ConversionDisplayItem) -> some View {
         HStack {
             sellField(item: item)
@@ -159,7 +170,7 @@ struct ConversionView: View {
                     Text("\(translated("Then you can buy")) **\(amountToBuy)** \(buy.name)")
                 }
                 
-                Text("\(translated("Exchange rate:")) **1** \(sell.name) = **\(String.formattedDecimal(buyAmount / sellAmount))** \(buy.name) (or **1** \(buy.name) = **\(String.formattedDecimal(sellAmount / buyAmount))** \(sell.name)")
+                Text("\(translated("Exchange rate")): **1** \(sell.name) = **\(String.formattedDecimal(buyAmount / sellAmount))** \(buy.name) (or **1** \(buy.name) = **\(String.formattedDecimal(sellAmount / buyAmount))** \(sell.name)")
             }
         }
         .font(.footnote)
