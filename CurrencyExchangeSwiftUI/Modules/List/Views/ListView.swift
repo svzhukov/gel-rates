@@ -34,7 +34,7 @@ struct ListView: View {
                         .padding(.bottom, 5)
                     }
             } else {
-                ProgressView(translated("Loading..."))
+                BasicProgressView()
             }
         }
 

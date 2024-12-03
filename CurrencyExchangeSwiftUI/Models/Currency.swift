@@ -82,11 +82,11 @@ struct Currency: Identifiable, Hashable {
         
         var sortOrder: Int {
             switch self {
-            case .usd:
-                return 0
-            case .eur:
-                return 1
             case .gel:
+                return 0
+            case .usd:
+                return 1
+            case .eur:
                 return 2
             case .rub:
                 return 3

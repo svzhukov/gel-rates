@@ -63,7 +63,7 @@ struct ChartContentView: View {
                     if let items = vm.periodicChartItems {
                         chartContent(items: items)
                     } else {
-                        ProgressView(translated("Loading..."))
+                        BasicProgressView()
                     }
                 }
             )

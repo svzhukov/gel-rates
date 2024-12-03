@@ -61,7 +61,7 @@ struct BestRatesView: View {
                 .padding(.trailing)
                 
             } else {
-                ProgressView(translated("Loading..."))
+                BasicProgressView()
             }
         }
         .onAppear {

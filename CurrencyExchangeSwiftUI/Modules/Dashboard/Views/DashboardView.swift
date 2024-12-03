@@ -10,7 +10,7 @@ import SwiftUI
 struct DashboardView: View {
     @ObservedObject var appearance = Appearance.shared
     @StateObject private var vm: DashboardVM
-    
+
     init(dashboardVM: DashboardVM) {
         _vm = StateObject(wrappedValue: dashboardVM)
     }
@@ -31,7 +31,7 @@ struct DashboardView: View {
                         ConversionView(vm: vm.conversionVM)
 //                        BestRatesView(vm: vm.bestRatesVM)
 //                        ChartView(vm: vm.chartVM)
-//                        ListView(vm: vm.listVM)
+                        ListView(vm: vm.listVM)
                            
                         
                         
@@ -50,6 +50,7 @@ struct DashboardView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
+                .scrollDismissesKeyboard(.immediately)
             }
     }
 }
