@@ -30,6 +30,11 @@ extension View {
             .font(.headline)
             .foregroundStyle(appearance.theme.textColor)
     }
+    func titleStyle(_ appearance: Appearance) -> some View {
+        self
+            .font(.title)
+            .foregroundStyle(appearance.theme.textColor)
+    }
 }
 
 class Appearance: ObservableObject {
@@ -100,6 +105,24 @@ class Appearance: ObservableObject {
             switch self {
             case .light, .dark:
                 return .blue.opacity(1)
+            }
+        }
+        
+        var actionableColor: Color {
+            switch self {
+            case .light:
+                return .blue
+            case .dark:
+                return .blue
+            }
+        }
+        
+        var themeSwitcherColor: Color {
+            switch self {
+            case .light:
+                return .yellow
+            case .dark:
+                return .indigo
             }
         }
     }

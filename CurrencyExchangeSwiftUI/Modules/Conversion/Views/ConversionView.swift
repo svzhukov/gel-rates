@@ -111,6 +111,7 @@ struct ConversionView: View {
                 }
             }
         }
+        .tint(appearance.theme.actionableColor)
         .modifier(StandardPickerStyle())
         .onChange(of: currencyToSell) {
             updateBuyTextField()
@@ -126,6 +127,7 @@ struct ConversionView: View {
                 }
             }
         }
+        .tint(appearance.theme.actionableColor)
         .modifier(StandardPickerStyle())
         .onChange(of: currencyToBuy) {
             updateBuyTextField()
@@ -141,6 +143,8 @@ struct ConversionView: View {
                 Image(systemName: "arrow.up.arrow.down")
             }
         }
+        .foregroundStyle(appearance.theme.textColor)
+        .opacity(0.8)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .padding(.vertical, -15)
         .padding(.trailing, 25)

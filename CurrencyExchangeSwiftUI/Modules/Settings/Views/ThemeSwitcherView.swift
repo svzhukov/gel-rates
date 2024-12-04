@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ThemeSwitcherView: View {
+    @ObservedObject var appearance = Appearance.shared
     @State var img: String = imgString()
     
     var body: some View {
@@ -21,8 +22,9 @@ struct ThemeSwitcherView: View {
             Image(systemName: img)
                 .resizable()
                 .frame(width: 25, height: 25)
-                .foregroundStyle(.teal)
+                .foregroundStyle(appearance.theme.themeSwitcherColor)
         }
+        .frame(alignment: .leading)
     }
     
     private static func imgString() -> String {

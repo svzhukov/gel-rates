@@ -18,10 +18,10 @@ struct Currency: Identifiable, Hashable {
         return type.rawValue
     }
     
-    enum CurrencyType: String {
+    enum CurrencyType: String, CaseIterable {
+        case gel = "GEL"
         case usd = "USD"
         case eur = "EUR"
-        case gel = "GEL"
         case rub = "RUB"
         case `try` = "TRY"
         case amd = "AMD"

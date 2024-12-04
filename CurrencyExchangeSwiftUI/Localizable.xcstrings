@@ -102,6 +102,17 @@
         }
       }
     },
+    "Batumi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Батуми"
+          }
+        }
+      }
+    },
     "Best offers" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -292,6 +303,28 @@
     "Home Screen" : {
 
     },
+    "Include online banks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включая онлайн обмен"
+          }
+        }
+      }
+    },
+    "Kutaisi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кутаиси"
+          }
+        }
+      }
+    },
     "List of exchangers" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -354,6 +387,17 @@
         }
       }
     },
+    "Only working now" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Работает сейчас"
+          }
+        }
+      }
+    },
     "or" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -382,6 +426,20 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Продажа"
+          }
+        }
+      }
+    },
+    "Some Epic Title idk" : {
+
+    },
+    "Tbilisi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тбилиси"
           }
         }
       }

@@ -20,14 +20,12 @@ struct DashboardView: View {
                 Color(appearance.theme.backgroundColor).ignoresSafeArea()
                 ScrollView(.vertical) {
                     VStack {
-                        HStack {
-                            ThemeSwitcherView()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            LanguageSwitcherView()
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        }
-                        .padding()
-                        
+                        Text("Some Epic Title idk")
+                            .titleStyle(appearance)
+                            .frame(maxWidth: .infinity)
+                            .background(appearance.theme.backgroundColor)
+                            .zIndex(1)
+                        OptionsView()
                         ConversionView(vm: vm.conversionVM)
                         BestRatesView(vm: vm.bestRatesVM)
                         ChartView(vm: vm.chartVM)

@@ -80,9 +80,24 @@ struct Constants {
         static var defaultLanguage: Language {
             return self.en
         }
+        
+        var flag: String {
+            switch self {
+            case .ru:
+                return "🇷🇺"
+            case .en:
+                return "🇺🇸"
+            }
+        }
     }
     
     static var themeCacheKey: String {
         return "CurrentAppThemeCacheKey"
+    }
+    
+    enum City: String, CaseIterable, Codable {
+        case tbilisi = "Tbilisi"
+        case batumi = "Batumi"
+        case kutaisi = "Kutaisi"
     }
 }

@@ -13,15 +13,19 @@ struct LanguageSwitcherView: View {
     @State var isHidden: Bool = true
         
     var body: some View {
-        HStack(spacing: 0) {
-            LanguagesButtonView(activeLang: $activeLang, isHidden: $isHidden)
-            LanguagesPanelView(activeLang: $activeLang, isHidden: $isHidden)
+        Group {
+            HStack(spacing: 0) {
+                LanguagesButtonView(activeLang: $activeLang, isHidden: $isHidden)
+                LanguagesPanelView(activeLang: $activeLang, isHidden: $isHidden)
+            }
+            .frame(height: 30) // Fixes animation choppiness
         }
-        .frame(height: 30)
+        .frame(maxWidth: .infinity, alignment: .trailing)
     }
 }
 
 struct LanguagesButtonView: View {
+    @ObservedObject var appearance = Appearance.shared
     @Binding var activeLang: Constants.Language
     @Binding var isHidden: Bool
     
@@ -37,7 +41,7 @@ struct LanguagesButtonView: View {
                     .animation(.bouncy, value: isHidden)
                 
                 Text(activeLang.rawValue)
-                    .tint(.teal)
+                    .foregroundStyle(.teal)
                     .frame(width: isHidden ? 30 : 0, alignment: .leading)
                     .animation(nil, value: isHidden)
             }
@@ -60,7 +64,7 @@ struct LanguagesPanelView: View {
                     Localization.shared.setLanguage(lang)
                     isHidden.toggle()
                 }) {
-                    Text(lang.rawValue)
+                    Text(lang.rawValue + " " + lang.flag)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(lang == activeLang ? appearance.theme.textColor : appearance.theme.secondaryTextColor)
                         .frame(width: 48, height: 30, alignment: .center)
@@ -69,7 +73,7 @@ struct LanguagesPanelView: View {
                 
                 if Constants.Language.allCases.firstIndex(of: lang) != Constants.Language.allCases.count - 1 {
                     Divider()
-                        .frame(width: 3, height: 25)
+                        .frame(width: 2, height: 25)
                         .background(Color.gray)
                         .opacity(0.5)
                 }
@@ -84,4 +88,8 @@ struct LanguagesPanelView: View {
 
 #Preview {
     LanguageSwitcherView()
+}
+
+#Preview {
+    Assembly.createDashboardView()
 }
