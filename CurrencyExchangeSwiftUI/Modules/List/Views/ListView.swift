@@ -65,6 +65,7 @@ struct ListView: View {
             
             if item.bank.type == Bank.OrgType.online {
                 Image(systemName: "iphone.gen1")
+                    .foregroundStyle(appearance.theme.secondaryTextColor)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

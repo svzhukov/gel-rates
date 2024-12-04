@@ -4,15 +4,8 @@
     "%.3f" : {
       "shouldTranslate" : false
     },
-    "%.3f %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$.3f %2$@"
-          }
-        }
-      }
+    "%@" : {
+
     },
     "%@  1 %@" : {
       "localizations" : {
@@ -41,6 +34,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ **%2$@** %3$@ %4$@ **%5$@** %6$@"
+          }
+        }
+      }
+    },
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
           }
         }
       }
