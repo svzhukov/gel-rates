@@ -18,14 +18,18 @@ struct BestRatesView: View {
                 VStack {
                     TitleView(vm.title)
                     Grid(verticalSpacing: 0) {
-                        headers(vm.headers)
+                        headersView(vm.headers)
                         Divider()
                             .background(appearance.theme.secondaryTextColor)
-                        content(items)
+                            .padding(.bottom, 4)
+                            .padding(.horizontal, 10)
+                        contentView(items)
                     }
+                    .padding(.bottom, 4)
                     .background(appearance.theme.secondaryBackgroundColor)
                     .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                 }
+                .frame(alignment: .center)
                 .padding()
                 
             } else {
@@ -37,30 +41,33 @@ struct BestRatesView: View {
         }
     }
     
-    private func headers(_ headers: [String]) -> some View {
+    private func headersView(_ headers: [String]) -> some View {
         GridRow {
             ForEach(headers, id: \.self) { header in
                 Text(header)
                     .subHeaderStyle(appearance)
-                    .frame(maxWidth: .infinity)
-                    .padding(12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 12)
+                    .padding(.leading, 20)
             }
         }
     }
     
-    private func content(_ items: [BestRatesDisplayItem]) -> some View {
-        ForEach(items) { (item: BestRatesDisplayItem) in
-            GridRow {
-                Text(item.currency.name)
-                Text("\(item.currency.buy, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
-                Text("\(item.currency.sell, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
+    private func contentView(_ items: [BestRatesDisplayItem]) -> some View {
+        Group {
+            ForEach(items) { (item: BestRatesDisplayItem) in
+                GridRow {
+                    Text(item.currency.name)
+                    Text("\(String.formattedDecimal(item.currency.buy, maximumFractionDigits: 4))")
+                    Text("\(String.formattedDecimal(item.currency.sell, maximumFractionDigits: 4))")
+                }
+                .bodyStyle(appearance)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, 2)
+                .padding(.leading, 20)
             }
-            .bodyStyle(appearance)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(2)
         }
     }
-
 }
 
 #Preview("Dashboard") {

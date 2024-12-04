@@ -83,7 +83,7 @@ struct ListView: View {
             
             ForEach(item.bank.currencies) { (currency: Currency) in
                 HStack {
-                    Text("\(currency.buy, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
+                    Text("\(String.formattedDecimal(currency.buy, maximumFractionDigits: 4)) \(Currency.CurrencyType.gel.symbol)")
                         .if(currency.buy == currency.buyBest) { view in
                             view
                                 .foregroundStyle(appearance.theme.accentColor)
@@ -94,7 +94,7 @@ struct ListView: View {
                         .font(.body).bold()
                         .frame(alignment: .leading)
                     Spacer()
-                    Text("\(currency.sell, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
+                    Text("\(String.formattedDecimal(currency.sell, maximumFractionDigits: 4)) \(Currency.CurrencyType.gel.symbol)")
                         .if(currency.sell == currency.sellBest) { view in
                             view
                                 .foregroundStyle(appearance.theme.accentColor)

@@ -28,9 +28,9 @@ struct DashboardView: View {
                         }
                         .padding()
                         
-//                        ConversionView(vm: vm.conversionVM)
+                        ConversionView(vm: vm.conversionVM)
                         BestRatesView(vm: vm.bestRatesVM)
-//                        ChartView(vm: vm.chartVM)
+                        ChartView(vm: vm.chartVM)
                         ListView(vm: vm.listVM)
                     }
                 }
