@@ -4,6 +4,16 @@
     "%.3f" : {
       "shouldTranslate" : false
     },
+    "%.3f %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$.3f %2$@"
+          }
+        }
+      }
+    },
     "%.3f ₾" : {
 
     },
@@ -116,6 +126,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Покупка"
+          }
+        }
+      }
+    },
+    "Chart GEL to USD" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "График GEL к USD"
           }
         }
       }
@@ -252,6 +273,7 @@
       }
     },
     "Exchange Rates" : {
+      "extractionState" : "manual",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -269,6 +291,17 @@
     },
     "Home Screen" : {
 
+    },
+    "List of exchangers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Список обменников"
+          }
+        }
+      }
     },
     "list_header_buy" : {
       "extractionState" : "manual",
@@ -360,17 +393,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Затем, вы можете купить"
-          }
-        }
-      }
-    },
-    "USD to GEL currency chart" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "USD к GEL график"
           }
         }
       }

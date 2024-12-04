@@ -28,44 +28,15 @@ struct DashboardView: View {
                         }
                         .padding()
                         
-                        ConversionView(vm: vm.conversionVM)
+//                        ConversionView(vm: vm.conversionVM)
                         BestRatesView(vm: vm.bestRatesVM)
-                        ChartView(vm: vm.chartVM)
+//                        ChartView(vm: vm.chartVM)
                         ListView(vm: vm.listVM)
-                           
-                        
-                        
-
-//                        NavigationLink {
-//                            Assembly.createChartView()
-//                        } label: {
-//                            Text(translated("USD to GEL currency chart"))
-//                        }
-//                        .padding(.bottom, 15)
-//                        NavigationLink {
-//                            Assembly.createListView()
-//                        } label: {
-//                            Text(translated("All banks"))
-//                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
                 .scrollDismissesKeyboard(.immediately)
             }
-    }
-}
-
-struct TitleView: View {
-    var body: some View {
-        HStack(alignment: .bottom) {
-            Image("GEL")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .padding(.bottom, 3)
-            Text("Exchange Rates")
-                .font(.title)
-                .padding(.bottom, 0)
-        }
     }
 }
 

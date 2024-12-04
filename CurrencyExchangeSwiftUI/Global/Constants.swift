@@ -82,62 +82,7 @@ struct Constants {
         }
     }
     
-    enum Theme: CaseIterable, Codable {
-        case light
-        case dark
-        
-        static var cacheKey: String {
-            return "CurrentAppThemeCacheKey"
-        }
-        
-        var backgroundColor: Color {
-            switch self {
-            case .light:
-                return .white
-            case .dark:
-                return .black
-            }
-        }
-        
-        var secondaryBackgroundColor: Color {
-            switch self {
-            case .light:
-                return .gray.opacity(0.15)
-            case .dark:
-                return .white.opacity(0.15)
-            }
-        }
-        
-        var textColor: Color {
-            switch self {
-            case .light:
-                return .black
-            case .dark:
-                return .white
-            }
-        }
-        
-        var secondaryTextColor: Color {
-            switch self {
-            case .light:
-                return .secondary
-            case .dark:
-                return .white.opacity(0.5)
-            }
-        }
-        
-        var accentColor: Color {
-            switch self {
-            case .light, .dark:
-                return .red
-            }
-        }
-        
-        var chartColor: Color {
-            switch self {
-            case .light, .dark:
-                return .blue.opacity(1)
-            }
-        }
+    static var themeCacheKey: String {
+        return "CurrentAppThemeCacheKey"
     }
 }

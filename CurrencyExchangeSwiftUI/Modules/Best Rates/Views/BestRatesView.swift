@@ -16,49 +16,17 @@ struct BestRatesView: View {
         Group {
             if let items = self.vm.items {
                 VStack {
-                    Text(vm.title)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundStyle(appearance.theme.secondaryTextColor)
-                        .padding(.leading, 30)
-                        .padding(.bottom, -5)
-                    
+                    TitleView(vm.title)
                     Grid(verticalSpacing: 0) {
-                        GridRow {
-                            ForEach(vm.headers, id: \.self) { header in
-                                Text(header)
-                                    .font(.headline)
-                                    .foregroundStyle(appearance.theme.textColor)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(5)
-                            }
-                        }
+                        headers(vm.headers)
                         Divider()
-                        ForEach(items) { (item: BestRatesDisplayItem) in
-                            GridRow {
-                                Text(item.currency.name)
-                                    .font(.body)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .foregroundStyle(appearance.theme.textColor)
-                                    .padding(4)
-                                Text("\(item.currency.buy, specifier: "%.3f") ₾")
-                                    .font(.body)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .foregroundStyle(appearance.theme.textColor)
-                                    .padding(4)
-                                Text("\(item.currency.sell, specifier: "%.3f") ₾")
-                                    .font(.body)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .foregroundStyle(appearance.theme.textColor)
-                                    .padding(4)
-                            }
-                        }
-                        
+                            .background(appearance.theme.secondaryTextColor)
+                        content(items)
                     }
                     .background(appearance.theme.secondaryBackgroundColor)
                     .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                 }
-                .padding(.leading)
-                .padding(.trailing)
+                .padding()
                 
             } else {
                 BasicProgressView()
@@ -68,6 +36,31 @@ struct BestRatesView: View {
             vm.fetchData()
         }
     }
+    
+    private func headers(_ headers: [String]) -> some View {
+        GridRow {
+            ForEach(headers, id: \.self) { header in
+                Text(header)
+                    .subHeaderStyle(appearance)
+                    .frame(maxWidth: .infinity)
+                    .padding(12)
+            }
+        }
+    }
+    
+    private func content(_ items: [BestRatesDisplayItem]) -> some View {
+        ForEach(items) { (item: BestRatesDisplayItem) in
+            GridRow {
+                Text(item.currency.name)
+                Text("\(item.currency.buy, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
+                Text("\(item.currency.sell, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
+            }
+            .bodyStyle(appearance)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(2)
+        }
+    }
+
 }
 
 #Preview("Dashboard") {

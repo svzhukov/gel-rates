@@ -9,9 +9,20 @@ import Charts
 import Foundation
 import SwiftUI
 
+struct ExtremePoint: Identifiable {
+    let id = UUID()
+    let item: ChartDisplayItem
+    let color: Color
+}
+
+struct PointMarkAnimation: Identifiable {
+    let id = UUID()
+    var points: [ExtremePoint] = []
+    var isVisible: Bool = false
+}
+
 struct ChartView: View {
     @ObservedObject var appearance = Appearance.shared
-
     var vm: ChartVM
 
     init(vm: ChartVM) {
@@ -20,28 +31,15 @@ struct ChartView: View {
 
     var body: some View {
         VStack {
-            ChartTitleView()
+            TitleView("Chart GEL to USD")
             ChartContentView(vm: self.vm)
             ChartButtonsView(vm: self.vm)
         }
-        .padding(.horizontal)
+        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
             self.vm.fetchData()
         }
-    }
-}
-
-// MARK: - Chart Title
-struct ChartTitleView: View {
-    @ObservedObject var appearance = Appearance.shared
-
-    var body: some View {
-        Text(translated("GEL / USD"))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(appearance.theme.secondaryTextColor)
-            .padding(.leading, 30)
-            .padding(.bottom, -5)
     }
 }
 
@@ -72,10 +70,10 @@ struct ChartContentView: View {
     private func chartContent(items: [ChartDisplayItem]) -> some View {
         Chart {
             ForEach(items) { item in
-                ChartAreaContent(item)
-                ChartLineContent(item)
+                chartAreaContent(item)
+                chartLineContent(item)
             }
-            ChartPointContent(pointAnimation: pointAnimation)
+            chartPointContent()
         }
         .foregroundStyle(linearGradient(items))
         .chartXAxis {
@@ -124,30 +122,16 @@ struct ChartContentView: View {
         let offset = 0.008
         return abs(min / max - 1) + offset
     }
-}
-
-struct ChartAreaContent: ChartContent {
-    let item: ChartDisplayItem
-    init(_ item: ChartDisplayItem) {
-        self.item = item
-    }
     
-    var body: some ChartContent {
+    private func chartAreaContent(_ item: ChartDisplayItem) -> some ChartContent {
         AreaMark(
             x: .value("Date", item.date),
             y: .value("Price", item.price)
         )
         .opacity(0.5)
     }
-}
-
-struct ChartLineContent: ChartContent {
-    let item: ChartDisplayItem
-    init(_ item: ChartDisplayItem) {
-        self.item = item
-    }
     
-    var body: some ChartContent {
+    private func chartLineContent(_ item: ChartDisplayItem) -> some ChartContent {
         LineMark(
             x: .value("Date", item.date),
             y: .value("Price", item.price)
@@ -155,12 +139,8 @@ struct ChartLineContent: ChartContent {
         .lineStyle(StrokeStyle(lineWidth: 1.5))
         .foregroundStyle(Appearance.shared.theme.chartColor).opacity(0.65)
     }
-}
-
-struct ChartPointContent: ChartContent {
-    let pointAnimation: PointMarkAnimation
     
-    var body: some ChartContent {
+    private func chartPointContent() -> some ChartContent {
         ForEach(pointAnimation.points) { point in
             PointMark(
                 x: .value("Date", point.item.date),
@@ -177,17 +157,6 @@ struct ChartPointContent: ChartContent {
     }
 }
 
-struct ExtremePoint: Identifiable {
-    let id = UUID()
-    let item: ChartDisplayItem
-    let color: Color
-}
-
-struct PointMarkAnimation: Identifiable {
-    let id = UUID()
-    var points: [ExtremePoint] = []
-    var isVisible: Bool = false
-}
 
 // MARK: - Chart Axis
 struct ChartAxisContent {

@@ -19,35 +19,30 @@ struct ListView: View {
     var body: some View {
         Group {
             if let items = self.vm.listItems {
+                VStack {
+                    TitleView(translated("List of exchangers"))
                     ForEach(items) { (item: ListDisplayItem) in
-                        Group {
-                            VStack {
-                                listHeaderView(item: item)
-                                listContentView(item: item)
-                            }
-                            .padding()
-                            .background(appearance.theme.secondaryBackgroundColor)
-                            .foregroundColor(appearance.theme.textColor)
-                            .cornerRadius(Constants.cornerRadius)
+                        VStack {
+                            listHeaderView(item)
+                            listContentView(item)
                         }
-                        .padding(.horizontal)
-                        .padding(.bottom, 5)
+                        .padding()
+                        .background(appearance.theme.secondaryBackgroundColor)
+                        .cornerRadius(Constants.cornerRadius)
                     }
+                }
+                .padding()
+
             } else {
                 BasicProgressView()
             }
         }
-
         .onAppear {
             vm.fetchData()
         }
     }
-}
-
-struct listHeaderView: View {
-    let item: ListDisplayItem
     
-    var body: some View {
+    private func listHeaderView(_ item: ListDisplayItem) -> some View {
         HStack {
             RoundedRectangle(cornerRadius: Constants.cornerRadius)
                 .frame(width: 38, height: 38)
@@ -66,7 +61,7 @@ struct listHeaderView: View {
 
 
             Text(item.bank.name.en!)
-                .font(.headline)
+                .headlineStyle(appearance)
             
             if item.bank.type == Bank.OrgType.online {
                 Image(systemName: "iphone.gen1")
@@ -75,42 +70,42 @@ struct listHeaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.bottom, 10)
     }
-}
-
-struct listContentView: View {
-    @ObservedObject var appearance = Appearance.shared
-
-    let item: ListDisplayItem
     
-    var body: some View {
-        HStack {
-            Text(translated("list_header_buy"))
-            Spacer()
-            Text(translated("list_header_sell"))
-        }
-        .foregroundColor(appearance.theme.secondaryTextColor)
-        .padding(.bottom, 3)
-        
-        ForEach(item.bank.currencies) { (currency: Currency) in
+    private func listContentView(_ item: ListDisplayItem) -> some View {
+        Group {
             HStack {
-                Text("\(currency.buy, specifier: "%.3f") ₾")
-                    .font(.body)
-                    .frame(maxWidth: 100, alignment: .leading)
-                    .foregroundStyle(currency.buy == currency.buyBest ? appearance.theme.accentColor : appearance.theme.textColor)
+                Text(translated("list_header_buy"))
                 Spacer()
-                Text("\(currency.type.flag)  1 \(currency.type.symbol)")
-                    .font(.body).bold()
-                    .frame(alignment: .leading)
-                Spacer()
-                Text("\(currency.sell, specifier: "%.3f") ₾")
-                    .font(.body)
-                    .frame(maxWidth: 100, alignment: .trailing)
-                    .foregroundStyle(currency.sell == currency.sellBest ? appearance.theme.accentColor : appearance.theme.textColor)
+                Text(translated("list_header_sell"))
+            }
+            .subHeaderStyle(appearance)
+            .padding(.bottom, 3)
+            
+            ForEach(item.bank.currencies) { (currency: Currency) in
+                HStack {
+                    Text("\(currency.buy, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
+                        .if(currency.buy == currency.buyBest) { view in
+                            view
+                                .foregroundStyle(appearance.theme.accentColor)
+                        }
+                        .frame(maxWidth: 100, alignment: .leading)
+                    Spacer()
+                    Text("\(currency.type.flag)  1 \(currency.type.symbol)")
+                        .font(.body).bold()
+                        .frame(alignment: .leading)
+                    Spacer()
+                    Text("\(currency.sell, specifier: "%.3f") \(Currency.CurrencyType.gel.symbol)")
+                        .if(currency.sell == currency.sellBest) { view in
+                            view
+                                .foregroundStyle(appearance.theme.accentColor)
+                        }
+                        .frame(maxWidth: 100, alignment: .trailing)
+                }
+                .bodyStyle(appearance)
             }
         }
     }
 }
-
 
 #Preview("List") {
     ScrollView {

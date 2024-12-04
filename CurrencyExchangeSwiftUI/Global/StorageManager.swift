@@ -47,18 +47,18 @@ class StorageManager: StorageManagerProtocol {
         }
     }
     
-    func saveAppTheme(to theme: Constants.Theme) {
+    func saveAppTheme(to theme: Appearance.Theme) {
         if let encoded = try? JSONEncoder().encode(theme) {
-            userDefaults.set(encoded, forKey: Constants.Theme.cacheKey)
-            inMemoryData[Constants.Theme.cacheKey] = theme
+            userDefaults.set(encoded, forKey: Constants.themeCacheKey)
+            inMemoryData[Constants.themeCacheKey] = theme
         }
     }
     
-    func loadAppTheme() -> Constants.Theme? {
-        if let inMemory = inMemoryData[Constants.Theme.cacheKey] as? Constants.Theme { return inMemory }
-        guard let data = userDefaults.data(forKey: Constants.Theme.cacheKey) else { return nil }
-        if let decoded = try? JSONDecoder().decode(Constants.Theme.self, from: data) {
-            inMemoryData[Constants.Theme.cacheKey] = decoded
+    func loadAppTheme() -> Appearance.Theme? {
+        if let inMemory = inMemoryData[Constants.themeCacheKey] as? Appearance.Theme { return inMemory }
+        guard let data = userDefaults.data(forKey: Constants.themeCacheKey) else { return nil }
+        if let decoded = try? JSONDecoder().decode(Appearance.Theme.self, from: data) {
+            inMemoryData[Constants.themeCacheKey] = decoded
             return decoded
         }
         

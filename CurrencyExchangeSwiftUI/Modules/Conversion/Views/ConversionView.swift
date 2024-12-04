@@ -27,7 +27,7 @@ struct ConversionView: View {
         Group {
             if let item = vm.item {
                 VStack {
-                    title()
+                    TitleView("Conversion")
                     VStack(alignment: .leading, spacing: 10) {
                         sellSegment(item: item)
                         switchCurrenciesButton()
@@ -52,14 +52,6 @@ struct ConversionView: View {
             vm.fetchData()
         }
     }
-    
-    private func title() -> some View {
-        Text(translated("Conversion"))
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundStyle(appearance.theme.secondaryTextColor)
-            .padding(.leading, 30)
-            .padding(.bottom, -5)
-    }
  
     private func sellSegment(item: ConversionDisplayItem) -> some View {
         HStack {
@@ -80,7 +72,7 @@ struct ConversionView: View {
     private func sellField(item: ConversionDisplayItem) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(translated("You have"))
-                .foregroundStyle(appearance.theme.secondaryTextColor)
+                .subHeaderStyle(appearance)
             
             TextField(translated("Amount to sell"), text: $amountToSell)
                 .modifier(StandardTextFieldStyle())
@@ -97,7 +89,7 @@ struct ConversionView: View {
     private func buyField(item: ConversionDisplayItem) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(translated("You get"))
-                .foregroundStyle(appearance.theme.secondaryTextColor)
+                .subHeaderStyle(appearance)
             
             TextField(translated("Amount to buy"), text: $amountToBuy)
                 .modifier(StandardTextFieldStyle())
