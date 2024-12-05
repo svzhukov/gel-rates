@@ -12,11 +12,23 @@ protocol ListServiceProtocol {
 }
 
 class ListService: ListServiceProtocol {
+    var isFetching: Bool = false
+    var callbacks: [(Result<MyfinJSONModel, Error>) -> Void] = []
+    
     func fetchListRates(completion: @escaping (Result<MyfinJSONModel, Error>) -> Void) {
         
-        if shouldReuseCachedData(MyfinJSONModel.self), let cachedData = StorageManager.shared.loadCachedData(type: MyfinJSONModel.self) {
+        callbacks.append(completion)
+        if isFetching { return }
+        isFetching = true
+                            
+        if shouldReuseCachedData(MyfinJSONModel.self), let cachedData = StorageManager.shared.loadJSONModel(type: MyfinJSONModel.self) {
             print("Reusing fetchListRates cached data...")
-            completion(.success(cachedData))
+            DispatchQueue.main.async {
+                for callback in self.callbacks {
+                    callback(.success(cachedData))
+                }
+                self.isFetching = false
+            }
             return
         }
         
@@ -27,16 +39,23 @@ class ListService: ListServiceProtocol {
                                          body: self.requestBody()) { (result: Result<MyfinJSONModel, Error>) in
                 switch result {
                 case .success(let model):
-                    StorageManager.shared.saveDataToCache(data: model)
+                    StorageManager.shared.saveJSONModel(data: model)
                 case .failure(_):
                     fatalError("manage api errors here")
                 }
                 
                 DispatchQueue.main.async {
-                    completion(result)
+                    for callback in self.callbacks {
+                        callback(result)
+                    }
+                    self.isFetching = false
                 }
             }
         }
+    }
+    
+    func lastfetchTimestamp() -> Date? {
+        return StorageManager.shared.loadLastFetchTimestamp(type: MyfinJSONModel.self)
     }
     
     private func requestBody() -> Data? {

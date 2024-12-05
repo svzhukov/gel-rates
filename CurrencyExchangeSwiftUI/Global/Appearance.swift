@@ -120,9 +120,9 @@ class Appearance: ObservableObject {
         var themeSwitcherColor: Color {
             switch self {
             case .light:
-                return .yellow
+                return .yellow.opacity(0.8)
             case .dark:
-                return .indigo
+                return .indigo.opacity(0.8)
             }
         }
     }

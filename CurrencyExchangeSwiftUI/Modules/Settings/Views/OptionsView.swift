@@ -11,6 +11,7 @@ import SwiftUI
 struct OptionsView: View {
     
     @State var selectedCity: Constants.City = Constants.City.tbilisi
+    @State var selectedCurrencies: [Currency.CurrencyType] = [Currency.CurrencyType.gel, Currency.CurrencyType.usd]
     @State private var includeOnline = false
     @State private var workingNow = false
     @State private var collapsed = true
@@ -104,25 +105,33 @@ struct OptionsView: View {
     private func currenciesView() -> some View {
         ForEach(currenciesTwoHalfArrays(), id: \.self) { array in
             HStack {
-                ForEach(array, id: \.self) { currency in
+                ForEach(array, id: \.self) { (currency: Currency.CurrencyType) in
                     HStack {
                         Button {
-                            includeOnline.toggle()
+                            if let index = selectedCurrencies.firstIndex(of: currency) {
+                                selectedCurrencies.remove(at: index)
+                            } else {
+                                selectedCurrencies.append(currency)
+                            }
                         } label: {
-                            Image(systemName: includeOnline || isGel(currency) ? "checkmark.square.fill" : "square")
+                            Image(systemName: selectedCurrencies.contains(currency) ? "checkmark.square.fill" : "square")
                                 .resizable()
                                 .frame(width: 20, height: 20)
                             Text(currency.rawValue)
                                 .foregroundStyle(appearance.theme.textColor)
                         }
-                        .disabled(isGel(currency))
+                        .disabled(shouldBeDisabled(currency))
                     }
-                    .foregroundStyle(isGel(currency) ? appearance.theme.secondaryTextColor : appearance.theme.actionableColor)
+                    .foregroundStyle(shouldBeDisabled(currency) ? appearance.theme.secondaryTextColor : appearance.theme.actionableColor)
                     .frame(minWidth: 66, alignment: .leading)
                 }
             }
             .padding(.horizontal)
         }
+    }
+    
+    private func shouldBeDisabled(_ currency: Currency.CurrencyType) -> Bool {
+        return currency == Currency.CurrencyType.gel || (selectedCurrencies.count <= 2 && selectedCurrencies.contains(currency))
     }
     
     private func cogWheelView() -> some View {
@@ -136,6 +145,7 @@ struct OptionsView: View {
                     .resizable()
                     .frame(width: 25, height: 25)
                     .foregroundStyle(appearance.theme.secondaryTextColor)
+                    .rotationEffect(.degrees(collapsed ? 0 : -180))
                 Image(systemName: "chevron.down")
                     .foregroundStyle(appearance.theme.textColor)
                     .opacity(0.8)
@@ -145,10 +155,6 @@ struct OptionsView: View {
         .frame(maxWidth: .infinity, alignment: .trailing)
         .padding(.top)
         .padding(.trailing)
-    }
-    
-    private func isGel(_ curr: Currency.CurrencyType) -> Bool {
-        curr == Currency.CurrencyType.gel
     }
     
     private func currenciesTwoHalfArrays() -> [[Currency.CurrencyType]] {

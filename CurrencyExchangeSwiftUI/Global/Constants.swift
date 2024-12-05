@@ -95,9 +95,17 @@ struct Constants {
         return "CurrentAppThemeCacheKey"
     }
     
+    static var selectedCurrenciesCacheKey: String {
+        return "SelectedCurrenciesCacheKey"
+    }
+    
     enum City: String, CaseIterable, Codable {
         case tbilisi = "Tbilisi"
         case batumi = "Batumi"
         case kutaisi = "Kutaisi"
+        
+        static var cacheKey: String {
+            return "CityCacheKey"
+        }
     }
 }

@@ -8,7 +8,16 @@
 import Foundation
 
 struct MyfinJSONModel: JSONModelProtocol {
+    // Custom properties
     static let apiType: Constants.APIType = Constants.APIType.myfin
+    let lastfetchTimestamp: Date = Date()
+    
+    // Explicit init to suppress lastfetchTimestamp default value warning
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.best = try container.decode([String : CurrencyRate].self, forKey: .best)
+        self.organizations = try container.decode([Organization].self, forKey: .organizations)
+    }
 
     let best: [String: CurrencyRate]
     let organizations: [Organization]

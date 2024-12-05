@@ -387,6 +387,17 @@
         }
       }
     },
+    "on" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "на"
+          }
+        }
+      }
+    },
     "Only working now" : {
       "extractionState" : "manual",
       "localizations" : {

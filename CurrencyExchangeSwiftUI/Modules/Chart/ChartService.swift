@@ -14,7 +14,7 @@ protocol ChartServiceProtocol {
 class ChartService: ChartServiceProtocol {
     
     func fetchAnnualRates(completion: @escaping (Result<TwelvedataJSONModel, Error>)  -> Void) {        
-        if shouldReuseCachedData(TwelvedataJSONModel.self), let cachedData = StorageManager.shared.loadCachedData(type: TwelvedataJSONModel.self) {
+        if shouldReuseCachedData(TwelvedataJSONModel.self), let cachedData = StorageManager.shared.loadJSONModel(type: TwelvedataJSONModel.self) {
             print("Reusing fetchAnnualRates cached data...")
             completion(.success(cachedData))
             return
@@ -27,7 +27,7 @@ class ChartService: ChartServiceProtocol {
             NetworkClient.shared.request(url: url) { (result: Result<TwelvedataJSONModel, Error>) in
                 switch result {
                 case .success(let model):
-                    StorageManager.shared.saveDataToCache(data: model)
+                    StorageManager.shared.saveJSONModel(data: model)
                 case .failure(_):
                     fatalError("manage api errors here")
                 }
