@@ -27,15 +27,16 @@ struct DashboardView: View {
                     OptionsView()
                     ConversionView(vm: vm.conversionVM)
                     BestRatesView(vm: vm.bestRatesVM)
-                    ChartView(vm: vm.chartVM)
+                    if #available(iOS 16.0, *) {
+                        ChartView(vm: vm.chartVM)
+                    }
                     ListView(vm: vm.listVM)
                 }
             }
             .frame(maxWidth: .infinity)
-            .scrollDismissesKeyboard(.immediately)
+            .availabilityScrollDismissesKeyboard()
         }
         .background(appearance.theme.backgroundColor)
-        .ignoresSafeArea()
     }
 }
 

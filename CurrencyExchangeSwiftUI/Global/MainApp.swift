@@ -14,7 +14,7 @@ struct CurrencyExchangeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationSplitView {
+            Group {
                 Assembly.createDashboardView()
                     .id(refreshID)
                     .onReceive(NotificationCenter.default.publisher(for: .languageDidChange)) { _ in
@@ -28,8 +28,6 @@ struct CurrencyExchangeApp: App {
                     .onAppear {
                         Localization.initialize()
                     }
-            } detail: {
-                
             }
         }
     }

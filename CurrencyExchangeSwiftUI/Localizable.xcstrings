@@ -4,9 +4,6 @@
     "%.3f" : {
       "shouldTranslate" : false
     },
-    "%@" : {
-
-    },
     "%@  1 %@" : {
       "localizations" : {
         "en" : {

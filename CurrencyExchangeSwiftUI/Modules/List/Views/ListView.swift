@@ -64,8 +64,9 @@ struct ListView: View {
                 .headlineStyle(appearance)
             
             if item.bank.type == Bank.OrgType.online {
-                Image(systemName: "iphone.gen1")
+                Image(systemName: "iphone")
                     .foregroundStyle(appearance.theme.secondaryTextColor)
+                    .font(.system(size: 16, weight: .bold))  // Thicker stroke
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

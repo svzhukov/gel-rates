@@ -9,18 +9,21 @@ import Charts
 import Foundation
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct ExtremePoint: Identifiable {
     let id = UUID()
     let item: ChartDisplayItem
     let color: Color
 }
 
+@available(iOS 16.0, *)
 struct PointMarkAnimation: Identifiable {
     let id = UUID()
     var points: [ExtremePoint] = []
     var isVisible: Bool = false
 }
 
+@available(iOS 16.0, *)
 struct ChartView: View {
     @ObservedObject var appearance = Appearance.shared
     var vm: ChartVM
@@ -44,6 +47,7 @@ struct ChartView: View {
 }
 
 // MARK: - Chart Content
+@available(iOS 16.0, *)
 struct ChartContentView: View {
     @ObservedObject var vm: ChartVM
     @State private var pointAnimation: PointMarkAnimation = PointMarkAnimation()
@@ -86,7 +90,7 @@ struct ChartContentView: View {
         .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
         .padding(.trailing, 10)
         
-        .conditionalOnChange(of: vm.periodicChartItems) {
+        .availabilityOnChange(of: vm.periodicChartItems) {
             if let items = vm.periodicChartItems {
                 addDelayedPointMarks(items, delay: 0.3)
             }
@@ -161,6 +165,7 @@ struct ChartContentView: View {
 
 
 // MARK: - Chart Axis
+@available(iOS 16.0, *)
 struct ChartAxisContent {
     static func yAxis() -> AnyAxisContent {
         return AnyAxisContent (

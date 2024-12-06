@@ -22,14 +22,6 @@ struct Assembly {
         return view
     }
     
-    static func createChartView() -> ChartView {
-        let service = ChartService()
-        let vm = ChartVM(service: service)
-        let view = ChartView(vm: vm)
-        
-        return view
-    }
-    
     static func createListView() -> ListView {
         let service = ListService()
         let vm = ListVM(service: service)
