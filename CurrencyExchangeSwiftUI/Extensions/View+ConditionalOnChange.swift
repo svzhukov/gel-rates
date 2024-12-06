@@ -13,11 +13,9 @@ extension View {
         action: @escaping () -> Void
     ) -> some View where T: Equatable {
         if #available(iOS 17.0, *) {
-            print("onChange iOS 17")
             return self.onChange(of: value, initial: false, action)
         } else {
-            print("onChange older iOS")
-            return self.onChange(of: value) { _ in
+            return self.onChange(of: value) { newValue in
                 action()
             }
         }
