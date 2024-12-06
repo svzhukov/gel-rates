@@ -13,7 +13,7 @@ struct BestRatesDisplayItem: Identifiable {
     
     static func mapModel(_ model: MyfinJSONModel) -> [BestRatesDisplayItem] {
         let currencyDict: [String: Currency] = model.best.mapValues { (rate: CurrencyRate) in
-            return Currency(buy: rate.buy, buyBest: rate.buy, sell: rate.sell, sellBest: rate.sell, type: Currency.CurrencyType(rawValue: rate.ccy)!)
+            return Currency(buy: rate.buy, buyBest: rate.buy, sell: rate.sell, sellBest: rate.sell, type: Constants.CurrencyType(rawValue: rate.ccy)!)
         }
         
         let currencies = Array(currencyDict.values).sorted { c1, c2 in

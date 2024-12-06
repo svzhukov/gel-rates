@@ -25,7 +25,7 @@ struct PointMarkAnimation: Identifiable {
 
 @available(iOS 16.0, *)
 struct ChartView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     var vm: ChartVM
 
     init(vm: ChartVM) {
@@ -51,6 +51,7 @@ struct ChartView: View {
 struct ChartContentView: View {
     @ObservedObject var vm: ChartVM
     @State private var pointAnimation: PointMarkAnimation = PointMarkAnimation()
+    @ObservedObject var state = AppState.shared
     
     init(vm: ChartVM) {
         self.vm = vm
@@ -58,7 +59,7 @@ struct ChartContentView: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: Constants.cornerRadius)
-            .fill(Appearance.shared.theme.secondaryBackgroundColor)
+            .fill(state.theme.secondaryBackgroundColor)
             .frame(height: 300)
             .overlay(
                 Group {
@@ -100,8 +101,8 @@ struct ChartContentView: View {
     private func linearGradient(_ items: [ChartDisplayItem]) -> LinearGradient {
         LinearGradient(
             gradient: Gradient(colors: [
-                Appearance.shared.theme.chartColor.opacity(0.9),
-                Appearance.shared.theme.chartColor.opacity(0.1),
+                state.theme.chartColor.opacity(0.9),
+                state.theme.chartColor.opacity(0.1),
             ]),
             startPoint: UnitPoint(x: 0.5, y: 0),
             endPoint: UnitPoint(x: 0.5, y: gradientEndYPoint(items))
@@ -143,7 +144,7 @@ struct ChartContentView: View {
             y: .value("Price", item.price)
         )
         .lineStyle(StrokeStyle(lineWidth: 1.5))
-        .foregroundStyle(Appearance.shared.theme.chartColor).opacity(0.65)
+        .foregroundStyle(state.theme.chartColor).opacity(0.65)
     }
     
     private func chartPointContent() -> some ChartContent {
@@ -152,12 +153,12 @@ struct ChartContentView: View {
                 x: .value("Date", point.item.date),
                 y: .value("Price", point.item.price)
             )
-            .foregroundStyle(Appearance.shared.theme.accentColor)
+            .foregroundStyle(state.theme.accentColor)
             .opacity(pointAnimation.isVisible ? 1 : 0)
             .annotation(position: .automatic) {
                 Text("\(point.item.price, specifier: "%.3f")")
                     .font(.system(size: 10))
-                    .foregroundColor(Appearance.shared.theme.secondaryTextColor)
+                    .foregroundColor(state.theme.secondaryTextColor)
             }
         }
     }
@@ -171,9 +172,9 @@ struct ChartAxisContent {
         return AnyAxisContent (
             AxisMarks {
                 AxisValueLabel()
-                    .foregroundStyle(Appearance.shared.theme.secondaryTextColor)
+                    .foregroundStyle(AppState.shared.theme.secondaryTextColor)
                 AxisTick()
-                    .foregroundStyle(Appearance.shared.theme.secondaryBackgroundColor)
+                    .foregroundStyle(AppState.shared.theme.secondaryBackgroundColor)
             })
     }
     
@@ -192,10 +193,10 @@ struct ChartAxisContent {
         AxisMarks(values: .stride(by: .day, count: 7)) {
             AxisValueLabel(format: .dateTime.day(.twoDigits).month(.twoDigits))
                 .offset(y: -15)
-                .foregroundStyle(Appearance.shared.theme.secondaryTextColor)
+                .foregroundStyle(AppState.shared.theme.secondaryTextColor)
                 .font(.system(size: 8))
             AxisGridLine()
-                .foregroundStyle(Appearance.shared.theme.secondaryBackgroundColor)
+                .foregroundStyle(AppState.shared.theme.secondaryBackgroundColor)
         }
     }
 
@@ -203,10 +204,10 @@ struct ChartAxisContent {
         AxisMarks(values: .stride(by: .day, count: 1)) {
             AxisValueLabel(format: .dateTime.day(.twoDigits).month(.twoDigits))
                 .offset(y: -15)
-                .foregroundStyle(Appearance.shared.theme.secondaryTextColor)
+                .foregroundStyle(AppState.shared.theme.secondaryTextColor)
                 .font(.system(size: 8))
             AxisGridLine()
-                .foregroundStyle(Appearance.shared.theme.secondaryBackgroundColor)
+                .foregroundStyle(AppState.shared.theme.secondaryBackgroundColor)
         }
     }
 
@@ -215,17 +216,17 @@ struct ChartAxisContent {
             if let date = value.as(Date.self),
                Calendar.current.component(.month, from: date) == 1 {
                 AxisValueLabel(format: .dateTime.year())
-                    .foregroundStyle(Appearance.shared.theme.secondaryTextColor)
+                    .foregroundStyle(AppState.shared.theme.secondaryTextColor)
                     .font(.system(size: 8))
             } else if value.index % 2 == 0 {
                 AxisValueLabel(format: .dateTime.month())
                     .offset(y: -15)
-                    .foregroundStyle(Appearance.shared.theme.secondaryTextColor)
+                    .foregroundStyle(AppState.shared.theme.secondaryTextColor)
                     .font(.system(size: 8))
 
             }
             AxisGridLine()
-                .foregroundStyle(Appearance.shared.theme.secondaryBackgroundColor)
+                .foregroundStyle(AppState.shared.theme.secondaryBackgroundColor)
         }
     }
 }

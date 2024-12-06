@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TitleView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     let title: String
     
     init(_ title: String) {
@@ -17,7 +17,7 @@ struct TitleView: View {
     
     var body: some View {
         Text(translated(title))
-            .headerStyle(appearance)
+            .headerStyle(state)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 30)
             .padding(.bottom, -5)

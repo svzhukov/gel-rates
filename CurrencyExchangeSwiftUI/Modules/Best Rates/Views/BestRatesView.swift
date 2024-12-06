@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct BestRatesView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @ObservedObject var vm: BestRatesVM
     
     var body: some View {
@@ -21,17 +21,17 @@ struct BestRatesView: View {
                         ForEach(Array(vm.headers.enumerated()), id: \.element) { index, header in
                             VStack(spacing: 0) {
                                 Text(header)
-                                    .subHeaderStyle(appearance)
+                                    .subHeaderStyle(state)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.vertical, 12)
                                 
                                 Divider()
-                                    .background(appearance.theme.secondaryTextColor)
+                                    .background(state.theme.secondaryTextColor)
                                     .padding(.bottom, 4)
                                 
                                 ForEach(items) { item in
                                     Text(columnText(item: item, for: ColumType(rawValue: index)!))
-                                        .bodyStyle(appearance)
+                                        .bodyStyle(state)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.vertical, 2)
                                 }
@@ -39,7 +39,7 @@ struct BestRatesView: View {
                         }
                     }
                     .padding(.horizontal).padding(.bottom, 4)
-                    .background(appearance.theme.secondaryBackgroundColor)
+                    .background(state.theme.secondaryBackgroundColor)
                     .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                 }
                 .padding()

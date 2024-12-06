@@ -39,8 +39,8 @@ class ChartService: ChartServiceProtocol {
         }
     }
     
-    func urlTwelveAPI(from: Currency.CurrencyType = .usd,
-                      to: Currency.CurrencyType = .gel,
+    func urlTwelveAPI(from: Constants.CurrencyType = .usd,
+                      to: Constants.CurrencyType = .gel,
                       interval: UInt = 1,
                       start: Date = Calendar.current.date(byAdding: .year, value: -1, to: Date())!,
                       end: Date = Date()) -> URL? {

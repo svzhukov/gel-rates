@@ -25,7 +25,7 @@ struct LanguageSwitcherView: View {
 }
 
 struct LanguagesButtonView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @Binding var activeLang: Constants.Language
     @Binding var isHidden: Bool
     
@@ -52,7 +52,7 @@ struct LanguagesButtonView: View {
 }
 
 struct LanguagesPanelView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @Binding var activeLang: Constants.Language
     @Binding var isHidden: Bool
 
@@ -66,9 +66,9 @@ struct LanguagesPanelView: View {
                 }) {
                     Text(lang.rawValue + " " + lang.flag)
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(lang == activeLang ? appearance.theme.textColor : appearance.theme.secondaryTextColor)
+                        .foregroundColor(lang == activeLang ? state.theme.textColor : state.theme.secondaryTextColor)
                         .frame(width: 48, height: 30, alignment: .center)
-                        .background(lang == activeLang ? appearance.theme.secondaryBackgroundColor : Color.clear)
+                        .background(lang == activeLang ? state.theme.secondaryBackgroundColor : Color.clear)
                 }
                 
                 if Constants.Language.allCases.firstIndex(of: lang) != Constants.Language.allCases.count - 1 {
@@ -79,7 +79,7 @@ struct LanguagesPanelView: View {
                 }
             }
         }
-        .background(appearance.theme.secondaryBackgroundColor)
+        .background(state.theme.secondaryBackgroundColor)
         .cornerRadius(Constants.cornerRadius)
         .opacity(isHidden ? 0 : 1)
         .animation(isHidden ? .easeOut(duration: 0.2) : .easeIn(duration: 0.2), value: isHidden)

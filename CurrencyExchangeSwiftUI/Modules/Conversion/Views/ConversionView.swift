@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConversionView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @ObservedObject var vm: ConversionVM
 
     @FocusState private var sellTextFieldFocus: Bool
@@ -35,7 +35,7 @@ struct ConversionView: View {
                         conversionFooter()
                     }
                     .padding()
-                    .background(appearance.theme.secondaryBackgroundColor)
+                    .background(state.theme.secondaryBackgroundColor)
                     .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                 }
                 .padding()
@@ -72,7 +72,7 @@ struct ConversionView: View {
     private func sellField(item: ConversionDisplayItem) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(translated("You have"))
-                .subHeaderStyle(appearance)
+                .subHeaderStyle(state)
             
             TextField(translated("Amount to sell"), text: $amountToSell)
                 .modifier(StandardTextFieldStyle())
@@ -89,7 +89,7 @@ struct ConversionView: View {
     private func buyField(item: ConversionDisplayItem) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(translated("You get"))
-                .subHeaderStyle(appearance)
+                .subHeaderStyle(state)
             
             TextField(translated("Amount to buy"), text: $amountToBuy)
                 .modifier(StandardTextFieldStyle())
@@ -111,7 +111,7 @@ struct ConversionView: View {
                 }
             }
         }
-        .tint(appearance.theme.actionableColor)
+        .tint(state.theme.actionableColor)
         .modifier(StandardPickerStyle())
         .availabilityOnChange(of: currencyToSell) {
             updateBuyTextField()
@@ -127,7 +127,7 @@ struct ConversionView: View {
                 }
             }
         }
-        .tint(appearance.theme.actionableColor)
+        .tint(state.theme.actionableColor)
         .modifier(StandardPickerStyle())
         .availabilityOnChange(of: currencyToBuy) {
             updateBuyTextField()
@@ -143,7 +143,7 @@ struct ConversionView: View {
                 Image(systemName: "arrow.up.arrow.down")
             }
         }
-        .foregroundStyle(appearance.theme.textColor)
+        .foregroundStyle(state.theme.textColor)
         .opacity(0.8)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .padding(.vertical, -15)
@@ -162,7 +162,7 @@ struct ConversionView: View {
                 if isGelConversion() {
                     Text("\(translated("You can sell")) **\(amountToSell)** \(sell.name) \(translated("and get")) **\(amountToBuy)** \(buy.name)")
                 } else {
-                    Text("\(translated("You can sell")) **\(amountToSell)** \(sell.name) \(translated("and get")) **\(String.formattedDecimal(sellAmount * sell.buy))** \(Currency.CurrencyType.gel.rawValue)")
+                    Text("\(translated("You can sell")) **\(amountToSell)** \(sell.name) \(translated("and get")) **\(String.formattedDecimal(sellAmount * sell.buy))** \(Constants.CurrencyType.gel.rawValue)")
                     Text("\(translated("Then you can buy")) **\(amountToBuy)** \(buy.name)")
                 }
                 
@@ -170,11 +170,11 @@ struct ConversionView: View {
             }
         }
         .font(.footnote)
-        .foregroundColor(appearance.theme.secondaryTextColor)
+        .foregroundColor(state.theme.secondaryTextColor)
     }
     
     private func isGelConversion() -> Bool {
-        return currencyToBuy?.type == Currency.CurrencyType.gel || currencyToSell?.type == Currency.CurrencyType.gel
+        return currencyToBuy?.type == Constants.CurrencyType.gel || currencyToSell?.type == Constants.CurrencyType.gel
     }
     
     private func setInitialCurrencies(item: ConversionDisplayItem) {

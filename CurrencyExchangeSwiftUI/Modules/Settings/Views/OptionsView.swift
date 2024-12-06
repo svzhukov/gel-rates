@@ -11,12 +11,12 @@ import SwiftUI
 struct OptionsView: View {
     
     @State var selectedCity: Constants.City = Constants.City.tbilisi
-    @State var selectedCurrencies: [Currency.CurrencyType] = [Currency.CurrencyType.gel, Currency.CurrencyType.usd]
+    @State var selectedCurrencies: [Constants.CurrencyType] = [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
     @State private var includeOnline = false
     @State private var workingNow = false
     @State private var collapsed = true
 
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
 
     var body: some View {
         Group {
@@ -37,7 +37,7 @@ struct OptionsView: View {
                 
                 cogWheelView()
             }
-            .foregroundStyle(appearance.theme.actionableColor)
+            .foregroundStyle(state.theme.actionableColor)
             .animation(.default, value: collapsed)
         }
         .clipped()
@@ -54,8 +54,8 @@ struct OptionsView: View {
                         Text(translated(city.rawValue))
                             .padding(.vertical, 12)
                             .padding(.horizontal, 16)
-                            .foregroundStyle(city == selectedCity ? .white : appearance.theme.actionableColor)
-                            .background(city == selectedCity ? appearance.theme.actionableColor : .clear)
+                            .foregroundStyle(city == selectedCity ? .white : state.theme.actionableColor)
+                            .background(city == selectedCity ? state.theme.actionableColor : .clear)
                             .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                     }
                 }
@@ -76,7 +76,7 @@ struct OptionsView: View {
                         .frame(width: 20, height: 20)
                     Text(translated("Include online banks"))
                         .font(.callout)
-                        .foregroundStyle(appearance.theme.textColor)
+                        .foregroundStyle(state.theme.textColor)
                     
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -94,7 +94,7 @@ struct OptionsView: View {
                     }
                     Text(translated("Only working now"))
                         .font(.callout)
-                        .foregroundStyle(appearance.theme.textColor)
+                        .foregroundStyle(state.theme.textColor)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -105,7 +105,7 @@ struct OptionsView: View {
     private func currenciesView() -> some View {
         ForEach(currenciesTwoHalfArrays(), id: \.self) { array in
             HStack {
-                ForEach(array, id: \.self) { (currency: Currency.CurrencyType) in
+                ForEach(array, id: \.self) { (currency: Constants.CurrencyType) in
                     HStack {
                         Button {
                             if let index = selectedCurrencies.firstIndex(of: currency) {
@@ -118,11 +118,11 @@ struct OptionsView: View {
                                 .resizable()
                                 .frame(width: 20, height: 20)
                             Text(currency.rawValue)
-                                .foregroundStyle(appearance.theme.textColor)
+                                .foregroundStyle(state.theme.textColor)
                         }
                         .disabled(shouldBeDisabled(currency))
                     }
-                    .foregroundStyle(shouldBeDisabled(currency) ? appearance.theme.secondaryTextColor : appearance.theme.actionableColor)
+                    .foregroundStyle(shouldBeDisabled(currency) ? state.theme.secondaryTextColor : state.theme.actionableColor)
                     .frame(minWidth: 66, alignment: .leading)
                 }
             }
@@ -130,8 +130,8 @@ struct OptionsView: View {
         }
     }
     
-    private func shouldBeDisabled(_ currency: Currency.CurrencyType) -> Bool {
-        return currency == Currency.CurrencyType.gel || (selectedCurrencies.count <= 2 && selectedCurrencies.contains(currency))
+    private func shouldBeDisabled(_ currency: Constants.CurrencyType) -> Bool {
+        return currency == Constants.CurrencyType.gel || (selectedCurrencies.count <= 2 && selectedCurrencies.contains(currency))
     }
     
     private func cogWheelView() -> some View {
@@ -144,10 +144,10 @@ struct OptionsView: View {
                 Image(systemName: "gearshape")
                     .resizable()
                     .frame(width: 25, height: 25)
-                    .foregroundStyle(appearance.theme.secondaryTextColor)
+                    .foregroundStyle(state.theme.secondaryTextColor)
                     .rotationEffect(.degrees(collapsed ? 0 : -180))
                 Image(systemName: "chevron.down")
-                    .foregroundStyle(appearance.theme.textColor)
+                    .foregroundStyle(state.theme.textColor)
                     .opacity(0.8)
                     .rotationEffect(.degrees(collapsed ? 0 : -180))
             }
@@ -157,8 +157,8 @@ struct OptionsView: View {
         .padding(.trailing)
     }
     
-    private func currenciesTwoHalfArrays() -> [[Currency.CurrencyType]] {
-        let currencies = Currency.CurrencyType.allCases
+    private func currenciesTwoHalfArrays() -> [[Constants.CurrencyType]] {
+        let currencies = Constants.CurrencyType.allCases
         let midpoint = currencies.count / 2
         return [Array(currencies[..<midpoint]), Array(currencies[midpoint...])]
     }

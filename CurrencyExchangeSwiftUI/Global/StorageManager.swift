@@ -46,12 +46,12 @@ class StorageManager: StorageManagerProtocol {
     }
     
     // MARK: - Theme
-    func saveAppTheme(to theme: Appearance.Theme) {
-        save(theme, forKey: Constants.themeCacheKey)
+    func saveAppTheme(to theme: Constants.Theme) {
+        save(theme, forKey: Constants.Theme.cacheKey)
     }
     
-    func loadAppTheme() -> Appearance.Theme? {
-        if let theme = load(Appearance.Theme.self, forKey: Constants.themeCacheKey) as? Appearance.Theme {
+    func loadAppTheme() -> Constants.Theme? {
+        if let theme = load(Constants.Theme.self, forKey: Constants.Theme.cacheKey) as? Constants.Theme {
             return theme
         }
         return nil
@@ -82,7 +82,7 @@ class StorageManager: StorageManagerProtocol {
     }
     
     // MARK: - Currencies
-//    func saveSelectedCurrencies(currencies: [Currency.CurrencyType]) {
+//    func saveSelectedCurrencies(currencies: [Constants.CurrencyType]) {
 //        save(currencies, forKey: Constants.City.cacheKey)
 //    }
 //    

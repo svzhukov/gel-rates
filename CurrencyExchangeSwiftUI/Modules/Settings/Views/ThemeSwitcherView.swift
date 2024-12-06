@@ -9,26 +9,26 @@ import Foundation
 import SwiftUI
 
 struct ThemeSwitcherView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @State var img: String = imgString()
     
     var body: some View {
         Button {
             withAnimation {
-                Appearance.shared.toggleTheme()
+                AppState.shared.toggleTheme()
                 img = ThemeSwitcherView.imgString()
             }
         } label: {
             Image(systemName: img)
                 .resizable()
                 .frame(width: 25, height: 25)
-                .foregroundStyle(appearance.theme.themeSwitcherColor)
+                .foregroundStyle(state.theme.themeSwitcherColor)
         }
         .frame(alignment: .leading)
     }
     
     private static func imgString() -> String {
-        return Appearance.shared.theme == .light ? "sun.max.fill" : "moon.circle.fill"
+        return AppState.shared.theme == .light ? "sun.max.fill" : "moon.circle.fill"
     }
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ListView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @ObservedObject var vm: ListVM
     
     init(vm: ListVM) {
@@ -27,7 +27,7 @@ struct ListView: View {
                             listContentView(item)
                         }
                         .padding()
-                        .background(appearance.theme.secondaryBackgroundColor)
+                        .background(state.theme.secondaryBackgroundColor)
                         .cornerRadius(Constants.cornerRadius)
                     }
                 }
@@ -61,12 +61,12 @@ struct ListView: View {
 
 
             Text(item.bank.name.en!)
-                .headlineStyle(appearance)
+                .headlineStyle(state)
             
             if item.bank.type == Bank.OrgType.online {
                 Image(systemName: "iphone")
-                    .foregroundStyle(appearance.theme.secondaryTextColor)
-                    .font(.system(size: 16, weight: .bold))  // Thicker stroke
+                    .foregroundStyle(state.theme.secondaryTextColor)
+                    .font(.system(size: 16, weight: .bold))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -80,15 +80,15 @@ struct ListView: View {
                 Spacer()
                 Text(translated("list_header_sell"))
             }
-            .subHeaderStyle(appearance)
+            .subHeaderStyle(state)
             .padding(.bottom, 3)
             
             ForEach(item.bank.currencies) { (currency: Currency) in
                 HStack {
-                    Text("\(String.formattedDecimal(currency.buy, maximumFractionDigits: 4)) \(Currency.CurrencyType.gel.symbol)")
+                    Text("\(String.formattedDecimal(currency.buy, maximumFractionDigits: 4)) \(Constants.CurrencyType.gel.symbol)")
                         .if(currency.buy == currency.buyBest) { view in
                             view
-                                .foregroundStyle(appearance.theme.accentColor)
+                                .foregroundStyle(state.theme.accentColor)
                         }
                         .frame(maxWidth: 100, alignment: .leading)
                     Spacer()
@@ -96,14 +96,14 @@ struct ListView: View {
                         .font(.body).bold()
                         .frame(alignment: .leading)
                     Spacer()
-                    Text("\(String.formattedDecimal(currency.sell, maximumFractionDigits: 4)) \(Currency.CurrencyType.gel.symbol)")
+                    Text("\(String.formattedDecimal(currency.sell, maximumFractionDigits: 4)) \(Constants.CurrencyType.gel.symbol)")
                         .if(currency.sell == currency.sellBest) { view in
                             view
-                                .foregroundStyle(appearance.theme.accentColor)
+                                .foregroundStyle(state.theme.accentColor)
                         }
                         .frame(maxWidth: 100, alignment: .trailing)
                 }
-                .bodyStyle(appearance)
+                .bodyStyle(state)
             }
         }
     }

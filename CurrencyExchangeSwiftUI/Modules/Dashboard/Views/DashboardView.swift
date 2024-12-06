@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @StateObject private var vm: DashboardVM
     
     init(dashboardVM: DashboardVM) {
@@ -19,24 +19,31 @@ struct DashboardView: View {
         ZStack() {
             ScrollView(.vertical) {
                 VStack {
-                    Text("Some Epic Title idk")
-                        .titleStyle(appearance)
-                        .frame(maxWidth: .infinity)
-                        .background(appearance.theme.backgroundColor)
-                        .zIndex(1)
+                    title()
                     OptionsView()
                     ConversionView(vm: vm.conversionVM)
                     BestRatesView(vm: vm.bestRatesVM)
+                    NavigationLink(destination: ListView(vm: vm.listVM)) {
+                        Text(translated("Show full list of exchangers"))
+                            .padding(.top, -10)
+                    }
                     if #available(iOS 16.0, *) {
                         ChartView(vm: vm.chartVM)
                     }
-                    ListView(vm: vm.listVM)
                 }
             }
             .frame(maxWidth: .infinity)
             .availabilityScrollDismissesKeyboard()
         }
-        .background(appearance.theme.backgroundColor)
+        .background(state.theme.backgroundColor)
+    }
+    
+    private func title() -> some View {
+        Text(vm.title)
+            .titleStyle(state)
+            .frame(maxWidth: .infinity)
+            .background(state.theme.backgroundColor)
+            .zIndex(1)
     }
 }
 

@@ -10,11 +10,11 @@ import SwiftUI
 @main
 struct CurrencyExchangeApp: App {
     @State private var refreshID = UUID()
-    @ObservedObject private var themeManager = Appearance.shared
+    @ObservedObject private var state = AppState.shared
 
     var body: some Scene {
         WindowGroup {
-            Group {
+            NavigationView {
                 Assembly.createDashboardView()
                     .id(refreshID)
                     .onReceive(NotificationCenter.default.publisher(for: .languageDidChange)) { _ in

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChartButtonsView: View {
-    @ObservedObject var appearance = Appearance.shared
+    @ObservedObject var state = AppState.shared
     @ObservedObject var vm: ChartVM
     
     init(vm: ChartVM) {
@@ -23,15 +23,15 @@ struct ChartButtonsView: View {
                 }) {
                     Text(range.localizedName)
                         .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(range == self.vm.selectedTimeRange ? appearance.theme.textColor : appearance.theme.secondaryTextColor)
+                        .foregroundColor(range == self.vm.selectedTimeRange ? state.theme.textColor : state.theme.secondaryTextColor)
                         .padding(10)
                         .frame(maxWidth: .infinity)
-                        .background(range == self.vm.selectedTimeRange ? appearance.theme.secondaryBackgroundColor : Color.clear)
+                        .background(range == self.vm.selectedTimeRange ? state.theme.secondaryBackgroundColor : Color.clear)
                         .cornerRadius(Constants.cornerRadius)
                 }
             }
         }
-        .background(appearance.theme.secondaryBackgroundColor)
+        .background(state.theme.secondaryBackgroundColor)
         .cornerRadius(Constants.cornerRadius)
         .frame(maxWidth: .infinity)
     }
