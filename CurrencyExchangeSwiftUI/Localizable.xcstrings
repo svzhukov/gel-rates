@@ -260,6 +260,7 @@
       }
     },
     "Details" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -268,9 +269,6 @@
           }
         }
       }
-    },
-    "Details Screen" : {
-
     },
     "Exchange rate" : {
       "extractionState" : "manual",
@@ -293,15 +291,6 @@
           }
         }
       }
-    },
-    "Go to Details" : {
-
-    },
-    "Home" : {
-
-    },
-    "Home Screen" : {
-
     },
     "Include online banks" : {
       "extractionState" : "manual",

@@ -77,7 +77,7 @@ struct ConversionView: View {
             TextField(translated("Amount to sell"), text: $amountToSell)
                 .modifier(StandardTextFieldStyle())
                 .focused($sellTextFieldFocus)
-                .onChange(of: amountToSell) {
+                .conditionalOnChange(of: amountToSell) {
                     if !buyTextFieldFocus {
                         updateBuyTextField()
                     }
@@ -94,7 +94,7 @@ struct ConversionView: View {
             TextField(translated("Amount to buy"), text: $amountToBuy)
                 .modifier(StandardTextFieldStyle())
                 .focused($buyTextFieldFocus)
-                .onChange(of: amountToBuy) {
+                .conditionalOnChange(of: amountToBuy) {
                     if buyTextFieldFocus {
                         updateSellTextField()
                     }
@@ -113,7 +113,7 @@ struct ConversionView: View {
         }
         .tint(appearance.theme.actionableColor)
         .modifier(StandardPickerStyle())
-        .onChange(of: currencyToSell) {
+        .conditionalOnChange(of: currencyToSell) {
             updateBuyTextField()
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
@@ -129,7 +129,7 @@ struct ConversionView: View {
         }
         .tint(appearance.theme.actionableColor)
         .modifier(StandardPickerStyle())
-        .onChange(of: currencyToBuy) {
+        .conditionalOnChange(of: currencyToBuy) {
             updateBuyTextField()
         }
         .frame(maxWidth: .infinity, alignment: .trailing)

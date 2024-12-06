@@ -82,12 +82,12 @@ struct ChartContentView: View {
         .chartYAxis {
             ChartAxisContent.yAxis()
         }
-
         .chartYScale(domain: items.minPrice!.price - 0.008...items.maxPrice!.price + 0.008)
         .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
         .padding(.trailing, 10)
-        .onChange(of: vm.selectedTimeRange, initial: true) {
-            addDelayedPointMarks(items, delay: 0.3)
+        
+        .conditionalOnChange(of: vm.selectedTimeRange) {
+                addDelayedPointMarks(items, delay: 0.3)
         }
     }
     
