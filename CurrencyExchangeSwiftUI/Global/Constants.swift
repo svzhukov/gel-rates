@@ -23,7 +23,7 @@ struct Constants {
         case amd = "AMD"
         case gbp = "GBP"
         case azn = "AZN"
-        case uah = "AUH"
+        case uah = "UAH"
         case kzt = "KZT"
         
         static var cacheKey: String {
@@ -313,15 +313,20 @@ struct Constants {
     
     enum Options {
         case includeOnline
-        case workingNow
         
         var cacheKey: String {
-            switch self {
-            case .includeOnline:
-                return "IncludeOnlineCacheKey"
-            case .workingNow:
-                return "WorkingNowCacheKey"
+            return "IncludeOnlineCacheKey"
+        }
+        
+        enum Availability: String, Codable {
+            case all = "All"
+            case availableNow = "AvailableNow"
+            case availableNowIncludeUnknown = "AvailableNowIncludeUnknown"
+            
+            static var cacheKey: String {
+                return "AvailabilityCacheKey"
             }
         }
+
     }
 }

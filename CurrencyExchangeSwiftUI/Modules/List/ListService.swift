@@ -62,13 +62,15 @@ class ListService: ListServiceProtocol {
     }
     
     private func requestBody() -> Data? {
-        let body: [String : Any] = ["city": "tbilisi",
-                        "includeOnline": true,
-                        "availability": "All"]
+        let body: [String : Any] = ["city": AppState.shared.selectedCity.rawValue,
+                                    "includeOnline": AppState.shared.includeOnline,
+                                    "availability": AppState.shared.workingAvailability.rawValue]
         return try? JSONSerialization.data(withJSONObject: body)
     }
     
     private func shouldReuseCachedData<T: JSONModelProtocol>(_ type: T.Type) -> Bool {
+        return false
+        
         let timeout: Double = 600
         guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
         let should = Date().timeIntervalSince(lastFetch) < timeout

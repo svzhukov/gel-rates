@@ -14,7 +14,7 @@ class AppState: ObservableObject {
     @Published var selectedCity: Constants.City = StorageManager.shared.loadCity() ?? Constants.City.tbilisi
     @Published var selectedCurrencies: [Constants.CurrencyType] = StorageManager.shared.loadSelectedCurrencies() ?? [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
     @Published var includeOnline = StorageManager.shared.loadIncludeOnline() ?? false
-    @Published var workingNow = StorageManager.shared.loadWorkingNow() ?? false
+    @Published var workingAvailability = StorageManager.shared.loadWokingAvailability() ?? Constants.Options.Availability.all
     @Published var theme: Constants.Theme = StorageManager.shared.loadAppTheme() ?? .light
     @Published var language: Constants.Language = StorageManager.shared.loadAppLanguage() ?? Constants.Language.en
     
@@ -32,10 +32,10 @@ class AppState: ObservableObject {
         print("Set city: \(newCity)")
     }
 
-    func toggleWorkingNow() {
-        workingNow.toggle()
-        StorageManager.shared.saveWorkingNow(working: workingNow)
-        print("Set working now: \(workingNow)")
+    func setWorkingAvailability(availability: Constants.Options.Availability) {
+        workingAvailability = availability
+        StorageManager.shared.saveWokingAvailability(working: availability)
+        print("Set working now: \(availability)")
     }
     
     func toggleIncludeOnline() {

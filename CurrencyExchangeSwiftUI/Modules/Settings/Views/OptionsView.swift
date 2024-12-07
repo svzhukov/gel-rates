@@ -11,7 +11,7 @@ import SwiftUI
 struct OptionsView: View {
     @ObservedObject var state = AppState.shared
     @State var collapsed = true
-
+    
     var body: some View {
         Group {
             VStack {
@@ -61,39 +61,40 @@ struct OptionsView: View {
     
     private func optionsView() -> some View {
         VStack {
-            Button {
+            optionButton(icon: state.includeOnline ? "checkmark.square.fill" : "square", text: "Include online banks") {
                 state.toggleIncludeOnline()
-            } label: {
-                HStack {
-                    Image(systemName: state.includeOnline ? "checkmark.square.fill" : "square")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                    Text(translated("Include online banks"))
-                        .font(.callout)
-                        .foregroundStyle(state.theme.textColor)
-                    
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            Button {
-                state.toggleWorkingNow()
-            } label: {
-                HStack {
-                    withAnimation {
-                        Image(systemName: state.workingNow ? "checkmark.square.fill" : "square")
-                            .resizable()
-                            .frame(width: 20, height: 20)
+            optionButton(icon: state.workingAvailability == Constants.Options.Availability.all ? "square" : "checkmark.square.fill", text: "Only working now") {
+                state.setWorkingAvailability(availability: state.workingAvailability == Constants.Options.Availability.all ? Constants.Options.Availability.availableNowIncludeUnknown : Constants.Options.Availability.all)
 
-                    }
-                    Text(translated("Only working now"))
-                        .font(.callout)
-                        .foregroundStyle(state.theme.textColor)
+            }
+            
+            if state.workingAvailability != Constants.Options.Availability.all {
+                optionButton(icon: state.workingAvailability == Constants.Options.Availability.availableNowIncludeUnknown ? "checkmark.square.fill" : "square", text: "Include unknown schedule") {
+                    state.setWorkingAvailability(availability: state.workingAvailability == Constants.Options.Availability.availableNowIncludeUnknown ? Constants.Options.Availability.availableNow : Constants.Options.Availability.availableNowIncludeUnknown)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .padding(.horizontal)
+    }
+    
+    private func optionButton(icon: String, text: String, action: (@escaping @MainActor () -> Void)) -> some View {
+        Button {
+            action()
+        } label: {
+            HStack {
+                withAnimation {
+                    Image(systemName: icon)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+                Text(translated(text))
+                    .font(.callout)
+                    .foregroundStyle(state.theme.textColor)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
     
     private func currenciesView() -> some View {

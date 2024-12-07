@@ -104,12 +104,12 @@ class StorageManager: StorageManagerProtocol {
         return nil
     }
     
-    func saveWorkingNow(working: Bool) {
-        save(working, forKey: Constants.Options.workingNow.cacheKey)
+    func saveWokingAvailability(working: Constants.Options.Availability) {
+        save(working, forKey: Constants.Options.Availability.cacheKey)
     }
     
-    func loadWorkingNow() -> Bool? {
-        if let working = load(Bool.self, forKey: Constants.Options.workingNow.cacheKey) as? Bool{
+    func loadWokingAvailability() -> Constants.Options.Availability? {
+        if let working = load(Constants.Options.Availability.self, forKey: Constants.Options.Availability.cacheKey) as? Constants.Options.Availability {
             return working
         }
         return nil
@@ -127,11 +127,19 @@ class StorageManager: StorageManagerProtocol {
     private func load<T: Decodable>(_ type: T.Type, forKey key: String) -> (any Decodable)? {
         if let inMemory = inMemoryData[key] as? Decodable { return inMemory }
         guard let data = userDefaults.data(forKey: key) else { return nil }
-        if let decoded = try? JSONDecoder().decode(type, from: data) {
-//            print("user defaults loaded: \(key)")
+        do {
+            let decoded = try JSONDecoder().decode(type, from: data)
             inMemoryData[key] = decoded
             return decoded
+        } catch {
+            print(error)
         }
+        
+//        if let decoded = try? JSONDecoder().decode(type, from: data) {
+////            print("user defaults loaded: \(key)")
+//            inMemoryData[key] = decoded
+//            return decoded
+//        }
         return nil
     }
     
