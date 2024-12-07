@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ConversionDisplayItem {
+struct ConversionDisplayItem: Equatable {
     let currencies: [Currency]
     
     static func mapModel(_ model: MyfinJSONModel) -> ConversionDisplayItem {

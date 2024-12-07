@@ -99,6 +99,17 @@
         }
       }
     },
+    "Back" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        }
+      }
+    },
     "Batumi" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -110,13 +121,13 @@
         }
       }
     },
-    "Best exchange rates title" : {
+    "Best exchange rates " : {
       "extractionState" : "manual",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Лучший курс обмена "
+            "value" : "Лучшие курсы обмена "
           }
         }
       }
@@ -132,7 +143,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Лучший курс"
           }
         }
@@ -289,6 +300,17 @@
         }
       }
     },
+    "in" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "в"
+          }
+        }
+      }
+    },
     "Include online banks" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -307,6 +329,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Кутаиси"
+          }
+        }
+      }
+    },
+    "List all exchangers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать все обменники"
           }
         }
       }

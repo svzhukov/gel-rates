@@ -39,6 +39,9 @@ struct ConversionView: View {
                     .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
                 }
                 .padding()
+                .onChangeConditional(of: vm.item) {
+                    updateBuyTextField(item: item)
+                }
                 
             } else {
                 BasicProgressView()
