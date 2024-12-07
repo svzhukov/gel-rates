@@ -8,7 +8,7 @@
 import Foundation
 
 class DashboardVM: ObservableObject {
-    let title: String = "Best exchange rates"
+    let title: String = "Best exchange rates title"
     let chartVM: ChartVM
     let listVM: ListVM
     let bestRatesVM: BestRatesVM

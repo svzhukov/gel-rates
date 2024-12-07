@@ -9,7 +9,7 @@ import SwiftUI
 import Foundation
 
 struct LanguageSwitcherView: View {
-    @State var activeLang: Constants.Language = Localization.shared.language
+    @State var activeLang: Constants.Language = AppState.shared.language
     @State var isHidden: Bool = true
         
     var body: some View {
@@ -61,7 +61,7 @@ struct LanguagesPanelView: View {
             ForEach(Constants.Language.allCases, id: \.rawValue) { lang in
                 Button(action: {
                     activeLang = lang
-                    Localization.shared.setLanguage(lang)
+                    state.setLanguage(lang)
                     isHidden.toggle()
                 }) {
                     Text(lang.rawValue + " " + lang.flag)
@@ -80,7 +80,7 @@ struct LanguagesPanelView: View {
             }
         }
         .background(state.theme.secondaryBackgroundColor)
-        .cornerRadius(Constants.cornerRadius)
+        .cornerRadius(Constants.Styles.cornerRadius)
         .opacity(isHidden ? 0 : 1)
         .animation(isHidden ? .easeOut(duration: 0.2) : .easeIn(duration: 0.2), value: isHidden)
     }

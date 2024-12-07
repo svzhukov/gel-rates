@@ -110,6 +110,17 @@
         }
       }
     },
+    "Best exchange rates title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лучший курс обмена "
+          }
+        }
+      }
+    },
     "Best offers" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -252,17 +263,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дата"
-          }
-        }
-      }
-    },
-    "Details" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Детали"
           }
         }
       }

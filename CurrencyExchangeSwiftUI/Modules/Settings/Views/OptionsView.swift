@@ -9,14 +9,8 @@ import SwiftUI
 
 
 struct OptionsView: View {
-    
-    @State var selectedCity: Constants.City = Constants.City.tbilisi
-    @State var selectedCurrencies: [Constants.CurrencyType] = [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
-    @State private var includeOnline = false
-    @State private var workingNow = false
-    @State private var collapsed = true
-
     @ObservedObject var state = AppState.shared
+    @State var collapsed = true
 
     var body: some View {
         Group {
@@ -49,14 +43,14 @@ struct OptionsView: View {
             HStack {
                 ForEach(Constants.City.allCases, id: \.self) { city in
                     Button {
-                        selectedCity = city
+                        state.setCity(city)
                     } label: {
                         Text(translated(city.rawValue))
                             .padding(.vertical, 12)
                             .padding(.horizontal, 16)
-                            .foregroundStyle(city == selectedCity ? .white : state.theme.actionableColor)
-                            .background(city == selectedCity ? state.theme.actionableColor : .clear)
-                            .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+                            .foregroundStyle(city == state.selectedCity ? .white : state.theme.actionableColor)
+                            .background(city == state.selectedCity ? state.theme.actionableColor : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
                     }
                 }
             }
@@ -68,10 +62,10 @@ struct OptionsView: View {
     private func optionsView() -> some View {
         VStack {
             Button {
-                includeOnline.toggle()
+                state.toggleIncludeOnline()
             } label: {
                 HStack {
-                    Image(systemName: includeOnline ? "checkmark.square.fill" : "square")
+                    Image(systemName: state.includeOnline ? "checkmark.square.fill" : "square")
                         .resizable()
                         .frame(width: 20, height: 20)
                     Text(translated("Include online banks"))
@@ -83,11 +77,11 @@ struct OptionsView: View {
             }
             
             Button {
-                workingNow.toggle()
+                state.toggleWorkingNow()
             } label: {
                 HStack {
                     withAnimation {
-                        Image(systemName: workingNow ? "checkmark.square.fill" : "square")
+                        Image(systemName: state.workingNow ? "checkmark.square.fill" : "square")
                             .resizable()
                             .frame(width: 20, height: 20)
 
@@ -108,13 +102,15 @@ struct OptionsView: View {
                 ForEach(array, id: \.self) { (currency: Constants.CurrencyType) in
                     HStack {
                         Button {
-                            if let index = selectedCurrencies.firstIndex(of: currency) {
-                                selectedCurrencies.remove(at: index)
+                            var updatedCurrencies = state.selectedCurrencies
+                            if let index = updatedCurrencies.firstIndex(of: currency) {
+                                updatedCurrencies.remove(at: index)
                             } else {
-                                selectedCurrencies.append(currency)
+                                updatedCurrencies.append(currency)
                             }
+                            state.setSelectedCurrencies(updatedCurrencies)
                         } label: {
-                            Image(systemName: selectedCurrencies.contains(currency) ? "checkmark.square.fill" : "square")
+                            Image(systemName: state.selectedCurrencies.contains(currency) ? "checkmark.square.fill" : "square")
                                 .resizable()
                                 .frame(width: 20, height: 20)
                             Text(currency.rawValue)
@@ -131,7 +127,7 @@ struct OptionsView: View {
     }
     
     private func shouldBeDisabled(_ currency: Constants.CurrencyType) -> Bool {
-        return currency == Constants.CurrencyType.gel || (selectedCurrencies.count <= 2 && selectedCurrencies.contains(currency))
+        return currency == Constants.CurrencyType.gel || (state.selectedCurrencies.count <= 2 && state.selectedCurrencies.contains(currency))
     }
     
     private func cogWheelView() -> some View {

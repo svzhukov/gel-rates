@@ -27,12 +27,12 @@ struct ChartButtonsView: View {
                         .padding(10)
                         .frame(maxWidth: .infinity)
                         .background(range == self.vm.selectedTimeRange ? state.theme.secondaryBackgroundColor : Color.clear)
-                        .cornerRadius(Constants.cornerRadius)
+                        .cornerRadius(Constants.Styles.cornerRadius)
                 }
             }
         }
         .background(state.theme.secondaryBackgroundColor)
-        .cornerRadius(Constants.cornerRadius)
+        .cornerRadius(Constants.Styles.cornerRadius)
         .frame(maxWidth: .infinity)
     }
 }

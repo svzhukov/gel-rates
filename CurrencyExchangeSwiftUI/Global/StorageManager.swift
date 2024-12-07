@@ -69,7 +69,19 @@ class StorageManager: StorageManagerProtocol {
         return nil
     }
     
-    // MARK: - City
+    // MARK: - Currencies
+    func saveSelectedCurrencies(currencies: [Constants.CurrencyType]) {
+        save(currencies, forKey: Constants.CurrencyType.cacheKey)
+    }
+    
+    func loadSelectedCurrencies() -> [Constants.CurrencyType]? {
+        if let currencies = load([Constants.CurrencyType].self, forKey: Constants.CurrencyType.cacheKey) as? [Constants.CurrencyType] {
+            return currencies
+        }
+        return nil
+    }
+    
+    // MARK: - Options
     func saveCity(city: Constants.City) {
         save(city, forKey: Constants.City.cacheKey)
     }
@@ -81,17 +93,27 @@ class StorageManager: StorageManagerProtocol {
         return nil
     }
     
-    // MARK: - Currencies
-//    func saveSelectedCurrencies(currencies: [Constants.CurrencyType]) {
-//        save(currencies, forKey: Constants.City.cacheKey)
-//    }
-//    
-//    func loadCity() -> Constants.City? {
-//        if let city = load(Constants.City.self, forKey: Constants.City.cacheKey) as? Constants.City {
-//            return city
-//        }
-//        return nil
-//    }
+    func saveIncludeOnline(include: Bool) {
+        save(include, forKey: Constants.Options.includeOnline.cacheKey)
+    }
+    
+    func loadIncludeOnline() -> Bool? {
+        if let include = load(Bool.self, forKey: Constants.Options.includeOnline.cacheKey) as? Bool{
+            return include
+        }
+        return nil
+    }
+    
+    func saveWorkingNow(working: Bool) {
+        save(working, forKey: Constants.Options.workingNow.cacheKey)
+    }
+    
+    func loadWorkingNow() -> Bool? {
+        if let working = load(Bool.self, forKey: Constants.Options.workingNow.cacheKey) as? Bool{
+            return working
+        }
+        return nil
+    }
     
     // MARK: - Private
     private func save(_ obj: Encodable, forKey key: String) {

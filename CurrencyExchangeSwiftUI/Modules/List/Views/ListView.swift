@@ -19,19 +19,22 @@ struct ListView: View {
     var body: some View {
         Group {
             if let items = self.vm.listItems {
-                VStack {
-                    TitleView(translated("List of exchangers"))
-                    ForEach(items) { (item: ListDisplayItem) in
-                        VStack {
-                            listHeaderView(item)
-                            listContentView(item)
+                ScrollView {
+                    VStack {
+                        TitleView(translated("List of exchangers"))
+                        ForEach(items) { (item: ListDisplayItem) in
+                            VStack {
+                                listHeaderView(item)
+                                listContentView(item)
+                            }
+                            .padding()
+                            .background(state.theme.secondaryBackgroundColor)
+                            .cornerRadius(Constants.Styles.cornerRadius)
                         }
-                        .padding()
-                        .background(state.theme.secondaryBackgroundColor)
-                        .cornerRadius(Constants.cornerRadius)
                     }
+                    .padding()
                 }
-                .padding()
+                .background(state.theme.backgroundColor)
 
             } else {
                 BasicProgressView()
@@ -44,7 +47,7 @@ struct ListView: View {
     
     private func listHeaderView(_ item: ListDisplayItem) -> some View {
         HStack {
-            RoundedRectangle(cornerRadius: Constants.cornerRadius)
+            RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius)
                 .frame(width: 38, height: 38)
                 .foregroundStyle(.white)
                 .shadow(color: .white, radius: 2)
@@ -86,7 +89,7 @@ struct ListView: View {
             ForEach(item.bank.currencies) { (currency: Currency) in
                 HStack {
                     Text("\(String.formattedDecimal(currency.buy, maximumFractionDigits: 4)) \(Constants.CurrencyType.gel.symbol)")
-                        .if(currency.buy == currency.buyBest) { view in
+                        .if(currency.buy == item.best.currency(for: currency.type)?.buy) { view in
                             view
                                 .foregroundStyle(state.theme.accentColor)
                         }
@@ -97,7 +100,7 @@ struct ListView: View {
                         .frame(alignment: .leading)
                     Spacer()
                     Text("\(String.formattedDecimal(currency.sell, maximumFractionDigits: 4)) \(Constants.CurrencyType.gel.symbol)")
-                        .if(currency.sell == currency.sellBest) { view in
+                        .if(currency.sell == item.best.currency(for: currency.type)?.sell) { view in
                             view
                                 .foregroundStyle(state.theme.accentColor)
                         }

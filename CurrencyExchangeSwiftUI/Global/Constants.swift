@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct Constants {
-    static let cornerRadius: CGFloat = 12
+    // MARK: - Styles
+    enum Styles {
+        static let cornerRadius: CGFloat = 12
+    }
     
     // MARK: - Currency
-    enum CurrencyType: String, CaseIterable {
+    enum CurrencyType: String, CaseIterable, Codable {
         case gel = "GEL"
         case usd = "USD"
         case eur = "EUR"
@@ -22,6 +25,10 @@ struct Constants {
         case azn = "AZN"
         case uah = "AUH"
         case kzt = "KZT"
+        
+        static var cacheKey: String {
+            return "SelectedCurrenciesCacheKey"
+        }
         
         var flag: String {
             switch self {
@@ -196,10 +203,6 @@ struct Constants {
             return "CurrentAppLanguageCacheKey"
         }
         
-        static var defaultLanguage: Language {
-            return self.en
-        }
-        
         var flag: String {
             switch self {
             case .ru:
@@ -217,6 +220,15 @@ struct Constants {
         
         static var cacheKey: String {
             return "CurrentAppThemeCacheKey"
+        }
+        
+        var colorSceme: ColorScheme {
+            switch self {
+            case .light:
+                return .light
+            case .dark:
+                return .dark
+            }
         }
                 
         var backgroundColor: Color {
@@ -288,10 +300,6 @@ struct Constants {
         }
     }
     
-    static var selectedCurrenciesCacheKey: String {
-        return "SelectedCurrenciesCacheKey"
-    }
-    
     // MARK: - Options
     enum City: String, CaseIterable, Codable {
         case tbilisi = "Tbilisi"
@@ -300,6 +308,20 @@ struct Constants {
         
         static var cacheKey: String {
             return "CityCacheKey"
+        }
+    }
+    
+    enum Options {
+        case includeOnline
+        case workingNow
+        
+        var cacheKey: String {
+            switch self {
+            case .includeOnline:
+                return "IncludeOnlineCacheKey"
+            case .workingNow:
+                return "WorkingNowCacheKey"
+            }
         }
     }
 }

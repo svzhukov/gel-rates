@@ -8,12 +8,12 @@
 import SwiftUI
 
 extension View {
-    func availabilityOnChange<T>(
+    func onChangeConditional<T>(
         of value: T,
         action: @escaping () -> Void
     ) -> some View where T: Equatable {
         if #available(iOS 17.0, *) {
-            return self.onChange(of: value, initial: false, action)
+            return self.onChange(of: value, initial: true, action)
         } else {
             return self.onChange(of: value) { newValue in
                 action()
@@ -23,7 +23,7 @@ extension View {
 }
 
 extension View {
-    func availabilityScrollDismissesKeyboard() -> some View {
+    func scrollDismissesKeyboardConditional() -> some View {
         if #available(iOS 17.0, *) {
             return self.scrollDismissesKeyboard(.immediately)
         } else {

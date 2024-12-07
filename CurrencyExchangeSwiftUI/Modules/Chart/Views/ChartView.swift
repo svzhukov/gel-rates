@@ -58,7 +58,7 @@ struct ChartContentView: View {
     }
     
     var body: some View {
-        RoundedRectangle(cornerRadius: Constants.cornerRadius)
+        RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius)
             .fill(state.theme.secondaryBackgroundColor)
             .frame(height: 300)
             .overlay(
@@ -88,10 +88,10 @@ struct ChartContentView: View {
             ChartAxisContent.yAxis()
         }
         .chartYScale(domain: items.minPrice!.price - 0.008...items.maxPrice!.price + 0.008)
-        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+        .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
         .padding(.trailing, 10)
         
-        .availabilityOnChange(of: vm.periodicChartItems) {
+        .onChangeConditional(of: vm.periodicChartItems) {
             if let items = vm.periodicChartItems {
                 addDelayedPointMarks(items, delay: 0.3)
             }
@@ -181,53 +181,41 @@ struct ChartAxisContent {
     static func xAxis(for timeRange: TimeRange?) -> AnyAxisContent {
         switch timeRange {
         case .month:
-            return AnyAxisContent(monthlyAxis())
+            return AnyAxisContent(axisWithStride(by: .day, stride: 7, format: "dd.MM"))
         case .week:
-            return AnyAxisContent(weeklyAxis())
+            return AnyAxisContent(axisWithStride(by: .day, stride: 1, format: "dd.MM"))
         case .halfYear, .year, .none:
-            return AnyAxisContent(yearlyAxis())
+            return AnyAxisContent(axisWithStride(by: .month, stride: 1, format: "MMM"))
         }
     }
 
-    private static func monthlyAxis() -> some AxisContent {
-        AxisMarks(values: .stride(by: .day, count: 7)) {
-            AxisValueLabel(format: .dateTime.day(.twoDigits).month(.twoDigits))
-                .offset(y: -15)
-                .foregroundStyle(AppState.shared.theme.secondaryTextColor)
-                .font(.system(size: 8))
-            AxisGridLine()
-                .foregroundStyle(AppState.shared.theme.secondaryBackgroundColor)
-        }
-    }
-
-    private static func weeklyAxis() -> some AxisContent {
-        AxisMarks(values: .stride(by: .day, count: 1)) {
-            AxisValueLabel(format: .dateTime.day(.twoDigits).month(.twoDigits))
-                .offset(y: -15)
-                .foregroundStyle(AppState.shared.theme.secondaryTextColor)
-                .font(.system(size: 8))
-            AxisGridLine()
-                .foregroundStyle(AppState.shared.theme.secondaryBackgroundColor)
-        }
-    }
-
-    private static func yearlyAxis() -> some AxisContent {
-        AxisMarks(values: .stride(by: .month, count: 1)) { value in
-            if let date = value.as(Date.self),
-               Calendar.current.component(.month, from: date) == 1 {
-                AxisValueLabel(format: .dateTime.year())
-                    .foregroundStyle(AppState.shared.theme.secondaryTextColor)
-                    .font(.system(size: 8))
-            } else if value.index % 2 == 0 {
-                AxisValueLabel(format: .dateTime.month())
+    private static func axisWithStride(by component: Calendar.Component, stride: Int, format: String) -> some AxisContent {
+        AxisMarks(values: .stride(by: component, count: stride)) { value in
+            if let date = value.as(Date.self) {
+                AxisValueLabel(formatDateForAxis(date, format: format))
                     .offset(y: -15)
                     .foregroundStyle(AppState.shared.theme.secondaryTextColor)
                     .font(.system(size: 8))
-
+                
+                // Extra year label for Jan
+                if Calendar.current.component(.month, from: date) == 1 {
+                    AxisValueLabel(formatDateForAxis(date, format: "yyyy"))
+                        .foregroundStyle(AppState.shared.theme.secondaryTextColor)
+                        .font(.system(size: 8))
+                }
             }
+            
             AxisGridLine()
                 .foregroundStyle(AppState.shared.theme.secondaryBackgroundColor)
         }
+    }
+
+    private static func formatDateForAxis(_ date: Date, format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.locale = Locale(identifier: AppState.shared.language.rawValue)
+        let formattedDate = formatter.string(from: date)
+        return formattedDate
     }
 }
 

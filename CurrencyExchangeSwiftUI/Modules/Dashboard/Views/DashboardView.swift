@@ -16,30 +16,24 @@ struct DashboardView: View {
     }
     
     var body: some View {
-        ZStack() {
-            ScrollView(.vertical) {
-                VStack {
-                    title()
-                    OptionsView()
-                    ConversionView(vm: vm.conversionVM)
-                    BestRatesView(vm: vm.bestRatesVM)
-                    NavigationLink(destination: ListView(vm: vm.listVM)) {
-                        Text(translated("Show full list of exchangers"))
-                            .padding(.top, -10)
-                    }
-                    if #available(iOS 16.0, *) {
-                        ChartView(vm: vm.chartVM)
-                    }
+        ScrollView(.vertical) {
+            VStack {
+                title()
+                OptionsView()
+                BestRatesView(vm: vm.bestRatesVM)
+                ConversionView(vm: vm.conversionVM)
+                
+                if #available(iOS 16.0, *) {
+                    ChartView(vm: vm.chartVM)
                 }
             }
-            .frame(maxWidth: .infinity)
-            .availabilityScrollDismissesKeyboard()
         }
-        .background(state.theme.backgroundColor)
+        .frame(maxWidth: .infinity)
+        .scrollDismissesKeyboardConditional()
     }
     
     private func title() -> some View {
-        Text(vm.title)
+        Text(translated(vm.title))
             .titleStyle(state)
             .frame(maxWidth: .infinity)
             .background(state.theme.backgroundColor)

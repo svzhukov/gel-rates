@@ -11,22 +11,66 @@ class AppState: ObservableObject {
     static let shared: AppState = AppState()
     private init() {}
     
-    @Published var selectedCity: Constants.City = Constants.City.tbilisi
-    @Published var selectedCurrencies: [Constants.CurrencyType] = [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
-    @Published var includeOnline = false
-    @Published var workingNow = false
-    
+    @Published var selectedCity: Constants.City = StorageManager.shared.loadCity() ?? Constants.City.tbilisi
+    @Published var selectedCurrencies: [Constants.CurrencyType] = StorageManager.shared.loadSelectedCurrencies() ?? [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
+    @Published var includeOnline = StorageManager.shared.loadIncludeOnline() ?? false
+    @Published var workingNow = StorageManager.shared.loadWorkingNow() ?? false
     @Published var theme: Constants.Theme = StorageManager.shared.loadAppTheme() ?? .light
-    @Published var language: Constants.Language = StorageManager.shared.loadAppLanguage() ?? Constants.Language.defaultLanguage
+    @Published var language: Constants.Language = StorageManager.shared.loadAppLanguage() ?? Constants.Language.en
+    
+    // MARK: - Options
+    func setSelectedCurrencies(_ newValue: [Constants.CurrencyType]) {
+        selectedCurrencies = newValue
+        StorageManager.shared.saveSelectedCurrencies(currencies: newValue)
+        print("Set selected currncies: \(newValue)")
+    }
+    
+    func setCity(_ newCity: Constants.City) {
+        if selectedCity == newCity { return }
+        selectedCity = newCity
+        StorageManager.shared.saveCity(city: newCity)
+        print("Set city: \(newCity)")
+    }
+
+    func toggleWorkingNow() {
+        workingNow.toggle()
+        StorageManager.shared.saveWorkingNow(working: workingNow)
+        print("Set working now: \(workingNow)")
+    }
+    
+    func toggleIncludeOnline() {
+        includeOnline.toggle()
+        StorageManager.shared.saveIncludeOnline(include: includeOnline)
+        print("Set include online: \(includeOnline)")
+    }
     
     // MARK: - Theme
-    func setTheme(_ newTheme: Constants.Theme) {
+    func toggleTheme() {
+        let newTheme: Constants.Theme = theme == .dark ? .light : .dark
         theme = newTheme
         StorageManager.shared.saveAppTheme(to: theme)
         print("Set theme: \(newTheme)")
     }
-    
-    func toggleTheme() {
-        setTheme(theme == .dark ? .light : .dark)
+
+    // MARK: - Localization
+    var bundle: Bundle {
+        if let path = Bundle.main.path(forResource: language.rawValue, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            return bundle
+        } else {
+            return .main
+        }
+    }
+
+    func setLanguage(_ newLang: Constants.Language) {
+        if language == newLang { return }
+        language = newLang
+        StorageManager.shared.saveAppLanguage(to: newLang)
+        print("Set language to: \(newLang.rawValue)")
     }
 }
+
+func translated(_ key: String, comment: String = "") -> String {
+    return NSLocalizedString(key, bundle: AppState.shared.bundle, comment: comment)
+}
+

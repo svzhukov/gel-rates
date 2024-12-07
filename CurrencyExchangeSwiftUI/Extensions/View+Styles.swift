@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 extension View {
     func subHeaderStyle(_ state: AppState) -> some View {
@@ -37,4 +38,11 @@ extension View {
             .font(.title)
             .foregroundStyle(state.theme.textColor)
     }
+    
+    func axisStyle(_ state: AppState) -> some View {
+        self
+            .foregroundStyle(state.theme.secondaryTextColor)
+            .font(.system(size: 8))
+    }
 }
+

@@ -16,11 +16,11 @@ struct BestRatesView: View {
         Group {
             if let items = self.vm.items {
                 VStack {
-                    TitleView(vm.title)
+                    TitleView(translated(vm.title))
                     HStack(spacing: 0) {
                         ForEach(Array(vm.headers.enumerated()), id: \.element) { index, header in
                             VStack(spacing: 0) {
-                                Text(header)
+                                Text(translated(header))
                                     .subHeaderStyle(state)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.vertical, 12)
@@ -40,9 +40,19 @@ struct BestRatesView: View {
                     }
                     .padding(.horizontal).padding(.bottom, 4)
                     .background(state.theme.secondaryBackgroundColor)
-                    .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+                    .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
+                    
+                    NavigationLink(destination: Assembly.createListView()) {
+                        HStack {
+                            Text(translated("List all exchangers"))
+                            Image(systemName: "chevron.right")
+                        }
+                    }
                 }
                 .padding()
+                .onChangeConditional(of: state.selectedCurrencies) {
+                    
+                }
                 
             } else {
                 BasicProgressView()
