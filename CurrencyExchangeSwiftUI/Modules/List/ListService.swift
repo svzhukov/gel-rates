@@ -24,8 +24,9 @@ class ListService: ListServiceProtocol {
         if shouldReuseCachedData(MyfinJSONModel.self), let cachedData = StorageManager.shared.loadJSONModel(type: MyfinJSONModel.self) {
             print("Reusing fetchListRates cached data...")
             DispatchQueue.main.async {
-                for callback in self.callbacks {
-                    callback(.success(cachedData))
+                for index in self.callbacks.indices.reversed() {
+                    self.callbacks[index](.success(cachedData))
+                    self.callbacks.remove(at: index)
                 }
                 self.isFetching = false
             }
@@ -45,9 +46,11 @@ class ListService: ListServiceProtocol {
                 }
                 
                 DispatchQueue.main.async {
-                    for callback in self.callbacks {
-                        callback(result)
+                    for index in self.callbacks.indices.reversed() {
+                        self.callbacks[index](result)
+                        self.callbacks.remove(at: index)
                     }
+                    
                     self.isFetching = false
                 }
             }
@@ -69,7 +72,6 @@ class ListService: ListServiceProtocol {
         let timeout: Double = 600
         guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
         let should = Date().timeIntervalSince(lastFetch) < timeout
-        print("shouldReuseCachedData for \(type): \(should)")
         return should
     }
 }
