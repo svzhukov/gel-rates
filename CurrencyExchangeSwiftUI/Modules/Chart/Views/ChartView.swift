@@ -41,7 +41,7 @@ struct ChartView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
-            self.vm.fetchData()
+            if vm.chartItems == nil { vm.fetchData() }
         }
     }
 }

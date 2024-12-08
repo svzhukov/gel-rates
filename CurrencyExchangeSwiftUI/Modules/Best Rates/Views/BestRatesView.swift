@@ -62,7 +62,7 @@ struct BestRatesView: View {
             }
         }
         .onAppear {
-            vm.fetchData()
+            if vm.items == nil { vm.fetchData() }
         }
     }
     
@@ -79,7 +79,7 @@ struct BestRatesView: View {
     
     private func columnText(item: BestRatesDisplayItem, for columnType: ColumType) -> String {
         switch columnType {
-        case .currency:
+        case .name:
             return item.currency.name
         case .buy:
             return "\(String.formattedDecimal(item.currency.buy, maximumFractionDigits: 4))"
@@ -89,7 +89,7 @@ struct BestRatesView: View {
     }
     
     private enum ColumType: Int {
-        case currency = 0
+        case name = 0
         case buy = 1
         case sell = 2
     }

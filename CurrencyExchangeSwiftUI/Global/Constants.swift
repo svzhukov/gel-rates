@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct Constants {
+        
+    static let delayBeforeNewAPIRequest: Double = 0
+    
     // MARK: - Styles
     enum Styles {
         static let cornerRadius: CGFloat = 12

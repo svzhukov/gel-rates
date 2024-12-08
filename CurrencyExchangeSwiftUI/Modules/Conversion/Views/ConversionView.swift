@@ -40,6 +40,7 @@ struct ConversionView: View {
                 }
                 .padding()
                 .onChangeConditional(of: vm.item) {
+                    updateCurrencyTypes(item: item)
                     updateBuyTextField(item: item)
                 }
                 
@@ -49,7 +50,7 @@ struct ConversionView: View {
         }
         .hideKeyboardOnTap()
         .onAppear {
-            vm.fetchData()
+            if vm.item == nil { vm.fetchData() }
         }
     }
  
@@ -87,7 +88,7 @@ struct ConversionView: View {
     }
     
     private func buyField(item: ConversionDisplayItem) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
+        return VStack(alignment: .leading, spacing: 3) {
             Text(translated("You get"))
                 .subHeaderStyle(state)
             
@@ -203,6 +204,11 @@ struct ConversionView: View {
         if let currencyToSell = item.currencies.currency(for: sellCurrencyType), let currencyToBuy = item.currencies.currency(for: buyCurrencyType) {
             amountToBuy = String.formattedDecimal(amount * currencyToSell.buy / currencyToBuy.sell)
         }
+    }
+    
+    private func updateCurrencyTypes(item: ConversionDisplayItem) {
+        sellCurrencyType = item.currencies[0].type
+        buyCurrencyType = item.currencies[1].type
     }
 }
 

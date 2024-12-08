@@ -68,12 +68,9 @@ class ListService: ListServiceProtocol {
         return try? JSONSerialization.data(withJSONObject: body)
     }
     
-    private func shouldReuseCachedData<T: JSONModelProtocol>(_ type: T.Type) -> Bool {
-        return false
-        
-        let timeout: Double = 600
+    private func shouldReuseCachedData<T: JSONModelProtocol>(_ type: T.Type) -> Bool {        
         guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
-        let should = Date().timeIntervalSince(lastFetch) < timeout
+        let should = Date().timeIntervalSince(lastFetch) < Constants.delayBeforeNewAPIRequest
         return should
     }
 }

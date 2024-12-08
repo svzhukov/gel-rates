@@ -56,9 +56,8 @@ class ChartService: ChartServiceProtocol {
     }
     
     private func shouldReuseCachedData<T: JSONModelProtocol>(_ type: T.Type) -> Bool {
-        let timeout: Double = 600
         guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
-        let should = Date().timeIntervalSince(lastFetch) < timeout
+        let should = Date().timeIntervalSince(lastFetch) < Constants.delayBeforeNewAPIRequest
         print("shouldReuseCachedData for \(type): \(should)")
         return should
     }

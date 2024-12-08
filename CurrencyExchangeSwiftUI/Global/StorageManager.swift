@@ -118,7 +118,6 @@ class StorageManager: StorageManagerProtocol {
     // MARK: - Private
     private func save(_ obj: Encodable, forKey key: String) {
         if let encoded = try? JSONEncoder().encode(obj) {
-//            print("user defaults saved: \(key)")
             userDefaults.set(encoded, forKey: key)
             inMemoryData[key] = obj
         }
@@ -134,12 +133,7 @@ class StorageManager: StorageManagerProtocol {
         } catch {
             print(error)
         }
-        
-//        if let decoded = try? JSONDecoder().decode(type, from: data) {
-////            print("user defaults loaded: \(key)")
-//            inMemoryData[key] = decoded
-//            return decoded
-//        }
+ 
         return nil
     }
     

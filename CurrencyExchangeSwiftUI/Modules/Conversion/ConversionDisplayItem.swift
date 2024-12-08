@@ -8,7 +8,9 @@
 import Foundation
 
 struct ConversionDisplayItem: Equatable {
-    let currencies: [Currency]
+    typealias DisplayItemType = ConversionDisplayItem
+    
+    var currencies: [Currency]
     
     static func mapModel(_ model: MyfinJSONModel) -> ConversionDisplayItem {
         let currencyDict: [String: Currency] = model.best.mapValues { (rate: CurrencyRate) in
@@ -23,5 +25,14 @@ struct ConversionDisplayItem: Equatable {
         }
         
         return ConversionDisplayItem(currencies: sorted)
+    }
+    
+    static func filterItemByCurrency(_ item: ConversionDisplayItem?, currencyTypes: [Constants.CurrencyType]) -> ConversionDisplayItem? {
+        let currencies = item?.currencies.filter { currency in
+            currencyTypes.contains { type in
+                type == currency.type
+            }
+        }
+        return ConversionDisplayItem(currencies: currencies!)
     }
 }

@@ -8,31 +8,36 @@
 import Foundation
 import Combine
 
-class ConversionVM: ObservableObject {
+class ConversionVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber {
     var service: ListServiceProtocol
+    
+    var allItems: [ConversionDisplayItem]?
     @Published var item: ConversionDisplayItem?
 
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
 
     init(service: ListServiceProtocol) {
         self.service = service
         
-        Publishers.CombineLatest3(AppState.shared.$selectedCity, AppState.shared.$includeOnline, AppState.shared.$workingAvailability)
-            .dropFirst()
-            .sink { [weak self] (newValue1, newValue2, newValue3) in
-                self?.fetchData()
-            }
-            .store(in: &cancellables)
+        subscribeToOptionChanges(cancellables: &cancellables) { [weak self] _, _, _ in
+            self?.fetchData()
+        }
+        subscribeToSelectedCurrencies { [weak self] newCurrencyTypes in
+            self?.item = ConversionDisplayItem.filterItemByCurrency(self?.allItems?[0], currencyTypes: newCurrencyTypes)
+        }
     }
     
     func fetchData() {
         self.service.fetchListRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
             switch result {
             case .success(let model):
-                self?.item = ConversionDisplayItem.mapModel(model)
+                self?.allItems = [ConversionDisplayItem.mapModel(model)]
+                self?.item = ConversionDisplayItem.filterItemByCurrency(self?.allItems?[0], currencyTypes: AppState.shared.selectedCurrencies)
             case .failure(let error):
                 fatalError(error.localizedDescription)
             }
         }
     }
+    
+    
 }

@@ -12,7 +12,7 @@ struct Bank {
     let name: Organization.TranslatedName
     let type: OrgType
     let icon: Icon
-    let currencies: [Currency]
+    var currencies: [Currency]
     
     enum OrgType {
         case bank

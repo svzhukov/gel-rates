@@ -22,7 +22,7 @@ struct ListView: View {
                 ScrollView {
                     VStack {
                         TitleView(translated("List of organizations"))
-                        ForEach(items) { (item: ListDisplayItem) in
+                        ForEach(items.filter { $0.bank.currencies.count > 0 }) { (item: ListDisplayItem) in
                             VStack {
                                 listHeaderView(item)
                                 listContentView(item)
@@ -41,7 +41,7 @@ struct ListView: View {
             }
         }
         .onAppear {
-            vm.fetchData()
+            if vm.listItems == nil { vm.fetchData() }
         }
     }
     

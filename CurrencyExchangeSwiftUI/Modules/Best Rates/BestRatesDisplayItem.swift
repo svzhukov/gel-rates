@@ -8,6 +8,8 @@
 import Foundation
 
 struct BestRatesDisplayItem: Identifiable {
+    typealias DisplayItemType = BestRatesDisplayItem
+    
     let id = UUID()
     let currency: Currency
     
@@ -22,6 +24,14 @@ struct BestRatesDisplayItem: Identifiable {
         
         return currencies.compactMap { currency in
             BestRatesDisplayItem(currency: currency)
+        }
+    }
+    
+    static func filterItemsWithCurrencyTypes(_ items: [BestRatesDisplayItem]?, currencyTypes: [Constants.CurrencyType]) -> [BestRatesDisplayItem]? {
+        items?.filter { item in
+            currencyTypes.contains { type in
+                type == item.currency.type
+            }
         }
     }
 }

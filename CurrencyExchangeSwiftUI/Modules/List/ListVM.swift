@@ -6,20 +6,38 @@
 //
 
 import Foundation
+import Combine
 
-class ListVM: ObservableObject {
+class ListVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber {
     var service: ListServiceProtocol
+    
+    var allItems: [ListDisplayItem]?
     @Published var listItems: [ListDisplayItem]?
+    var cancellables = Set<AnyCancellable>()
 
     init(service: ListServiceProtocol) {
+        print("ListVM init")
+
         self.service = service
+        
+        subscribeToOptionChanges(cancellables: &cancellables) { [weak self] _, _, _ in
+            self?.fetchData()
+        }
+        subscribeToSelectedCurrencies { [weak self] newCurrencyTypes in
+            self?.listItems = ListDisplayItem.filterItemsWithCurrencyTypes(self?.allItems, currencyTypes: newCurrencyTypes)
+        }
+    }
+    
+    deinit {
+        print("ListVM deint")
     }
     
     func fetchData() {
         self.service.fetchListRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
             switch result {
             case .success(let model):
-                self?.listItems = ListDisplayItem.mapModel(model)
+                self?.allItems = ListDisplayItem.mapModel(model)
+                self?.listItems = ListDisplayItem.filterItemsWithCurrencyTypes(self?.allItems, currencyTypes: AppState.shared.selectedCurrencies)
             case .failure(let error):
                 fatalError(error.localizedDescription)
             }

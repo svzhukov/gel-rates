@@ -22,7 +22,7 @@ class AppState: ObservableObject {
     func setSelectedCurrencies(_ newValue: [Constants.CurrencyType]) {
         selectedCurrencies = newValue
         StorageManager.shared.saveSelectedCurrencies(currencies: newValue)
-        print("Set selected currncies: \(newValue)")
+        print("Set selected currncies: \(newValue.count)")
     }
     
     func setCity(_ newCity: Constants.City) {

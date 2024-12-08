@@ -16,3 +16,11 @@ struct Currency: Identifiable, Hashable {
         return type.rawValue
     }
 }
+
+extension Array where Element == Currency {
+    func currency(for type: Constants.CurrencyType) -> Currency? {
+        return self.first { currency in
+            currency.type == type
+        }
+    }
+}

@@ -8,32 +8,35 @@
 import Foundation
 import Combine
 
-class BestRatesVM: ObservableObject {
+class BestRatesVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber {
+    
     var service: ListServiceProtocol
     
+    var allItems: [BestRatesDisplayItem]?
     @Published var items: [BestRatesDisplayItem]?
     @Published var title: String = "Best offers"
     let headers = ["Currency", "Buy", "Sell"]
     
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
 
     init(service: ListServiceProtocol, currencies: [BestRatesDisplayItem]? = nil) {
         self.service = service
         self.items = currencies
-                
-        Publishers.CombineLatest3(AppState.shared.$selectedCity, AppState.shared.$includeOnline, AppState.shared.$workingAvailability)
-            .dropFirst()
-            .sink { [weak self] (newValue1, newValue2, newValue3) in
-                self?.fetchData()
-            }
-            .store(in: &cancellables)
+        
+        subscribeToOptionChanges(cancellables: &cancellables) { [weak self] _, _, _ in
+            self?.fetchData()
+        }
+        subscribeToSelectedCurrencies { [weak self] newCurrencyTypes in
+            self?.items = BestRatesDisplayItem.filterItemsWithCurrencyTypes(self?.allItems, currencyTypes: newCurrencyTypes)
+        }
     }
     
     func fetchData() {
         self.service.fetchListRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
             switch result {
             case .success(let model):
-                self?.items = BestRatesDisplayItem.mapModel(model)
+                self?.allItems = BestRatesDisplayItem.mapModel(model)
+                self?.items = BestRatesDisplayItem.filterItemsWithCurrencyTypes(self?.allItems, currencyTypes: AppState.shared.selectedCurrencies)
             case .failure(let error):
                 fatalError(error.localizedDescription)
             }

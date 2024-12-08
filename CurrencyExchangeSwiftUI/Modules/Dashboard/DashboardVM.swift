@@ -11,15 +11,13 @@ import Combine
 class DashboardVM: ObservableObject {
     @Published var title: String = "Best exchange rates"
     let chartVM: ChartVM
-    let listVM: ListVM
     let bestRatesVM: BestRatesVM
     let conversionVM: ConversionVM
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(chartVM: ChartVM, listVM: ListVM, bestRatesVM: BestRatesVM, conversionVM: ConversionVM) {
+    init(chartVM: ChartVM, bestRatesVM: BestRatesVM, conversionVM: ConversionVM) {
         self.chartVM = chartVM
-        self.listVM = listVM
         self.bestRatesVM = bestRatesVM
         self.conversionVM = conversionVM
     }

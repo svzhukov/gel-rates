@@ -8,8 +8,10 @@
 import Foundation
 
 struct ListDisplayItem: Identifiable {
+    typealias DisplayItemType = ListDisplayItem
+    
     let id = UUID()
-    let bank: Bank
+    var bank: Bank
     let best: [Currency]
     
     static func mapModel(_ model: MyfinJSONModel) -> [ListDisplayItem] {
@@ -31,6 +33,16 @@ struct ListDisplayItem: Identifiable {
             return ListDisplayItem (bank: bank, best: best)
         }
         return items
+    }
+    
+    static func filterItemsWithCurrencyTypes(_ allItems: [ListDisplayItem]?, currencyTypes: [Constants.CurrencyType]) -> [ListDisplayItem]? {
+        if var items = allItems {
+            for i in items.indices {
+                items[i].bank.currencies = items[i].bank.currencies.filter { currencyTypes.contains($0.type) }
+            }
+            return items
+        }
+        return nil
     }
 }
 
