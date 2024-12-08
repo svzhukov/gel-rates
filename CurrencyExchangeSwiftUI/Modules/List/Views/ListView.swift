@@ -21,7 +21,7 @@ struct ListView: View {
             if let items = self.vm.listItems {
                 ScrollView {
                     VStack {
-                        TitleView(translated("List of exchangers"))
+                        TitleView(translated("List of organizations"))
                         ForEach(items) { (item: ListDisplayItem) in
                             VStack {
                                 listHeaderView(item)
@@ -79,9 +79,9 @@ struct ListView: View {
     private func listContentView(_ item: ListDisplayItem) -> some View {
         Group {
             HStack {
-                Text(translated("list_header_buy"))
+                Text(translated("Buy"))
                 Spacer()
-                Text(translated("list_header_sell"))
+                Text(translated("Sell"))
             }
             .subHeaderStyle(state)
             .padding(.bottom, 3)

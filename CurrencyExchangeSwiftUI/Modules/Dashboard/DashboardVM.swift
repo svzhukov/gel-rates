@@ -31,7 +31,7 @@ class DashboardVM: ObservableObject {
         let currentDate = Date()
         let formattedDate = dateFormatter.string(from: currentDate)
 
-        title = translated("Best exchange rates ") + translated("in") + " \(translated(AppState.shared.selectedCity.rawValue)) " + translated("on") + " \(formattedDate)"
+        title = translated("Best exchange rates") + translated(" in ") + "\(translated(AppState.shared.selectedCity.rawValue))" + translated(" on ") + "\(formattedDate)"
     }
 }
 

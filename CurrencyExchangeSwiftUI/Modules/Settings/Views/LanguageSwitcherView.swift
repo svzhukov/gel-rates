@@ -46,7 +46,7 @@ struct LanguagesButtonView: View {
                     .animation(nil, value: isHidden)
             }
         }
-        .offset(x: isHidden ? 103 : 0)
+        .offset(x: isHidden ? CGFloat(Constants.Language.allCases.count * 50) : 0)
         .zIndex(1)
     }
 }

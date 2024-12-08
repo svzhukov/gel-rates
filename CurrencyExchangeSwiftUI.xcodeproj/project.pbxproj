@@ -194,7 +194,6 @@
 				Base,
 				ru,
 				ka,
-				ca,
 			);
 			mainGroup = D9D827052C949DAF006DF004;
 			productRefGroup = D9D8270F2C949DAF006DF004 /* Products */;

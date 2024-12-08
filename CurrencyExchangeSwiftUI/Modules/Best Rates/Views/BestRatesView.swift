@@ -42,12 +42,15 @@ struct BestRatesView: View {
                     .background(state.theme.secondaryBackgroundColor)
                     .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
                     
-                    NavigationLink(destination: Assembly.createListView()) {
-                        HStack {
-                            Text(translated("List all exchangers"))
-                            Image(systemName: "chevron.right")
+                    NavigationLink(destination:
+                                    Assembly.createListView()
+                        .navigationBarBackButtonHidden(true)
+                        .navigationBarItems(leading: BackButton())) {
+                            HStack {
+                                Text(translated("List all organizations"))
+                                Image(systemName: "chevron.right")
+                            }
                         }
-                    }
                 }
                 .padding()
                 .onChangeConditional(of: state.selectedCurrencies) {
@@ -60,6 +63,17 @@ struct BestRatesView: View {
         }
         .onAppear {
             vm.fetchData()
+        }
+    }
+    
+    private func backButton() -> some View {
+        Button {
+            
+        } label: {
+            HStack {
+                Image(systemName: "chevron.left")
+                Text(translated("Back"))
+            }
         }
     }
     

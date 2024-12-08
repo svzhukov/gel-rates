@@ -164,7 +164,7 @@ struct ConversionView: View {
                     Text("\(translated("Then you can buy")) **\(amountToBuy)** \(buyCurrencyType.rawValue)")
                 }
                 
-                Text("\(translated("Exchange rate")): **1** \(sellCurrencyType.rawValue) = **\(String.formattedDecimal(buyAmount / sellAmount))** \(buyCurrencyType.rawValue) (or **1** \(buyCurrencyType.rawValue) = **\(String.formattedDecimal(sellAmount / buyAmount))** \(sellCurrencyType.rawValue)")
+                Text("\(translated("Exchange rate")): **1** \(sellCurrencyType.rawValue) = **\(String.formattedDecimal(buyAmount / sellAmount))** \(buyCurrencyType.rawValue) (\(translated("or")) **1** \(buyCurrencyType.rawValue) = **\(String.formattedDecimal(sellAmount / buyAmount))** \(sellCurrencyType.rawValue)")
             }
         }
         .font(.footnote)

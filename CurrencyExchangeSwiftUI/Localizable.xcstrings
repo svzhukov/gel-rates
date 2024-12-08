@@ -1,6 +1,40 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " in " : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " в "
+          }
+        }
+      }
+    },
+    " on " : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " на "
+          }
+        }
+      }
+    },
     "%.3f" : {
       "shouldTranslate" : false
     },
@@ -23,7 +57,8 @@
             "value" : "%1$@ **%2$@** %3$@"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "%@ **%@** %@ %@ **%@** %@" : {
       "localizations" : {
@@ -33,7 +68,8 @@
             "value" : "%1$@ **%2$@** %3$@ %4$@ **%5$@** %6$@"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "%@ %@" : {
       "localizations" : {
@@ -43,32 +79,29 @@
             "value" : "%1$@ %2$@"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
-    "%@: **1** %@ = **%@** %@ (or **1** %@ = **%@** %@" : {
+    "%@: **1** %@ = **%@** %@ (%@ **1** %@ = **%@** %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@: **1** %2$@ = **%3$@** %4$@ (or **1** %5$@ = **%6$@** %7$@"
+            "value" : "%1$@: **1** %2$@ = **%3$@** %4$@ (%5$@ **1** %6$@ = **%7$@** %8$@"
           }
         }
-      }
-    },
-    "All banks" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Все банки"
-          }
-        }
-      }
+      },
+      "shouldTranslate" : false
     },
     "Amount to buy" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესასყიდი თანხა"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -80,6 +113,12 @@
     "Amount to sell" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასაყიდი თანხა"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -91,6 +130,12 @@
     "and get" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "და მიიღე"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -102,6 +147,12 @@
     "Back" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უკან"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -113,6 +164,12 @@
     "Batumi" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბათუმში"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -121,13 +178,19 @@
         }
       }
     },
-    "Best exchange rates " : {
+    "Best exchange rates" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საუკეთესო გაცვლითი კურსი"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Лучшие курсы обмена "
+            "value" : "Лучшие курсы обмена"
           }
         }
       }
@@ -135,10 +198,10 @@
     "Best offers" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
+        "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Best offers"
+            "value" : "საუკეთესო გაცვლითი კურსი"
           }
         },
         "ru" : {
@@ -152,6 +215,12 @@
     "Buy" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყიდვის"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -160,19 +229,24 @@
         }
       }
     },
-    "Chart GEL to USD" : {
+    "Chart GEL/USD" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დიაგრამა GEL/USD"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "График GEL к USD"
+            "value" : "График GEL/USD"
           }
         }
       }
     },
     "chart_button_month" : {
-      "comment" : "месяц",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -181,9 +255,15 @@
             "value" : "Month"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თვე"
+          }
+        },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Месяц"
           }
         }
@@ -198,9 +278,15 @@
             "value" : "Half Year"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ექვსი თვე"
+          }
+        },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Полгода"
           }
         }
@@ -215,9 +301,15 @@
             "value" : "Week"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კვირაში"
+          }
+        },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Неделя"
           }
         }
@@ -232,9 +324,15 @@
             "value" : "Year"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წელიწადი"
+          }
+        },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Год"
           }
         }
@@ -249,9 +347,15 @@
             "value" : "Currency converter"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტის გადამყვანი"
+          }
+        },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Конвертер валют"
           }
         }
@@ -260,6 +364,12 @@
     "Currency" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტა"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -270,6 +380,12 @@
     },
     "Date" : {
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თარიღი"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +397,12 @@
     "Exchange rate" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Გაცვლითი კურსი"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -292,6 +414,12 @@
     "Exchange Rates" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Გაცვლითი კურსი"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -300,20 +428,15 @@
         }
       }
     },
-    "in" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "в"
-          }
-        }
-      }
-    },
     "Include online banks" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩართეთ ონლაინ ბანკები"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -322,9 +445,32 @@
         }
       }
     },
+    "Include unknown schedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩართეთ უცნობი გრაფიკი"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включая неизвестное расписание"
+          }
+        }
+      }
+    },
     "Kutaisi" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქუთაისში"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -333,58 +479,36 @@
         }
       }
     },
-    "List all exchangers" : {
+    "List all organizations" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ru" : {
+        "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Показать все обменники"
-          }
-        }
-      }
-    },
-    "List of exchangers" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Список обменников"
-          }
-        }
-      }
-    },
-    "list_header_buy" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buy"
+            "value" : "ჩამოთვალეთ ყველა ბანკი"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Покупка"
+            "state" : "translated",
+            "value" : "Показать все организации"
           }
         }
       }
     },
-    "list_header_sell" : {
+    "List of organizations" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
+        "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sell"
+            "value" : "ორგანიზაციების სია"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Продажа"
+            "state" : "translated",
+            "value" : "Список организаций"
           }
         }
       }
@@ -392,27 +516,16 @@
     "Loading..." : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
+        "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loading…"
+            "value" : "იტვირთება…"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Загрузка…"
-          }
-        }
-      }
-    },
-    "on" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
             "state" : "translated",
-            "value" : "на"
+            "value" : "Загрузка…"
           }
         }
       }
@@ -420,6 +533,12 @@
     "Only working now" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მუშაობს ახლა"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -431,6 +550,12 @@
     "or" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ან"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -441,6 +566,12 @@
     },
     "Price" : {
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფასი"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -452,6 +583,12 @@
     "Sell" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაყიდვის"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -463,6 +600,12 @@
     "Tbilisi" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თბილისში"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -474,6 +617,12 @@
     "Then you can buy" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაშინ შეგიძლია იყიდო"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -485,6 +634,12 @@
     "You can sell" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეგიძლიათ გაყიდოთ"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -496,6 +651,12 @@
     "You get" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Შენ გსურს"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -507,6 +668,12 @@
     "You have" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Შენ გაქვს"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

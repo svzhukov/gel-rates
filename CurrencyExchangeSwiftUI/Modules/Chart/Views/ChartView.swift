@@ -34,7 +34,7 @@ struct ChartView: View {
 
     var body: some View {
         VStack {
-            TitleView("Chart GEL to USD")
+            TitleView("Chart GEL/USD")
             ChartContentView(vm: self.vm)
             ChartButtonsView(vm: self.vm)
         }

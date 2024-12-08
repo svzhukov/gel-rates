@@ -196,8 +196,9 @@ struct Constants {
     
     // MARK: - Language
     enum Language: String, CaseIterable, Codable {
-        case ru = "ru"
         case en = "en"
+        case ka = "ka"
+        case ru = "ru"
         
         static var cacheKey: String {
             return "CurrentAppLanguageCacheKey"
@@ -205,10 +206,12 @@ struct Constants {
         
         var flag: String {
             switch self {
-            case .ru:
-                return "🇷🇺"
             case .en:
                 return "🇺🇸"
+            case .ka:
+                return "🇬🇪"
+            case .ru:
+                return "🇷🇺"
             }
         }
     }

@@ -20,7 +20,7 @@ struct OptionsView: View {
                         ThemeSwitcherView()
                         LanguageSwitcherView()
                     }
-                    .padding(16)
+                    .padding(.horizontal).padding(.bottom)
                     currenciesView()
                     citiesView()
                     optionsView()

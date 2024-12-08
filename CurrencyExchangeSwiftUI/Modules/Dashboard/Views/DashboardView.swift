@@ -41,6 +41,8 @@ struct DashboardView: View {
     private func title() -> some View {
         Text(vm.title)
             .titleStyle(state)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal).padding(.top)
             .onChangeConditional(of: state.selectedCity) {
                 vm.updateTitle()
             }
