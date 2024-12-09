@@ -44,5 +44,17 @@ extension View {
             .foregroundStyle(state.theme.secondaryTextColor)
             .font(.system(size: 8))
     }
+    
+    func roundedCardStyle(_ state: AppState) -> some View {
+        self
+            .background(state.theme.secondaryBackgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
+    }
+    
+    func iconStyle(_ state: AppState) -> some View {
+        self
+            .foregroundStyle(state.theme.secondaryTextColor)
+            .font(.system(size: 16, weight: .bold))
+    }
 }
 

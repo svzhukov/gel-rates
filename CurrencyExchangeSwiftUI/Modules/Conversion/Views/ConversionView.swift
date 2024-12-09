@@ -35,8 +35,7 @@ struct ConversionView: View {
                         conversionFooter(item: item)
                     }
                     .padding()
-                    .background(state.theme.secondaryBackgroundColor)
-                    .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
+                    .roundedCardStyle(state)
                 }
                 .padding()
                 .onChangeConditional(of: vm.item) {
@@ -58,7 +57,6 @@ struct ConversionView: View {
         HStack {
             sellField(item: item)
             sellPicker(item: item)
-                .offset(y: 12)
         }
     }
     
@@ -66,74 +64,63 @@ struct ConversionView: View {
         HStack {
             buyField(item: item)
             buyPicker(item: item)
-                .offset(y: 12)
         }
     }
     
     private func sellField(item: ConversionDisplayItem) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
-            Text(translated("You have"))
-                .subHeaderStyle(state)
-            
-            TextField(translated("Amount to sell"), text: $amountToSell)
-                .modifier(StandardTextFieldStyle())
-                .focused($sellTextFieldFocus)
-                .onChangeConditional(of: amountToSell) {
-                    if !buyTextFieldFocus {
-                        updateBuyTextField(item: item)
-                    }
-                }
+        field(item: item, header: "You have", placeholder: "Amount to buy", text: $amountToSell, focus: $sellTextFieldFocus, onChangeOf: amountToSell) {
+            if !buyTextFieldFocus {
+                updateBuyTextField(item: item)
+            }
         }
-        .frame(width: 240)
     }
     
     private func buyField(item: ConversionDisplayItem) -> some View {
-        return VStack(alignment: .leading, spacing: 3) {
-            Text(translated("You get"))
-                .subHeaderStyle(state)
-            
-            TextField(translated("Amount to buy"), text: $amountToBuy)
-                .modifier(StandardTextFieldStyle())
-                .focused($buyTextFieldFocus)
-                .onChangeConditional(of: amountToBuy) {
-                    if buyTextFieldFocus {
-                        updateSellTextField(item: item)
-                    }
-                }
+        field(item: item, header: "You get", placeholder: "Amount to buy", text: $amountToBuy, focus: $buyTextFieldFocus, onChangeOf: amountToBuy) {
+            if buyTextFieldFocus {
+                updateSellTextField(item: item)
+            }
         }
-        .frame(width: 240)
     }
     
     private func sellPicker(item: ConversionDisplayItem) -> some View {
-        Picker(translated("Currency"), selection: $sellCurrencyType) {
-            ForEach(item.currencies) { (currency: Currency) in
-                if currency.type != buyCurrencyType {
-                    Text(currency.name).tag(currency.type)
-                }
-            }
-        }
-        .tint(state.theme.actionableColor)
-        .modifier(StandardPickerStyle())
-        .onChangeConditional(of: sellCurrencyType) {
-            updateBuyTextField(item: item)
-        }
-        .frame(maxWidth: .infinity, alignment: .trailing)
+        picker(item: item, selection: $sellCurrencyType, onChangeCurrencyType: sellCurrencyType, ignoreCurrencyType: buyCurrencyType)
     }
     
     private func buyPicker(item: ConversionDisplayItem) -> some View {
-        Picker(translated("Currency"), selection: $buyCurrencyType) {
+        picker(item: item, selection: $buyCurrencyType, onChangeCurrencyType: buyCurrencyType, ignoreCurrencyType: sellCurrencyType)
+    }
+    
+    private func picker(item: ConversionDisplayItem, selection: Binding<Constants.CurrencyType>, onChangeCurrencyType: Constants.CurrencyType, ignoreCurrencyType: Constants.CurrencyType) -> some View {
+        Picker(translated("Currency"), selection: selection) {
             ForEach(item.currencies) { (currency: Currency) in
-                if currency.type != sellCurrencyType {
+                if currency.type != ignoreCurrencyType {
                     Text(currency.name).tag(currency.type)
                 }
             }
         }
         .tint(state.theme.actionableColor)
         .modifier(StandardPickerStyle())
-        .onChangeConditional(of: buyCurrencyType) {
+        .frame(maxWidth: .infinity, alignment: .center)
+        .offset(y: 12)
+        .onChangeConditional(of: onChangeCurrencyType) {
             updateBuyTextField(item: item)
         }
-        .frame(maxWidth: .infinity, alignment: .trailing)
+    }
+    
+    private func field(item: ConversionDisplayItem, header: String, placeholder: String, text: Binding<String>, focus: FocusState<Bool>.Binding, onChangeOf: String, action: (@escaping () -> Void)) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(translated(header))
+                .subHeaderStyle(state)
+            
+            TextField(translated(placeholder), text: text)
+                .modifier(StandardTextFieldStyle())
+                .focused(focus)
+                .onChangeConditional(of: onChangeOf) {
+                    action()
+                }
+        }
+        .frame(width: 240)
     }
     
     private func switchCurrenciesButton() -> some View {
@@ -148,7 +135,7 @@ struct ConversionView: View {
         .opacity(0.8)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .padding(.vertical, -15)
-        .padding(.trailing, 25)
+        .padding(.trailing, 30)
         .offset(y: 17)
     }
         
@@ -172,6 +159,25 @@ struct ConversionView: View {
         .foregroundColor(state.theme.secondaryTextColor)
     }
     
+    private func updateSellTextField(item: ConversionDisplayItem) {
+        let amount = Double(amountToBuy) ?? 0
+        if let currencyToSell = item.currencies.currency(for: sellCurrencyType), let currencyToBuy = item.currencies.currency(for: buyCurrencyType) {
+            amountToSell = String.formattedDecimal(amount * currencyToBuy.sell / currencyToSell.buy)
+        }
+    }
+    
+    private func updateBuyTextField(item: ConversionDisplayItem) {
+        let amount = Double(amountToSell) ?? 0
+        if let currencyToSell = item.currencies.currency(for: sellCurrencyType), let currencyToBuy = item.currencies.currency(for: buyCurrencyType) {
+            amountToBuy = String.formattedDecimal(amount * currencyToSell.buy / currencyToBuy.sell)
+        }
+    }
+    
+    private func updateCurrencyTypes(item: ConversionDisplayItem) {
+        sellCurrencyType = item.currencies[0].type
+        buyCurrencyType = item.currencies[1].type
+    }
+    
     private func isGelConversion() -> Bool {
         return buyCurrencyType == Constants.CurrencyType.gel || sellCurrencyType == Constants.CurrencyType.gel
     }
@@ -190,25 +196,6 @@ struct ConversionView: View {
             content
                 .pickerStyle(MenuPickerStyle())
         }
-    }
-    
-    private func updateSellTextField(item: ConversionDisplayItem) {
-        let amount = Double(amountToBuy) ?? 0
-        if let currencyToSell = item.currencies.currency(for: sellCurrencyType), let currencyToBuy = item.currencies.currency(for: buyCurrencyType) {
-            amountToSell = String.formattedDecimal(amount * currencyToBuy.sell / currencyToSell.buy)
-        }
-    }
-    
-    private func updateBuyTextField(item: ConversionDisplayItem) {
-        let amount = Double(amountToSell) ?? 0
-        if let currencyToSell = item.currencies.currency(for: sellCurrencyType), let currencyToBuy = item.currencies.currency(for: buyCurrencyType) {
-            amountToBuy = String.formattedDecimal(amount * currencyToSell.buy / currencyToBuy.sell)
-        }
-    }
-    
-    private func updateCurrencyTypes(item: ConversionDisplayItem) {
-        sellCurrencyType = item.currencies[0].type
-        buyCurrencyType = item.currencies[1].type
     }
 }
 

@@ -479,23 +479,6 @@
         }
       }
     },
-    "List all organizations" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ჩამოთვალეთ ყველა ბანკი"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Показать все организации"
-          }
-        }
-      }
-    },
     "List of organizations" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -627,6 +610,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Затем, вы можете купить"
+          }
+        }
+      }
+    },
+    "View all organizations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩამოთვალეთ ყველა ბანკი"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать все организации"
           }
         }
       }

@@ -28,8 +28,7 @@ struct ListView: View {
                                 listContentView(item)
                             }
                             .padding()
-                            .background(state.theme.secondaryBackgroundColor)
-                            .cornerRadius(Constants.Styles.cornerRadius)
+                            .roundedCardStyle(state)
                         }
                     }
                     .padding()
@@ -47,33 +46,35 @@ struct ListView: View {
     
     private func listHeaderView(_ item: ListDisplayItem) -> some View {
         HStack {
-            RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius)
-                .frame(width: 38, height: 38)
-                .foregroundStyle(.white)
-                .shadow(color: .white, radius: 2)
-                .overlay(
-                    Image(item.bank.icon.name)
-                    .if(item.bank.icon.fileExtension == "png") { view in
-                        view
-                            .resizable()
-                            .frame(maxWidth: 32, maxHeight: 32)
-                    }
-                        .frame(maxWidth: 32, maxHeight: 32)
-                        .scaledToFit()
-                )
-
-
+            orgImageView(item)
+            
             Text(item.bank.name.en!)
                 .headlineStyle(state)
             
             if item.bank.type == Bank.OrgType.online {
                 Image(systemName: "iphone")
-                    .foregroundStyle(state.theme.secondaryTextColor)
-                    .font(.system(size: 16, weight: .bold))
+                    .iconStyle(state)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.bottom, 10)
+    }
+    
+    private func orgImageView(_ item: ListDisplayItem) -> some View {
+        RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius)
+            .frame(width: 38, height: 38)
+            .foregroundStyle(.white)
+            .shadow(color: .white, radius: 2)
+            .overlay(
+                Image(item.bank.icon.name)
+                .if(item.bank.icon.fileExtension == "png") { view in
+                    view
+                        .resizable()
+                        .frame(maxWidth: 32, maxHeight: 32)
+                }
+                    .frame(maxWidth: 32, maxHeight: 32)
+                    .scaledToFit()
+            )
     }
     
     private func listContentView(_ item: ListDisplayItem) -> some View {

@@ -28,11 +28,11 @@ struct ChartButtonsView: View {
                         .frame(maxWidth: .infinity)
                         .background(range == self.vm.selectedTimeRange ? state.theme.secondaryBackgroundColor : Color.clear)
                         .cornerRadius(Constants.Styles.cornerRadius)
+
                 }
             }
         }
-        .background(state.theme.secondaryBackgroundColor)
-        .cornerRadius(Constants.Styles.cornerRadius)
+        .roundedCardStyle(state)
         .frame(maxWidth: .infinity)
     }
 }

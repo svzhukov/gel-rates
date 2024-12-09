@@ -13,6 +13,7 @@ struct ListDisplayItem: Identifiable {
     let id = UUID()
     var bank: Bank
     let best: [Currency]
+    var isFavorite: Bool = false
     
     static func mapModel(_ model: MyfinJSONModel) -> [ListDisplayItem] {
         let items: [ListDisplayItem] = model.organizations.compactMap { (org: Organization) in

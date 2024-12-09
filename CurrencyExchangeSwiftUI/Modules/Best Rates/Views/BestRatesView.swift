@@ -39,15 +39,14 @@ struct BestRatesView: View {
                         }
                     }
                     .padding(.horizontal).padding(.bottom, 4)
-                    .background(state.theme.secondaryBackgroundColor)
-                    .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
+                    .roundedCardStyle(state)
                     
                     NavigationLink(destination:
                                     Assembly.createListView()
                         .navigationBarBackButtonHidden(true)
                         .navigationBarItems(leading: BackButton())) {
                             HStack {
-                                Text(translated("List all organizations"))
+                                Text(translated("View all organizations"))
                                 Image(systemName: "chevron.right")
                             }
                         }

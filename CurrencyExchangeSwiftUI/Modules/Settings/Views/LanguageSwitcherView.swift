@@ -79,8 +79,7 @@ struct LanguagesPanelView: View {
                 }
             }
         }
-        .background(state.theme.secondaryBackgroundColor)
-        .cornerRadius(Constants.Styles.cornerRadius)
+        .roundedCardStyle(state)
         .opacity(isHidden ? 0 : 1)
         .animation(isHidden ? .easeOut(duration: 0.2) : .easeIn(duration: 0.2), value: isHidden)
     }
