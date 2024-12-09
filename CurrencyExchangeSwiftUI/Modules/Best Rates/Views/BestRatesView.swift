@@ -52,9 +52,6 @@ struct BestRatesView: View {
                         }
                 }
                 .padding()
-                .onChangeConditional(of: state.selectedCurrencies) {
-                    
-                }
                 
             } else {
                 BasicProgressView()

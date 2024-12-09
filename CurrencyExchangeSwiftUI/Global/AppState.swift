@@ -21,7 +21,7 @@ class AppState: ObservableObject {
     private init(store: StorageManagerProtocol) {
         self.store = store
         self.selectedCity = store.loadCity() ?? Constants.City.tbilisi
-        self.selectedCurrencies = store.loadSelectedCurrencies() ?? [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
+        self.selectedCurrencies = store.loadSelectedCurrencies() ?? Constants.CurrencyType.allCases
         self.includeOnline = store.loadIncludeOnline() ?? false
         self.workingAvailability = store.loadWokingAvailability() ?? Constants.Options.Availability.all
         self.theme = store.loadAppTheme() ?? .light

@@ -35,7 +35,7 @@ struct DashboardView: View {
             }
             .background(state.theme.backgroundColor)
         }
-        .preferredColorScheme(state.theme.colorSceme)
+        .preferredColorSchemeConditional(scheme: state.theme.colorSceme)
     }
     
     private func title() -> some View {

@@ -33,3 +33,17 @@ extension View {
         }
     }
 }
+
+extension View {
+    func preferredColorSchemeConditional(scheme: ColorScheme) -> some View {
+        if #available(iOS 16.0, *) {
+            return self.preferredColorScheme(scheme)
+        } else {
+            return self
+        }
+    }
+}
+
+
+
+    
