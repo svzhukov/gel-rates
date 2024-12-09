@@ -66,16 +66,7 @@ class AppState: ObservableObject {
         print("Set theme: \(newTheme)")
     }
 
-    // MARK: - Localization
-    var bundle: Bundle {
-        if let path = Bundle.main.path(forResource: language.rawValue, ofType: "lproj"),
-           let bundle = Bundle(path: path) {
-            return bundle
-        } else {
-            return .main
-        }
-    }
-
+    // MARK: - Language
     func setLanguage(_ newLang: Constants.Language) {
         if language == newLang { return }
         language = newLang
@@ -83,8 +74,3 @@ class AppState: ObservableObject {
         print("Set language to: \(newLang.rawValue)")
     }
 }
-
-func translated(_ key: String, comment: String = "") -> String {
-    return NSLocalizedString(key, bundle: AppState.shared.bundle, comment: comment)
-}
-

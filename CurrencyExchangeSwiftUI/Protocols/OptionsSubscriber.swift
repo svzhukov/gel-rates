@@ -24,7 +24,6 @@ extension OptionsSubscriber {
             AppState.shared.$includeOnline,
             AppState.shared.$workingAvailability
         )
-        .dropFirst()
         .sink { onChange($0, $1, $2) }
         .store(in: &cancellables)
     }
