@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TitleView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     let title: String
     
     init(_ title: String) {

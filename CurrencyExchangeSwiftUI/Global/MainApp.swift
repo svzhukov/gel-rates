@@ -13,6 +13,7 @@ struct CurrencyExchangeApp: App {
     var body: some Scene {
         WindowGroup {
             Assembly.createDashboardView()
+                .environmentObject(AppState.shared)
         }
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ListView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @ObservedObject var vm: ListVM
     
     init(vm: ListVM) {

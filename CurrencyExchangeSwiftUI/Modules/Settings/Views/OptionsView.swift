@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct OptionsView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @State var collapsed = true
     
     var body: some View {

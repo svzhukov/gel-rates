@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ThemeSwitcherView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @State var img: String = imgString()
     
     var body: some View {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConversionView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @ObservedObject var vm: ConversionVM
 
     @FocusState private var sellTextFieldFocus: Bool

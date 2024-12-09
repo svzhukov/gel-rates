@@ -25,7 +25,7 @@ struct LanguageSwitcherView: View {
 }
 
 struct LanguagesButtonView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @Binding var activeLang: Constants.Language
     @Binding var isHidden: Bool
     
@@ -52,7 +52,7 @@ struct LanguagesButtonView: View {
 }
 
 struct LanguagesPanelView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @Binding var activeLang: Constants.Language
     @Binding var isHidden: Bool
 

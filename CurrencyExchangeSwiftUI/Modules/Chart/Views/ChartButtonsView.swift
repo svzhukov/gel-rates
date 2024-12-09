@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChartButtonsView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @ObservedObject var vm: ChartVM
     
     init(vm: ChartVM) {

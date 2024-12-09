@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DashboardView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @StateObject private var vm: DashboardVM
     
     init(dashboardVM: DashboardVM) {

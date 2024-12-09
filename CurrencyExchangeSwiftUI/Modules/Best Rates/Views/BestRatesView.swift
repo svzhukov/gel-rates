@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct BestRatesView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     @ObservedObject var vm: BestRatesVM
     
     var body: some View {

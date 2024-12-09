@@ -25,7 +25,7 @@ struct PointMarkAnimation: Identifiable {
 
 @available(iOS 16.0, *)
 struct ChartView: View {
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     var vm: ChartVM
 
     init(vm: ChartVM) {
@@ -51,7 +51,7 @@ struct ChartView: View {
 struct ChartContentView: View {
     @ObservedObject var vm: ChartVM
     @State private var pointAnimation: PointMarkAnimation = PointMarkAnimation()
-    @ObservedObject var state = AppState.shared
+    @EnvironmentObject var state: AppState
     
     init(vm: ChartVM) {
         self.vm = vm
