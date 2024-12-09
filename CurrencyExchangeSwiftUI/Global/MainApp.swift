@@ -9,7 +9,10 @@ import SwiftUI
 
 @main
 struct CurrencyExchangeApp: App {
-
+    init() {
+        Assembly.configureAppState()
+    }
+    
     var body: some Scene {
         WindowGroup {
             Assembly.createDashboardView()

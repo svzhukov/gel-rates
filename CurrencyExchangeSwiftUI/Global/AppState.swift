@@ -8,39 +8,53 @@
 import Foundation
 
 class AppState: ObservableObject {
-    static let shared: AppState = AppState()
-    private init() {}
+    static private(set) var shared: AppState!
+    let store: StorageManagerProtocol
     
-    @Published var selectedCity: Constants.City = StorageManager.shared.loadCity() ?? Constants.City.tbilisi
-    @Published var selectedCurrencies: [Constants.CurrencyType] = StorageManager.shared.loadSelectedCurrencies() ?? [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
-    @Published var includeOnline = StorageManager.shared.loadIncludeOnline() ?? false
-    @Published var workingAvailability = StorageManager.shared.loadWokingAvailability() ?? Constants.Options.Availability.all
-    @Published var theme: Constants.Theme = StorageManager.shared.loadAppTheme() ?? .light
-    @Published var language: Constants.Language = StorageManager.shared.loadAppLanguage() ?? Constants.Language.en
+    @Published var selectedCity: Constants.City
+    @Published var selectedCurrencies: [Constants.CurrencyType]
+    @Published var includeOnline: Bool
+    @Published var workingAvailability: Constants.Options.Availability
+    @Published var theme: Constants.Theme
+    @Published var language: Constants.Language
+    
+    private init(store: StorageManagerProtocol) {
+        self.store = store
+        self.selectedCity = store.loadCity() ?? Constants.City.tbilisi
+        self.selectedCurrencies = store.loadSelectedCurrencies() ?? [Constants.CurrencyType.gel, Constants.CurrencyType.usd]
+        self.includeOnline = store.loadIncludeOnline() ?? false
+        self.workingAvailability = store.loadWokingAvailability() ?? Constants.Options.Availability.all
+        self.theme = store.loadAppTheme() ?? .light
+        self.language =  store.loadAppLanguage() ?? Constants.Language.en
+    }
+
+    static func configure(store: StorageManagerProtocol) {
+        shared = AppState(store: store)
+    }
     
     // MARK: - Options
     func setSelectedCurrencies(_ newValue: [Constants.CurrencyType]) {
         selectedCurrencies = newValue
-        StorageManager.shared.saveSelectedCurrencies(currencies: newValue)
+        store.saveSelectedCurrencies(currencies: newValue)
         print("Set selected currncies: \(newValue.count)")
     }
     
     func setCity(_ newCity: Constants.City) {
         if selectedCity == newCity { return }
         selectedCity = newCity
-        StorageManager.shared.saveCity(city: newCity)
+        store.saveCity(city: newCity)
         print("Set city: \(newCity)")
     }
 
     func setWorkingAvailability(availability: Constants.Options.Availability) {
         workingAvailability = availability
-        StorageManager.shared.saveWokingAvailability(working: availability)
+        store.saveWokingAvailability(working: availability)
         print("Set working now: \(availability)")
     }
     
     func toggleIncludeOnline() {
         includeOnline.toggle()
-        StorageManager.shared.saveIncludeOnline(include: includeOnline)
+        store.saveIncludeOnline(include: includeOnline)
         print("Set include online: \(includeOnline)")
     }
     
@@ -48,7 +62,7 @@ class AppState: ObservableObject {
     func toggleTheme() {
         let newTheme: Constants.Theme = theme == .dark ? .light : .dark
         theme = newTheme
-        StorageManager.shared.saveAppTheme(to: theme)
+        store.saveAppTheme(to: theme)
         print("Set theme: \(newTheme)")
     }
 
@@ -65,7 +79,7 @@ class AppState: ObservableObject {
     func setLanguage(_ newLang: Constants.Language) {
         if language == newLang { return }
         language = newLang
-        StorageManager.shared.saveAppLanguage(to: newLang)
+        store.saveAppLanguage(to: newLang)
         print("Set language to: \(newLang.rawValue)")
     }
 }

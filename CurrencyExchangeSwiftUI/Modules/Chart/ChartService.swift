@@ -12,9 +12,14 @@ protocol ChartServiceProtocol {
 }
 
 class ChartService: ChartServiceProtocol {
+    let store: StorageManagerProtocol
+    
+    init(store: StorageManagerProtocol) {
+        self.store = store
+    }
     
     func fetchAnnualRates(completion: @escaping (Result<TwelvedataJSONModel, Error>)  -> Void) {        
-        if shouldReuseCachedData(TwelvedataJSONModel.self), let cachedData = StorageManager.shared.loadJSONModel(type: TwelvedataJSONModel.self) {
+        if shouldReuseCachedData(TwelvedataJSONModel.self), let cachedData = store.loadJSONModel(type: TwelvedataJSONModel.self) {
             print("Reusing fetchAnnualRates cached data...")
             completion(.success(cachedData))
             return
@@ -24,10 +29,10 @@ class ChartService: ChartServiceProtocol {
             guard let url = self.urlTwelveAPI()
             else { return }
             
-            NetworkClient.shared.request(url: url) { (result: Result<TwelvedataJSONModel, Error>) in
+            NetworkClient.shared.request(url: url) { [weak self] (result: Result<TwelvedataJSONModel, Error>) in
                 switch result {
                 case .success(let model):
-                    StorageManager.shared.saveJSONModel(data: model)
+                    self?.store.saveJSONModel(data: model)
                 case .failure(_):
                     fatalError("manage api errors here")
                 }
@@ -56,9 +61,8 @@ class ChartService: ChartServiceProtocol {
     }
     
     private func shouldReuseCachedData<T: JSONModelProtocol>(_ type: T.Type) -> Bool {
-        guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
+        guard let lastFetch = store.loadLastFetchTimestamp(type: type) else { return false }
         let should = Date().timeIntervalSince(lastFetch) < Constants.delayBeforeNewAPIRequest
-        print("shouldReuseCachedData for \(type): \(should)")
         return should
     }
 }

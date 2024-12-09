@@ -11,16 +11,30 @@ protocol StorageManagerProtocol {
     func loadJSONModel<T: JSONModelProtocol>(type: T.Type) -> T?
     func loadLastFetchTimestamp<T: JSONModelProtocol>(type: T.Type) -> Date?
     func saveJSONModel<T: JSONModelProtocol>(data: T)
+    
+    func saveAppTheme(to theme: Constants.Theme)
+    func loadAppTheme() -> Constants.Theme?
+    
+    func saveAppLanguage(to language: Constants.Language)
+    func loadAppLanguage() -> Constants.Language?
+    
+    func saveSelectedCurrencies(currencies: [Constants.CurrencyType])
+    func loadSelectedCurrencies() -> [Constants.CurrencyType]?
+    
+    func saveCity(city: Constants.City)
+    func loadCity() -> Constants.City?
+    
+    func saveIncludeOnline(include: Bool)
+    func loadIncludeOnline() -> Bool?
+    
+    func saveWokingAvailability(working: Constants.Options.Availability)
+    func loadWokingAvailability() -> Constants.Options.Availability?
 }
 
 class StorageManager: StorageManagerProtocol {
-    static let shared = StorageManager()
     private let userDefaults = UserDefaults.standard
     private var inMemoryData: [String: Any] = [:]
 
-    private init() { }
-
-    
     // MARK: - JSON Models
     func loadJSONModel<T: JSONModelProtocol>(type: T.Type) -> T? {
         if let data = load(type, forKey: type.apiType.cacheKey) as? T {

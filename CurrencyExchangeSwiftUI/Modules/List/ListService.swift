@@ -12,16 +12,21 @@ protocol ListServiceProtocol {
 }
 
 class ListService: ListServiceProtocol {
+    let store: StorageManagerProtocol
+
     var isFetching: Bool = false
     var callbacks: [(Result<MyfinJSONModel, Error>) -> Void] = []
     
+    init(store: StorageManagerProtocol) {
+        self.store = store
+    }
+    
     func fetchListRates(completion: @escaping (Result<MyfinJSONModel, Error>) -> Void) {
-        
         callbacks.append(completion)
         if isFetching { return }
         isFetching = true
                             
-        if shouldReuseCachedData(MyfinJSONModel.self), let cachedData = StorageManager.shared.loadJSONModel(type: MyfinJSONModel.self) {
+        if shouldReuseCachedData(MyfinJSONModel.self), let cachedData = store.loadJSONModel(type: MyfinJSONModel.self) {
             print("Reusing fetchListRates cached data...")
             DispatchQueue.main.async {
                 for index in self.callbacks.indices.reversed() {
@@ -37,28 +42,29 @@ class ListService: ListServiceProtocol {
             NetworkClient.shared.request(url: URL(string: Constants.APIType.myfin.endpoint)!,
                                          method: Constants.Network.Method.post,
                                          headers: Constants.Network.Headers.json.dictionary,
-                                         body: self.requestBody()) { (result: Result<MyfinJSONModel, Error>) in
+                                         body: self.requestBody()) { [weak self] (result: Result<MyfinJSONModel, Error>) in
                 switch result {
                 case .success(let model):
-                    StorageManager.shared.saveJSONModel(data: model)
+                    self?.store.saveJSONModel(data: model)
                 case .failure(_):
                     fatalError("manage api errors here")
                 }
                 
-                DispatchQueue.main.async {
-                    for index in self.callbacks.indices.reversed() {
-                        self.callbacks[index](result)
-                        self.callbacks.remove(at: index)
+                if let indices = self?.callbacks.indices.reversed() {
+                    DispatchQueue.main.async {
+                        for index in indices {
+                            self?.callbacks[index](result)
+                            self?.callbacks.remove(at: index)
+                        }
+                        self?.isFetching = false
                     }
-                    
-                    self.isFetching = false
-                }
+                }                
             }
         }
     }
     
     func lastfetchTimestamp() -> Date? {
-        return StorageManager.shared.loadLastFetchTimestamp(type: MyfinJSONModel.self)
+        return store.loadLastFetchTimestamp(type: MyfinJSONModel.self)
     }
     
     private func requestBody() -> Data? {
@@ -69,7 +75,7 @@ class ListService: ListServiceProtocol {
     }
     
     private func shouldReuseCachedData<T: JSONModelProtocol>(_ type: T.Type) -> Bool {        
-        guard let lastFetch = StorageManager.shared.loadLastFetchTimestamp(type: type) else { return false }
+        guard let lastFetch = store.loadLastFetchTimestamp(type: type) else { return false }
         let should = Date().timeIntervalSince(lastFetch) < Constants.delayBeforeNewAPIRequest
         return should
     }
