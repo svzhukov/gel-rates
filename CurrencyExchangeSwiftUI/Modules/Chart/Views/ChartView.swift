@@ -91,7 +91,7 @@ struct ChartContentView: View {
         .clipShape(RoundedRectangle(cornerRadius: Constants.Styles.cornerRadius))
         .padding(.trailing, 10)
         
-        .onChangeConditional(of: vm.periodicChartItems) {
+        .onChangeConditional(of: vm.periodicChartItems) { 
             if let items = vm.periodicChartItems {
                 addDelayedPointMarks(items, delay: 0.3)
             }

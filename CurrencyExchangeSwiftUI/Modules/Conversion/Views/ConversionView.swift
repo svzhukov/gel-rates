@@ -39,7 +39,12 @@ struct ConversionView: View {
                 }
                 .padding()
                 .onChangeConditional(of: vm.item) {
-                    updateCurrencyTypes(item: item)
+                    if let item = vm.item {
+                        updateCurrencyTypes(item: item)
+                        updateBuyTextField(item: item)
+                    }
+                }
+                .onAppear {
                     updateBuyTextField(item: item)
                 }
                 

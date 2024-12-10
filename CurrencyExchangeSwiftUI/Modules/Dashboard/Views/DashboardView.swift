@@ -16,25 +16,23 @@ struct DashboardView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                ScrollView(.vertical) {
-                    VStack {
-                        title()
-                        OptionsView()
-                        BestRatesView(vm: vm.bestRatesVM)
-                        ConversionView(vm: vm.conversionVM)
-                        
-                        if #available(iOS 16.0, *) {
-                            ChartView(vm: vm.chartVM)
-                        }
+        ZStack {
+            ScrollView(.vertical) {
+                VStack {
+                    title()
+                    OptionsView()
+                    BestRatesView(vm: vm.bestRatesVM)
+                    ConversionView(vm: vm.conversionVM)
+                    
+                    if #available(iOS 16.0, *) {
+                        ChartView(vm: vm.chartVM)
                     }
                 }
-                .frame(maxWidth: .infinity)
-                .scrollDismissesKeyboardConditional()
             }
-            .background(state.theme.backgroundColor)
+            .frame(maxWidth: .infinity)
+            .scrollDismissesKeyboardConditional()
         }
+        .background(state.theme.backgroundColor)
         .preferredColorSchemeConditional(scheme: state.theme.colorSceme)
     }
     
@@ -46,7 +44,10 @@ struct DashboardView: View {
             .onChangeConditional(of: state.selectedCity) {
                 vm.updateTitle()
             }
-            .onChangeConditional(of: state.language) {
+            .onChangeConditional(of: state.language) { 
+                vm.updateTitle()
+            }
+            .onAppear {
                 vm.updateTitle()
             }
     }

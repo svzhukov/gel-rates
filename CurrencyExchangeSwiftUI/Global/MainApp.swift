@@ -15,9 +15,13 @@ struct CurrencyExchangeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Assembly.createDashboardView()
-                .environmentObject(AppState.shared)
+            NavigationView {
+                Assembly.createDashboardView()
+                    .navigationBarHidden(true)
+            }
+            .environmentObject(AppState.shared)
         }
+
     }
 }
 
