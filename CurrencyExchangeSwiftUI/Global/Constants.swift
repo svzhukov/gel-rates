@@ -315,13 +315,42 @@ struct Constants {
         static var cacheKey: String {
             return "CityCacheKey"
         }
-    }
-    
-    enum Options {
-        case includeOnline
         
-        var cacheKey: String {
-            return "IncludeOnlineCacheKey"
+        static var defaultValue: City {
+            return .tbilisi
+        }
+    }
+        
+    enum Options {
+        var includeOnline: Bool {
+            return true
+        }
+        
+        enum IncludeOnline {
+            case yes
+            case no
+            
+            static var cacheKey: String {
+                return "IncludeOnlineCacheKey"
+            }
+            
+            static var defaultValue: IncludeOnline {
+                return .yes
+            }
+
+            var rawValue: Bool {
+                switch self {
+                case .yes: return true
+                case .no: return false
+                }
+            }
+
+            init?(rawValue: Bool) {
+                switch rawValue {
+                case true: self = .yes
+                case false: self = .no
+                }
+            }
         }
         
         enum Availability: String, Codable {
@@ -332,7 +361,10 @@ struct Constants {
             static var cacheKey: String {
                 return "AvailabilityCacheKey"
             }
+            
+            static var defaultValue: Availability {
+                return .all
+            }
         }
-
     }
 }

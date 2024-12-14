@@ -10,7 +10,7 @@ import Combine
 
 class BestRatesVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber {
     
-    var service: ListServiceProtocol
+    var service: LiveExchangeRateServiceProtocol
     
     var allItems: [BestRatesDisplayItem]?
     @Published var items: [BestRatesDisplayItem]?
@@ -19,7 +19,7 @@ class BestRatesVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscr
     
     var cancellables = Set<AnyCancellable>()
 
-    init(service: ListServiceProtocol, currencies: [BestRatesDisplayItem]? = nil) {
+    init(service: LiveExchangeRateServiceProtocol, currencies: [BestRatesDisplayItem]? = nil) {
         self.service = service
         self.items = currencies
         
@@ -32,7 +32,7 @@ class BestRatesVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscr
     }
     
     func fetchData() {
-        self.service.fetchListRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
+        self.service.fetchLiveRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
             switch result {
             case .success(let model):
                 self?.allItems = BestRatesDisplayItem.mapModel(model)

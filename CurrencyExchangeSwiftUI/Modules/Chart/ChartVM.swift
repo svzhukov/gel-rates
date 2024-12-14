@@ -8,7 +8,7 @@
 import Foundation
 
 class ChartVM: ObservableObject {
-    var service: ChartServiceProtocol
+    var service: HistoricalExchangeRateServiceProtocol
     
     var chartItems: [ChartDisplayItem]?
     @Published var periodicChartItems: [ChartDisplayItem]?
@@ -27,12 +27,12 @@ class ChartVM: ObservableObject {
         periodicChartItems = chartItems?.filter { timeRange.dateRange.contains($0.date) }
     }
 
-    init(service: ChartServiceProtocol) {
+    init(service: HistoricalExchangeRateServiceProtocol) {
         self.service = service
     }
     
     func fetchData() {
-        self.service.fetchAnnualRates { [weak self] result in
+        self.service.fetchHistoricalRates { [weak self] result in
             switch result {
             case .success(let model):
                 self?.chartItems = ChartDisplayItem.mapModel(model)

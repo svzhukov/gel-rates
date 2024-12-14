@@ -9,13 +9,13 @@ import Foundation
 import Combine
 
 class ListVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber {
-    var service: ListServiceProtocol
+    var service: LiveExchangeRateServiceProtocol
     
     var allItems: [ListDisplayItem]?
     @Published var listItems: [ListDisplayItem]?
     var cancellables = Set<AnyCancellable>()
 
-    init(service: ListServiceProtocol) {
+    init(service: LiveExchangeRateServiceProtocol) {
         print("ListVM init")
 
         self.service = service
@@ -33,7 +33,7 @@ class ListVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber 
     }
     
     func fetchData() {
-        self.service.fetchListRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
+        self.service.fetchLiveRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
             switch result {
             case .success(let model):
                 self?.allItems = ListDisplayItem.mapModel(model)

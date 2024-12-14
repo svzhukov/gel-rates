@@ -9,14 +9,14 @@ import Foundation
 import Combine
 
 class ConversionVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber {
-    var service: ListServiceProtocol
+    var service: LiveExchangeRateServiceProtocol
     
     var allItems: [ConversionDisplayItem]?
     @Published var item: ConversionDisplayItem?
 
     var cancellables = Set<AnyCancellable>()
 
-    init(service: ListServiceProtocol) {
+    init(service: LiveExchangeRateServiceProtocol) {
         self.service = service
         
         subscribeToOptionChanges(cancellables: &cancellables) { [weak self] _, _, _ in
@@ -28,7 +28,7 @@ class ConversionVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubsc
     }
     
     func fetchData() {
-        self.service.fetchListRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
+        self.service.fetchLiveRates{ [weak self] (result: Result<MyfinJSONModel, any Error>) in
             switch result {
             case .success(let model):
                 self?.allItems = [ConversionDisplayItem.mapModel(model)]

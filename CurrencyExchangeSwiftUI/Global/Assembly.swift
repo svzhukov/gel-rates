@@ -10,9 +10,9 @@ import SwiftUI
 
 struct Assembly {
     static func createDashboardView() -> DashboardView {
-        let store = StorageManager()
-        let listService = ListService(store: store)
-        let chartVM = ChartVM(service: ChartService(store: store))
+        let store = StorageManager(userDefaults: UserDefaults.standard)
+        let listService = LiveExchangeRateService(store: store)
+        let chartVM = ChartVM(service: HistoricalExchangeRateService(store: store))
         let bestVM = BestRatesVM(service: listService)
         let conversionVM = ConversionVM(service: listService)
         let dashboardVM = DashboardVM(chartVM: chartVM, bestRatesVM: bestVM, conversionVM: conversionVM)
@@ -23,8 +23,8 @@ struct Assembly {
     }
     
     static func createListView() -> ListView {
-        let store = StorageManager()
-        let service = ListService(store: store)
+        let store = StorageManager(userDefaults: UserDefaults.standard)
+        let service = LiveExchangeRateService(store: store)
         let vm = ListVM(service: service)
         let view = ListView(vm: vm)
         
@@ -32,7 +32,7 @@ struct Assembly {
     }
     
     static func configureAppState() {
-        let store = StorageManager()
-        AppState.configure(store: store)
+        let store = StorageManager(userDefaults: UserDefaults.standard)
+        AppState.configure(store: store, liveService: LiveExchangeRateService(store: store), prefService: PreferencesService(store: store))
     }
 }
