@@ -76,7 +76,7 @@ struct BestRatesView: View {
     private func columnText(item: BestRatesDisplayItem, for columnType: ColumType) -> String {
         switch columnType {
         case .name:
-            return item.currency.name
+            return "\(item.currency.type.flag) \(item.currency.name)"
         case .buy:
             return "\(String.formattedDecimal(item.currency.buy, maximumFractionDigits: 4))"
         case .sell:

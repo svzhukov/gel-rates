@@ -20,7 +20,7 @@ class BaseService {
     func save(_ obj: Encodable, key: String) {
         guard let data = encodeJSON(data: obj) else { return }
         store.saveData(data, key: key)
-        inMemoryCache[key] = obj
+//        inMemoryCache[key] = obj
     }
 
     func load<T: Decodable>(_ type: T.Type, key: String) -> (any Decodable)? {
@@ -28,7 +28,7 @@ class BaseService {
         guard let data = store.fetchData(key: key) else { return nil }
 
         let decoded = decodeJSON(type: type, data: data)
-        inMemoryCache[key] = decoded
+//        inMemoryCache[key] = decoded
         return decoded
     }
     

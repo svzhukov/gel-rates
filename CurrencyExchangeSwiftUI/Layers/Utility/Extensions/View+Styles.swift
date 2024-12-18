@@ -35,7 +35,7 @@ extension View {
     
     func titleStyle(_ state: AppState) -> some View {
         self
-            .font(.title2)
+            .font(.title3)
             .foregroundStyle(state.theme.textColor)
     }
     
