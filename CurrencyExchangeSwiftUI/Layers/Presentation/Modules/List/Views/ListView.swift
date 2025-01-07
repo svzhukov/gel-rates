@@ -67,11 +67,7 @@ struct ListView: View {
             .shadow(color: .white, radius: 2)
             .overlay(
                 Image(item.bank.icon.name)
-                .if(item.bank.icon.fileExtension == "png") { view in
-                    view
-                        .resizable()
-                        .frame(maxWidth: 32, maxHeight: 32)
-                }
+                    .resizable()
                     .frame(maxWidth: 32, maxHeight: 32)
                     .scaledToFit()
             )

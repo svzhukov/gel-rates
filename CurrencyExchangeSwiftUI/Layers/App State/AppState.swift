@@ -46,8 +46,8 @@ class AppState: ObservableObject {
     
     func setCity(_ newCity: Constants.City) {
         if selectedCity == newCity { return }
-        selectedCity = newCity
         liveService.saveCity(city: newCity)
+        selectedCity = newCity
         print("Set city: \(newCity)")
     }
 

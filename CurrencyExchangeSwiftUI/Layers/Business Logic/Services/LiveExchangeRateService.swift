@@ -130,6 +130,7 @@ class LiveExchangeRateService: BaseService, LiveExchangeRateServiceProtocol {
         let body: [String : Any] = ["city": loadCity()?.rawValue ?? Constants.City.defaultValue.rawValue,
                                     "includeOnline": loadIncludeOnline() ?? Constants.Options.IncludeOnline.defaultValue.rawValue,
                                     "availability": loadWokingAvailability()?.rawValue ?? Constants.Options.Availability.defaultValue.rawValue]
+        print(body)
         return try? JSONSerialization.data(withJSONObject: body)
     }
     

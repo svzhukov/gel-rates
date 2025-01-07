@@ -18,12 +18,20 @@ class BestRatesVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscr
     let headers = ["Currency", "Buy", "Sell"]
     
     var cancellables = Set<AnyCancellable>()
+    
+    deinit {
+        print("BestRatesVM deinit")
+    }
 
     init(service: LiveExchangeRateServiceProtocol, currencies: [BestRatesDisplayItem]? = nil) {
+        
+        print("BestRatesVM init")
+        
         self.service = service
         self.items = currencies
         
-        subscribeToOptionChanges(cancellables: &cancellables) { [weak self] _, _, _ in
+        subscribeToOptionChanges(cancellables: &cancellables) { [weak self] newCity, _, _ in
+            print(newCity)
             self?.fetchData()
         }
         subscribeToSelectedCurrencies { [weak self] newCurrencyTypes in

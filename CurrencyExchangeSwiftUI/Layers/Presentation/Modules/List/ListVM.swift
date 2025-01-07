@@ -20,7 +20,8 @@ class ListVM: ObservableObject, OptionsSubscriber, SelectedCurrenciesSubscriber 
 
         self.service = service
         
-        subscribeToOptionChanges(cancellables: &cancellables) { [weak self] _, _, _ in
+        subscribeToOptionChanges(cancellables: &cancellables) { [weak self] newCity, _, _ in
+            print(newCity)
             self?.fetchData()
         }
         subscribeToSelectedCurrencies { [weak self] newCurrencyTypes in

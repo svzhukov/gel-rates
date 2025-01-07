@@ -9,19 +9,20 @@ import SwiftUI
 
 @main
 struct CurrencyExchangeApp: App {
+    @StateObject private var router = Router()
+    private var dashboardView: DashboardView
+
     init() {
         Assembly.configureAppState()
+        dashboardView = Assembly.createDashboardView()
     }
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                Assembly.createDashboardView()
-                    .navigationBarHidden(true)
-            }
+            NavigationContainer(rootView: dashboardView)
             .environmentObject(AppState.shared)
+            .environmentObject(router)
         }
-
     }
 }
 

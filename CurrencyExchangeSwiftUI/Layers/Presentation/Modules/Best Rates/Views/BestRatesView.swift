@@ -11,7 +11,8 @@ import SwiftUI
 struct BestRatesView: View {
     @EnvironmentObject var state: AppState
     @ObservedObject var vm: BestRatesVM
-    
+    @EnvironmentObject private var router: Router
+
     var body: some View {
         Group {
             if let items = self.vm.items {
@@ -41,15 +42,14 @@ struct BestRatesView: View {
                     .padding(.horizontal).padding(.bottom, 4)
                     .roundedCardStyle(state)
                     
-                    NavigationLink(destination:
-                                    Assembly.createListView()
-                        .navigationBarBackButtonHidden(true)
-                        .navigationBarItems(leading: BackButton())) {
-                            HStack {
-                                Text(translated("View all organizations"))
-                                Image(systemName: "chevron.right")
-                            }
+                    Button {
+                        router.navigate(to: Route.organizations)
+                    } label: {
+                        HStack {
+                            Text(translated("View all organizations"))
+                            Image(systemName: "chevron.right")
                         }
+                    }
                 }
                 .padding()
                 
