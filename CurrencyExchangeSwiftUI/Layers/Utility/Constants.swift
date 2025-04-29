@@ -28,6 +28,7 @@ struct Constants {
         case azn = "AZN"
         case uah = "UAH"
         case kzt = "KZT"
+        case cad = "CAD"
         
         static var cacheKey: String {
             return "SelectedCurrenciesCacheKey"
@@ -55,6 +56,8 @@ struct Constants {
                 return "🇺🇦"
             case .kzt:
                 return "🇰🇿"
+            case .cad:
+                return "🇨🇦"
             }
         }
         
@@ -80,6 +83,8 @@ struct Constants {
                 return "₴"
             case .kzt:
                 return "₸"
+            case .cad:
+                return "$"
             }
         }
         
@@ -105,6 +110,8 @@ struct Constants {
                 return 8
             case .kzt:
                 return 9
+            case .cad:
+                return 10
             }
         }
         
@@ -130,6 +137,8 @@ struct Constants {
                 self = .uah
             case "KZT":
                 self = .kzt
+            case "CAD":
+                self = .cad
             default:
                 print("Currency raw value for string not found: \(rawValue)")
                 return nil

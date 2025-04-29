@@ -98,7 +98,7 @@ struct OptionsView: View {
     }
     
     private func currenciesView() -> some View {
-        ForEach(currenciesTwoHalfArrays(), id: \.self) { array in
+        ForEach(currencyRows(), id: \.self) { array in
             HStack {
                 ForEach(array, id: \.self) { (currency: Constants.CurrencyType) in
                     HStack {
@@ -154,17 +154,22 @@ struct OptionsView: View {
         .padding(.trailing)
     }
     
-    private func currenciesTwoHalfArrays() -> [[Constants.CurrencyType]] {
+    private func currencyRows() -> [[Constants.CurrencyType]] {
         let currencies = Constants.CurrencyType.allCases
-        let midpoint = currencies.count / 2
-        return [Array(currencies[..<midpoint]), Array(currencies[midpoint...])]
+        let chunkSize = 5
+
+        let chunkedArrays = stride(from: 0, to: currencies.count, by: chunkSize).map {
+            Array(currencies[$0..<min($0 + chunkSize, currencies.count)])
+        }
+        
+        return chunkedArrays
     }
 }
 
 #Preview("City") {
-    OptionsView()
+    ScrollView(.vertical) {
+        OptionsView()
+            .environmentObject(AppState.shared)
+    }
 }
 
-#Preview("Dashboard") {
-    Assembly.createDashboardView()
-}

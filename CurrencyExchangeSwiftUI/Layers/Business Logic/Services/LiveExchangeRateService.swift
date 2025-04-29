@@ -52,7 +52,8 @@ class LiveExchangeRateService: BaseService, LiveExchangeRateServiceProtocol {
                 case .success(let model):
                     self?.saveModel(model)
                 case .failure(_):
-                    fatalError("manage api errors here")
+//                    fatalError("manage api errors here")
+                    print("api error")
                 }
                 
                 self?.invokeCallbacks(result)
